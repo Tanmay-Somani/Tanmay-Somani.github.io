@@ -1,0 +1,152 @@
+.Page {
+  margin: -8px;
+  padding: 46px;
+  background-attachment: fixed;
+  background-color: #f6ebf4;
+  text-shadow: 0.1px 0.1px .1px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+.MainHead {
+  font-size: 300%;
+  font-weight: lighter;
+  margin-bottom: 10px;
+}
+
+.SkillHead {
+  font-size: 130%;
+  color: #482673;
+}
+
+.Skillborder {
+  outline: 2.5px ridge #482673;
+  padding: 20px;
+  margin: 30px;
+}
+
+body {
+  text-align: center;
+  color: rgb(76, 191, 166);
+  font-family: 'Cinzel Decorative', cursive;
+  font-weight: lighter;
+}
+
+p {
+  color: #482673;
+  font-family: verdana;
+  font-size: 14px;
+}
+
+h1 {
+  color: #ed0b70;
+  text-align: center;
+  font-size: 6vw;
+  margin-top: 40px;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+tr:hover {
+  background-color:#CCCCFF;
+  color:#301008;
+  font-size:110%;
+}
+
+header {
+  background: rgb(76, 191, 166) no-repeat center center;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("Sky.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  margin: -8px;
+  padding: 245px;
+  font-size: 200%;
+}
+footer{
+    background: #301008;
+    margin: -45px;
+    padding: 22px;
+    }
+
+.column {
+      float: left;
+      width: 33.33%;
+}
+.row:after {
+      content: "";
+      display: table;
+      clear: both;
+}
+@media screen and (max-width:600px) {
+    .column {
+      width: 100%;
+    }
+    ul.topnav li {float: none;}
+}
+a:link{
+    color:#4cbfa6;
+     text-decoration: none;
+     padding: 5px 10px;
+  text-align: center;
+  display: inline-block;
+}
+a:visited{
+  color :#f6ebf4;
+   text-decoration: none;
+   padding: 5px 10px;
+  text-align: center;
+  display: inline-block;
+}
+
+a:hover{
+  color: #ed0b70;
+  text-decoration: underline;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+
+a:active{
+  color:#4cbfa6;
+  text-decoration: underline;
+  padding: 5px 10px;
+  text-align: center;
+
+}
+li{
+  background-color: #CCCCFF;
+  background-color: rgba(204,204,255,0.5);
+  margin: 20px 20px 20px 20px;
+}
+
+ul.topnav {
+  list-style-type: none;
+  margin: -11px;
+  padding: 20px;
+  overflow: hidden;
+  background-color: #333;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 11px 139px;
+  text-decoration: none;
+}
+
+
+ul.topnav li a:hover:not(.active) {background-color: #111;}
+.active {background-color: #04AA6D;}
