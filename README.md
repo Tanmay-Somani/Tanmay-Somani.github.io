@@ -1,2 +1,2 @@
-# [Tanmay-Somani.github.io](https://tTanmay-Somani.github.io)
-Press the above link to be sent to my website
+# Tanmay-Somani.github.io
+Copy the above link to be sent to my website
