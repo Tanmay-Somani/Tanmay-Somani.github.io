@@ -1,7 +1,7 @@
 # Tanmay Somani
 
 ## Tanmay-Somani.github.io
-https://Tanmay-Somani.github.io.
+<https://Tanmay-Somani.github.io.>
 
 ##### Click on the link above to be sent to my website
 
@@ -22,3 +22,5 @@ also adding the fact that you can use.
 -/. to place a period 
 
 also `monospace` code here 
+
+if you have read this far click here to go to my website
