@@ -10,12 +10,12 @@ As an attempt to learn onto how to code **html css** and __java__ I decided to m
 
 >Its a great learning attempt i must say
 >>indeed
->>> three points to note are
->>> -it should be precise
->>> -it should be clean
->>> -it should be understandable
->> whats even the use of ***indeed*** here
->at least its a start
+>>> three points to note are.
+>>> -it should be precise.
+>>> -it should be clean.
+>>> -it should be understandable.
+>> whats even the use of ***indeed*** here.
+>at least its a start.
 
 ---
 also adding the fact that you can use.
@@ -23,4 +23,4 @@ also adding the fact that you can use.
 
 also `monospace` code here 
 
-if you have read this far click here to go to my website
+if you have read this far click here to go to my *[website](https://Tanmay-Somani.github.io.)*
