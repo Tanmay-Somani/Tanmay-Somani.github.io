@@ -1,7 +1,5 @@
 # Tanmay-Somani.github.io
 https://Tanmay-Somani.github.io <br />
-<head>
-  <title>Tanmay Somani
-  </title>
-</head>
+Tanmay Somani
+===============
 Copy the above link to be sent to my website
