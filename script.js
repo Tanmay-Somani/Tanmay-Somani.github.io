@@ -18,18 +18,27 @@ $(document).ready(function() {
 
   // Apply color theme to navigation bar
   var colorTheme = {
-    primary: '#F64C72',
-    secondary: '#99738E',
+    primary: '#7C80F2',
+    secondary: '#553D67',
     active: '#2F2FA2'
   };
 
-  $('.navbar').css('background-color', colorTheme.primary);
-  $('.navbar-brand, .navbar-nav .nav-link').css('color', colorTheme.secondary);
-  $('.navbar-toggler').css('border-color', colorTheme.secondary);
-  $('.navbar-toggler-icon').css('background-color', colorTheme.secondary);
-  $('.navbar-nav .nav-link').hover(function() {
-    $(this).css('color', colorTheme.active);
-  }, function() {
-    $(this).css('color', colorTheme.secondary);
+  function applyTheme() {
+    $('.navbar').css('background-color', colorTheme.primary);
+    $('.navbar-brand, .navbar-nav .nav-link').css('color', colorTheme.secondary);
+    $('.navbar-toggler').css('border-color', colorTheme.secondary);
+    $('.navbar-toggler-icon').css('background-color', colorTheme.secondary);
+    $('.navbar-nav .nav-link').hover(function() {
+      $(this).css('color', colorTheme.active);
+    }, function() {
+      $(this).css('color', colorTheme.secondary);
+    });
+  }
+
+  applyTheme();
+
+  $('.navbar-toggler').click(function() {
+    applyTheme();
   });
 });
+

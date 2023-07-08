@@ -11,6 +11,8 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <style>
     /* Color theme */
     :root {
@@ -28,50 +30,51 @@
   <div id="progress-bar"></div>
   <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="me.jpg">
-  <img src="me.jpg" alt="Your Logo" />
-</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Portfolio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <div class="container">
-      <h1>Welcome to Your Portfolio</h1>
-      <p>This is a brief description of your portfolio website.</p>
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="me.jpg" alt="Logo" class="logo-img">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#Home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#About">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#Portfolio">Portfolio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#Contact">Contact</a>
+        </li>
+      </ul>
     </div>
-  </section>
+  </div>
+</nav>
+</header>
 
-  <section class="about">
-    <div class="container">
-      <h2>About Me</h2>
-      <p>This section can contain information about yourself and your skills.</p>
-    </div>
-  </section>
+<section class="hero-section">
+  <div class="container">
+    <h1 id="Home">Tanmay Somani</h1>
+    <p>My work</p>
+  </div>
+</section>
+
+<section class="about">
+  <div class="container">
+    <h2>About Me</h2>
+    <p>As an enthusiastic book lover and avid reader, I thrive in the face of challenging situations. No matter the obstacle, I always find a way to overcome it. My passion for technology drives me to explore new frontiers while also appreciating the value of established domains. I embrace new challenges with fervor, persisting until I triumphantly conquer them.</p>
+  </div>
+</section>
+
 
   <section class="portfolio">
     <div class="container">
-      <h2>Portfolio</h2>
+      <h2 id="Portfolio">Portfolio</h2>
       <div class="gallery">
         <!-- Your portfolio items can go here -->
       </div>
@@ -80,7 +83,7 @@
 
   <section class="contact">
     <div class="container">
-      <h2>Contact Me</h2>
+      <h2 id="Contact">Contact Me</h2>
       <p>You can provide your contact information and a contact form here.</p>
     </div>
   </section>
