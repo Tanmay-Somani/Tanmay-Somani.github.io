@@ -5,6 +5,14 @@ $(document).ready(function() {
     applyTheme();
   });
 
+  // Close menu on outside click
+  $(document).click(function(e) {
+    var target = e.target;
+    if (!$('.navbar-toggler').is(target) && !$('.navbar-collapse').is(target) && $('.navbar-collapse').hasClass('show')) {
+      $('.navbar-toggler').trigger('click');
+    }
+  });
+
   // Smooth scroll to section
   $('a[href^="#"]').click(function(e) {
     e.preventDefault();
@@ -12,7 +20,12 @@ $(document).ready(function() {
     var offset = $(target).offset().top;
     $('html, body').animate({
       scrollTop: offset
-    }, 500);
+    }, 500, function() {
+      // Close menu after scroll on small screens
+      if ($(window).width() < 768) {
+        $('.navbar-toggler').trigger('click');
+      }
+    });
   });
 
   // Apply color theme to navigation bar
@@ -47,7 +60,7 @@ $(document).ready(function() {
     var content = $(this).next();
     $(this).toggleClass('active');
     content.slideToggle();
-    
+
     // Change button text when clicked
     if ($(this).hasClass('active')) {
       $(this).html('<i class="fas fa-chevron-up"></i>'); // Upward arrow icon
