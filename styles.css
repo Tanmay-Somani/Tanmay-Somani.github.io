@@ -482,24 +482,70 @@ html, body {
 }
 
 /*------------------------------------------------------------------------------------------------*/
-/* Contact section */
 .contact {
-  background-color: #2F2FA2;
+  background-color: #F64C72;
   padding: 100px 0;
   text-align: center;
+  color: #FFF;
 }
 
 .contact h2 {
-  color: #F64C72;
+  color: #553D67;
   font-size: 36px;
   margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .contact p {
-  color: #553D67;
+  color: #99738E;
   font-size: 18px;
 }
 
+.collapsible {
+  margin-top: 20px;
+}
+
+.collapsible-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #553D67;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.collapsible-content {
+  display: none;
+}
+
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#contact-form input,
+#contact-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+#contact-form button {
+  background-color: #99738E;
+  color: #FFF;
+  cursor: pointer;
+}
+
+#success-message {
+  margin-top: 20px;
+  display: none;
+}
+
+/*------------------------------------------------------------------------------------------------*/
 #progress-bar {
   position: fixed;
   top: 0;
