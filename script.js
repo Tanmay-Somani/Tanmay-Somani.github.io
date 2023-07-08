@@ -1,10 +1,7 @@
 $(document).ready(function() {
-  // Hamburger menu toggle
   $('.navbar-toggler').click(function() {
     $('.navbar-collapse').toggleClass('show');
   });
-
-  // Smooth scrolling for navigation links
   $('a[href^="#"]').click(function(e) {
     e.preventDefault();
 
@@ -15,14 +12,11 @@ $(document).ready(function() {
       scrollTop: offset
     }, 500);
   });
-
-  // Apply color theme to navigation bar
   var colorTheme = {
     primary: '#7C80F2',
     secondary: '#553D67',
     active: '#2F2FA2'
   };
-
   function applyTheme() {
     $('.navbar').css('background-color', colorTheme.primary);
     $('.navbar-brand, .navbar-nav .nav-link').css('color', colorTheme.secondary);
@@ -34,11 +28,12 @@ $(document).ready(function() {
       $(this).css('color', colorTheme.secondary);
     });
   }
-
   applyTheme();
-
   $('.navbar-toggler').click(function() {
     applyTheme();
   });
+  var currentYear = new Date().getFullYear();
+  var birthYear = 2003;
+  var age = currentYear - birthYear;
+  $('#age').text(age);
 });
-
