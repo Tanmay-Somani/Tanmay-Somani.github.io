@@ -513,10 +513,16 @@ html, body {
   background-color: #553D67;
   color: #FFF;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.collapsible-btn:hover {
+  background-color: #7C80F2;
 }
 
 .collapsible-content {
   display: none;
+  transition: display 0.3s ease;
 }
 
 #contact-form {
@@ -532,6 +538,12 @@ html, body {
   border: none;
   border-radius: 4px;
   font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#contact-form input {
+  background-color: #FFF;
+  color: #553D67;
 }
 
 #contact-form button {
@@ -540,10 +552,50 @@ html, body {
   cursor: pointer;
 }
 
+#contact-form button:hover {
+  background-color: #7C80F2;
+}
+
 #success-message {
   margin-top: 20px;
   display: none;
 }
+
+@media (max-width: 768px) {
+  .contact {
+    padding: 80px 0;
+  }
+  
+  .contact h2 {
+    font-size: 28px;
+  }
+  
+  .contact p {
+    font-size: 16px;
+  }
+  
+  .collapsible-btn {
+    font-size: 14px;
+  }
+  
+  #contact-form input,
+  #contact-form button {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 992px) {
+  .contact h2 {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .contact h2 {
+    font-size: 40px;
+  }
+}
+
 
 /*------------------------------------------------------------------------------------------------*/
 #progress-bar {
