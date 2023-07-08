@@ -1,11 +1,11 @@
 $(document).ready(function() {
-  // Hamburger menu toggle
+  // Navbar toggler
   $('.navbar-toggler').click(function() {
     $('.navbar-collapse').toggleClass('show');
     applyTheme();
   });
 
-  // Smooth scrolling for navigation links
+  // Smooth scroll to section
   $('a[href^="#"]').click(function(e) {
     e.preventDefault();
     var target = $(this).attr('href');
@@ -47,6 +47,13 @@ $(document).ready(function() {
     var content = $(this).next();
     $(this).toggleClass('active');
     content.slideToggle();
+    
+    // Change button text when clicked
+    if ($(this).hasClass('active')) {
+      $(this).html('<i class="fas fa-chevron-up"></i>'); // Upward arrow icon
+    } else {
+      $(this).html('Send me a Message');
+    }
   });
 
   // Form submission
@@ -70,5 +77,14 @@ $(document).ready(function() {
         $('#error-message').show();
       }
     });
+  });
+
+  // Progress bar
+  $(window).scroll(function() {
+    var scrollTop = $(window).scrollTop();
+    var documentHeight = $(document).height();
+    var windowHeight = $(window).height();
+    var scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+    $("#progress-bar").css("width", scrollPercentage + "%");
   });
 });
