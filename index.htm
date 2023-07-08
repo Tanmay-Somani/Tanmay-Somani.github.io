@@ -87,12 +87,33 @@
 </section>
 
 
-  <section class="contact">
-    <div class="container">
-      <h2 id="Contact">Contact Me</h2>
-      <p>You can provide your contact information and a contact form here.</p>
+<section class="contact">
+  <div class="container">
+    <h2 id="Contact">Contact Me</h2>
+    <p>If you wanna reach me.</p>
+    <div class="collapsible">
+      <button type="button" class="collapsible-btn">Send me a Message</button>
+      <div class="collapsible-content">
+        <form id="contact-form" action="contact.php" method="POST">
+  <!-- Your form fields here -->
+  <input type="text" id="name" name="name" placeholder="Your Name" required>
+  <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+  <button type="submit">Thank You</button>
+</form>
+
+        <div id="success-message" style="display: none;">
+  Thank you for your message! We'll be in touch soon.
+</div>
+
+<div id="error-message" style="display: none;">
+  An error occurred. Please try again later.
+</div>
+
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <footer>
     <div class="container">
@@ -100,23 +121,6 @@
     </div>
   </footer>
 
-<script>
-  $(document).ready(function() {
-  $('.navbar-toggler').click(function() {
-    $('.navbar-collapse').toggleClass('show');
-  });
-
-  // Calculate and update progress bar
-  $(window).on('scroll', function() {
-    var windowHeight = $(window).height();
-    var documentHeight = $(document).height();
-    var scrollTop = $(window).scrollTop();
-    var scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
-    $('#progress-bar').css('width', scrollPercent + '%');
-  });
-});
-
-</script>
 </body>
 
 
