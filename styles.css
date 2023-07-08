@@ -374,10 +374,19 @@ body, html {
 /*------------------------------------------------------------------------------------------------*/
 
 
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 .about {
   background-color: #F64C72;
-  padding: 100px 0;
-  text-align: center;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .about h2 {
@@ -421,20 +430,58 @@ body, html {
 
 
 /*------------------------------------------------------------------------------------------------*/
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 
-/* Portfolio section */
 .portfolio {
-  background-color: #99738E;
-  padding: 100px 0;
+  background-color: #553D67;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   text-align: center;
 }
 
 .portfolio h2 {
-  color: #2F2FA2;
+  color: #F64C72;
   font-size: 36px;
   margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.portfolio p {
+  color: #FFF;
+  font-size: 18px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .portfolio h2 {
+    font-size: 28px;
+  }
+
+  .portfolio p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 992px) {
+  .portfolio h2 {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .portfolio h2 {
+    font-size: 34px;
+  }
+}
+
+/*------------------------------------------------------------------------------------------------*/
 /* Contact section */
 .contact {
   background-color: #2F2FA2;
