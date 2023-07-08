@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta http-equiv="content-style-type" content="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hello, this is Tanmay Somani and this is my attempt at creating my own website            resume. Hope you are all along with me on this journey">
+  <title>Tanmay Soman's ThreadScapes</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Color theme */
+    :root {
+      --primary-color: #F64C72;
+      --secondary-color: #99738E;
+      --active-color: #2F2FA2;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <div id="progress-bar"></div>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="me.jpg">
+  <img src="me.jpg" alt="Your Logo" />
+</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Welcome to Your Portfolio</h1>
+      <p>This is a brief description of your portfolio website.</p>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="container">
+      <h2>About Me</h2>
+      <p>This section can contain information about yourself and your skills.</p>
+    </div>
+  </section>
+
+  <section class="portfolio">
+    <div class="container">
+      <h2>Portfolio</h2>
+      <div class="gallery">
+        <!-- Your portfolio items can go here -->
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="container">
+      <h2>Contact Me</h2>
+      <p>You can provide your contact information and a contact form here.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 Your Portfolio. All rights reserved.</p>
+    </div>
+  </footer>
+
+<script>
+  $(document).ready(function() {
+  $('.navbar-toggler').click(function() {
+    $('.navbar-collapse').toggleClass('show');
+  });
+
+  // Calculate and update progress bar
+  $(window).on('scroll', function() {
+    var windowHeight = $(window).height();
+    var documentHeight = $(document).height();
+    var scrollTop = $(window).scrollTop();
+    var scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+    $('#progress-bar').css('width', scrollPercent + '%');
+  });
+});
+
+</script>
+</body>
+
+
+</html>
