@@ -346,7 +346,69 @@ html {
 #progress-bar {
 	animation: wave 2s linear infinite;
 }
+.flex-center {
+	width: 100%;
+	min-height: 5vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  .icon-3d {
+	padding: 10px;
+	width: 50px;
+	height: 50px;
+  }
+  
+  .icon-link {
+	display: inline-block;
+	margin: 1px 15px;
+	transition: transform 200ms ease-in-out;
+  }
+  
+  .icon-link:hover {
+	animation: glitch 1s infinite;
+  }
+  
+  @keyframes glitch {
+	0% {
+	  text-shadow: 5px 4px red, -5px -6px blue;
+	  transform: translate(0);
+	}
+	25% {
+	  text-shadow: -5px -6px red, 5px 4px blue;
+	  transform: translate(2px, -2px);
+	}
+	50% {
+	  text-shadow: 5px -4px red, -8px 4px blue;
+	  transform: translate(-2px, 2px);
+	}
+	75% {
+	  text-shadow: -8px -4px red, -5px -4px blue;
+	  transform: translate(2px, -2px);
+	}
+	100% {
+	  text-shadow: -5px 0 red, 5px -4px blue;
+	  transform: translate(0);
+	}
+  }
 
+  @media (max-width: 768px) {
+	.flex-center {
+	  min-height: 3vh;
+	}
+  
+	.icon-3d {
+	  width: 30px;
+	  height: 30px;
+	}
+  }
+  @media (max-width: 480px) {
+	.icon-3d {
+		width: 26px;
+		height: 26px;
+	}
+  }
 
 footer {
 	background-color: #a05fda;

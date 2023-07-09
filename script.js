@@ -102,3 +102,31 @@ $(document).ready(function () {
     $("#progress-bar").css("width", scrollPercentage + "%");
   });
 });
+
+const icons = document.querySelectorAll('.icon-link');
+
+icons.forEach(icon => {
+  icon.addEventListener('click', () => {
+    const alt = icon.querySelector('img').alt;
+    switch (alt) {
+      case 'Github':
+        window.open('https://github.com/Tanmay-Somani', '_blank');
+        break;
+      case 'Twitter':
+        window.open('https://twitter.com/TSVA0', '_blank');
+        break;
+      case 'Medium':
+        window.open('https://medium.com/@tanmaysomani2003', '_blank');
+        break;
+      case 'Gmail':
+        window.open('mailto:tanmaysomani2003@gmail.com', '_blank');
+        break;
+      case 'LinkedIn':
+        window.open('https://www.linkedin.com/in/tcode/', '_blank');
+        break;
+      default:
+        break;
+    }
+  });
+});
+
