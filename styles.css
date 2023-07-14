@@ -4,16 +4,17 @@ body {
 	padding: 0;
 	background-color: #1c0433;
 	color: #f5376a;
-  }
-  .navbar {
+}
+
+.navbar {
 	position: sticky;
 	top: 0;
-	background-color: #ffccda !important;
+	background-color: black !important;
 	color: #fff;
 	z-index: 9999;
-	padding: 20px;
-  }
-  .hero-section {
+}
+
+.hero-section {
 	position: relative;
 	background-color: #2c0749;
 	height: 90vh;
@@ -22,73 +23,47 @@ body {
 	align-items: flex-end;
 	padding: 20px;
 	transform-origin: bottom left;
-  }
-  
-  .hero-section .container {
-	max-width: 100%; 
+}
+
+.hero-section .container {
+	max-width: 100%;
 	margin: 0 auto;
-  }
-  
-  .hero-section h1 {
+}
+
+.hero-section h1 {
 	font-size: 10vw;
-	margin: 0; 	
-  }
-  .hero-section p {
-	font-size: 5vw; 	
-	margin: 0;	
-  }
-  
-/*--------------------------------------*/
-  .about {
+	margin: 0;
+}
+
+.hero-section p {
+	font-size: 5vw;
+	margin: 0;
+}
+
+.about {
 	background-color: #f5376a;
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	padding: 80px 0
-  }
-  
-  .about h2 {
+	padding: 80px 0;
+}
+
+.about h2 {
 	color: #553d67;
 	font-size: 46px;
 	margin: 0;
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-  
-  .about p {
+}
+
+.about p {
 	color: #553d67;
 	font-size: 18px;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  }
-  
-  @media (max-width: 768px) {
-	.about {
-	  padding: 80px 0;
-	}
-  
-	.about h2 {
-	  font-size: 32px;
-	}
-  
-	.about p {
-	  font-size: 16px;
-	}
-  }
-  
-  @media (min-width: 769px) and (max-width: 1199px) {
-	.about {
-	  justify-content: center;
-	}
-  }
-  
-  @media (min-width: 1200px) {
-	.about {
-	  justify-content: center;
-	}
-  }
-  
-  .portfolio {
+}
+
+.portfolio {
 	background-color: #2c0749;
 	height: 100vh;
 	display: flex;
@@ -97,67 +72,45 @@ body {
 	flex-direction: column;
 	text-align: center;
 	padding: 80px 0;
-  }
-  
-  .portfolio h2 {
+}
+
+.portfolio h2 {
 	color: df0640;
 	font-size: 36px;
 	margin: 0;
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-  
-  .portfolio p {
+}
+
+.portfolio p {
 	color: #fff;
 	font-size: 18px;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  }
-  
-  @media (max-width: 768px) {
-	.portfolio h2 {
-	  font-size: 28px;
-	}
-  
-	.portfolio p {
-	  font-size: 16px;
-	}
-  }
-  
-  @media (max-width: 992px) {
-	.portfolio h2 {
-	  font-size: 32px;
-	}
-  }
-  
-  @media (max-width: 1200px) {
-	.portfolio h2 {
-	  font-size: 34px;
-	}
-  }
-  
-  .contact {
+}
+
+.contact {
 	background-color: #f5376a;
 	padding: 100px 0;
 	text-align: center;
 	color: #fff;
-  }
-  
-  .contact h2 {
+}
+
+.contact h2 {
 	color: #553d67;
 	font-size: 36px;
 	margin: 0;
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-  
-  .contact p {
+}
+
+.contact p {
 	color: #99738e;
 	font-size: 18px;
-  }
-  
-  .collapsible {
+}
+
+.collapsible {
 	margin-top: 20px;
-  }
-  
-  .collapsible-btn {
+}
+
+.collapsible-btn {
 	padding: 10px 20px;
 	border: none;
 	border-radius: 4px;
@@ -166,89 +119,54 @@ body {
 	color: #fff;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
-  }
-  
-  .collapsible-btn:hover {
+}
+
+.collapsible-btn:hover {
 	background-color: #2c0749;
-  }
-  
-  .collapsible-content {
+}
+
+.collapsible-content {
 	display: none;
 	transition: display 0.3s ease;
-  }
-  
-  #contact-form {
+}
+
+#contact-form {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 	margin-top: 20px;
-  }
-  
-  #contact-form input,
-  #contact-form button {
+}
+
+#contact-form input,
+#contact-form button {
 	padding: 10px 20px;
 	border: none;
 	border-radius: 4px;
 	font-size: 16px;
 	transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  #contact-form input {
+}
+
+#contact-form input {
 	background-color: #fff;
 	color: #553d67;
-  }
-  
-  #contact-form button {
+}
+
+#contact-form button {
 	background-color: #99738e;
 	color: #fff;
 	cursor: pointer;
-  }
-  
-  #contact-form button:hover {
+}
+
+#contact-form button:hover {
 	background-color: #2c0749;
-  }
-  
-  #success-message {
+}
+
+#success-message {
 	margin-top: 20px;
 	display: none;
-  }
-  
-  @media (max-width: 768px) {
-	.contact {
-	  padding: 80px 0;
-	}
-  
-	.contact h2 {
-	  font-size: 28px;
-	}
-  
-	.contact p {
-	  font-size: 16px;
-	}
-  
-	.collapsible-btn {
-	  font-size: 14px;
-	}
-  
-	#contact-form input,
-	#contact-form button {
-	  font-size: 14px;
-	}
-  }
-  
-  @media (max-width: 992px) {
-	.contact h2 {
-	  font-size: 32px;
-	}
-  }
-  
-  @media (min-width: 1200px) {
-	.contact h2 {
-	  font-size: 40px;
-	}
-  }
-  
-  #progress-bar {
+}
+
+#progress-bar {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -259,95 +177,63 @@ body {
 	transition: width 0.3s ease;
 	animation: linear;
 	border-radius: 60px;
-  }
-  
-  @keyframes wave {
-	0% {
-	  border-radius: 50px;
-	}
-  
-	50% {
-	  border-radius: 10px;
-	}
-  
-	100% {
-	  border-radius: 50px;
-	}
-  }
-  
-  .flex-center {
+}
+
+.flex-center {
 	width: 100%;
 	min-height: 5vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-  }
-  
-  .icon-3d {
+}
+
+.icon-3d {
 	padding: 10px;
 	width: 50px;
 	height: 50px;
-  }
-  
-  .icon-link {
+}
+
+.icon-link {
 	display: inline-block;
 	margin: 1px 15px;
 	transition: transform 200ms ease-in-out;
-  }
-  
-  .icon-link:hover .icon-3d {
+	position: relative;
+}
+
+.icon-link:hover .icon-3d {
 	animation: glitch 1s infinite;
-  }
-  
-  @keyframes glitch {
+}
+
+@keyframes glitch {
 	0% {
-	  text-shadow: 5px 4px red, -5px -6px blue;
-	  transform: translate(0);
+		text-shadow: none;
+		transform: translate(0);
 	}
-  
+
 	25% {
-	  text-shadow: -5px -6px red, 5px 4px blue;
-	  transform: translate(2px, -2px);
+		text-shadow: 5px 4px red, -5px -6px blue;
+		transform: translate(2px, -2px);
 	}
-  
+
 	50% {
-	  text-shadow: 5px -4px red, -8px 4px blue;
-	  transform: translate(-2px, 2px);
+		text-shadow: -5px -6px red, 5px 4px blue;
+		transform: translate(-2px, 2px);
 	}
-  
+
 	75% {
-	  text-shadow: -8px -4px red, -5px -4px blue;
-	  transform: translate(2px, -2px);
+		text-shadow: 5px -4px red, -8px 4px blue;
+		transform: translate(2px, -2px);
 	}
-  
+
 	100% {
-	  text-shadow: -5px 0 red, 5px -4px blue;
-	  transform: translate(0);
+		text-shadow: -5px 0 red, 5px -4px blue;
+		transform: translate(0);
 	}
-  }
-  
-  @media (max-width: 768px) {
-	.flex-center {
-	  min-height: 3vh;
-	}
-  
-	.icon-3d {
-	  width: 30px;
-	  height: 30px;
-	}
-  }
-  
-  @media (max-width: 480px) {
-	.icon-3d {
-	  width: 26px;
-	  height: 26px;
-	}
-  }
-  
-  footer {
+}
+
+footer {
 	background-color: #ffccda;
 	padding: 5px 0;
 	text-align: center;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
-  
+}
