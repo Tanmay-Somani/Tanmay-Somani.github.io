@@ -1,3 +1,5 @@
+html{scroll-behavior: smooth;
+}
 body {
 	font-family: 'Comfortaa', cursive;
 	margin: 0;
@@ -13,31 +15,43 @@ body {
 	color: #fff;
 	z-index: 9999;
 	box-shadow: -1px 7px 21px rgba(10, 11, 10, 0.5);
+
 }
 .hero-section {
 	position: relative;
 	background-color: #3aa38e;
 	height: 90vh;
 	display: flex;
-	justify-content: flex-start;
 	align-items: flex-end;
-	padding: 20px;
-	transform-origin: bottom left;
-}
-
-.hero-section .container {
+	justify-content: flex-start; 
+	padding: 10px;
 	max-width: 100%;
 	margin: 0 auto;
 }
 
-.hero-section h1 {
+.hero-section h1,
+.hero-section p {
 	font-size: 10vw;
 	margin: 0;
+	opacity: 0;
+	transform: translateY(20px);
+	animation: fadeUp 2s forwards;
+	will-change: opacity, transform;
 }
 
 .hero-section p {
 	font-size: 5vw;
-	margin: 0;
+}
+
+@keyframes fadeUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .about {
@@ -163,9 +177,16 @@ body {
 	background-color: #3aa38e;
 }
 
+#success-message,
+#error-message {
+  margin-top: 10px;
+  text-align: center;
+}
 #success-message {
-	margin-top: 20px;
-	display: none;
+  color: green;
+}
+#error-message {
+  color: red;
 }
 
 #progress-bar {
