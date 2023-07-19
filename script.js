@@ -1,34 +1,16 @@
 $(document).ready(function() {
     const colors = {
-      primary: "#7C80F2",
+      primary: "#eff203",
       secondary: "#553D67",
       active: "#2F2FA2",
     };
   
     function toggleNavbarColors() {
-      $(".navbar").css({
-        backgroundColor: colors.primary,
+      $(".navbar-toggler").click(function () {
+        $(".navbar-collapse").toggleClass("show");
       });
-      $(".navbar-brand, .navbar-nav .nav-link").css({
-        color: colors.secondary,
-      });
-      $(".navbar-toggler").css({
-        borderColor: colors.secondary,
-      });
-      $(".navbar-toggler-icon").css({
-        backgroundColor: colors.secondary,
-      });
-  
-      $(".navbar-nav .nav-link").hover(
-        function() {
-          $(this).css("color", colors.active);
-        },
-        function() {
-          $(this).css("color", colors.secondary);
-        }
-      );
     }
-  
+
     function scrollSmoothTo(target) {
       $("html, body").animate(
         {

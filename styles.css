@@ -1,5 +1,6 @@
-html{scroll-behavior: smooth;
-}
+ html{
+	scroll-behavior: snap;
+} 
 body {
 	font-family: 'Comfortaa', cursive;
 	margin: 0;
@@ -9,24 +10,24 @@ body {
 }
 
 .navbar {
-	position: relative;
 	top: 0;
-	background-color: #0bcbcb!important;
+	height:7vh;	
+	position:sticky;
+	background-color: #0bcbcb !important;	
 	color: #fff;
-	z-index: 9999;
-	box-shadow: -1px 7px 21px rgba(10, 11, 10, 0.5);
-
+	z-index: 999;
+	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
 }
+
 .hero-section {
-	position: relative;
 	background-color: #3aa38e;
 	height: 90vh;
-	display: flex;
-	align-items: flex-end;
-	justify-content: flex-start; 
 	padding: 10px;
 	max-width: 100%;
 	margin: 0 auto;
+	display: flex;
+	justify-content: flex-start; 
+	align-items: flex-end;
 }
 
 .hero-section h1,
@@ -37,6 +38,7 @@ body {
 	transform: translateY(20px);
 	animation: fadeUp 2s forwards;
 	will-change: opacity, transform;
+	text-align: left;
 }
 
 .hero-section p {
@@ -50,9 +52,10 @@ body {
 	}
 	to {
 		opacity: 1;
-		transform: translateY(0);
+		transform: translate(0);
 	}
 }
+
 
 .about {
 	background-color: #FFA69E;
@@ -138,9 +141,12 @@ body {
 }
 
 .collapsible-btn:hover {
-	background-color: #3aa38e;
-}
+	background-color:#3aa38e;
 
+}
+.contact .collapsible-btn:hover {
+      background-color: #46157f8b;
+}
 .collapsible-content {
 	display: none;
 	transition: display 0.3s ease;
