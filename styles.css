@@ -194,7 +194,9 @@ body {
 #error-message {
   color: red;
 }
-
+#progress-container {
+	height: 5px;
+}
 #progress-bar {
 	position: fixed;
 	top: 0;
