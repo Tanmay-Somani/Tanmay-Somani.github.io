@@ -9,6 +9,6 @@
 
 <br>
 
-Need help in the Github actions section.
+Need help in the GitHub actions section.
 
 <br>
