@@ -7,8 +7,6 @@
 <hr>
 <br>
 <hr>
-<br>
-<hr>
 Need help in the GitHub actions section.
 <br>
 <hr>
