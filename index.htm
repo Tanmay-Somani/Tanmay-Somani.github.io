@@ -398,7 +398,9 @@
         </div>
     </div>
 </section>
-
+<section>
+    <div id="github-activity"></div>
+</section>
 <section id="tech-stack" class="section bg-light">
     <div class="container">
         <h2 class="mb-5 text-center fade-in">Tech Stack</h2>
@@ -407,24 +409,24 @@
         </div>
     </div>
 </section>
-
 <section id="contact" class="section">
     <div class="container">
         <h2 class="mb-5 text-center fade-in">Contact Me</h2>
-        <form action="https://formspree.io/f/xeoqjbpk" method="POST" id="contact-form" class="fade-in">
+        <form action="https://formspree.io/f/xeoqjbpk" method="POST" id="contact-form" class="fade-in" target="_blank">
             <div class="mb-3">
-                <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
             </div>
             <div class="mb-3">
-                <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                <input type="email" name="_replyto" class="form-control" id="email" placeholder="Your Email" required>
             </div>
             <div class="mb-3">
-                <textarea class="form-control" id="message" rows="3" placeholder="Your Message" required></textarea>
+                <textarea name="message" class="form-control" id="message" rows="3" placeholder="Your Message" required></textarea>
             </div>
             <button type="submit" class="btn btn-lg w-100">Send Message</button>
         </form>
     </div>
 </section>
+
 <div>
     <a href="https://topmate.io/embed/profile/tanmay_somani?theme=D5534D" class="topmate-button" target="_blank">Connect with me on Topmate</a>
 </div>
@@ -479,13 +481,36 @@
             }
         });
 
-        // Form submission
-        $('#contact-form').submit(function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We\'ll be in touch soon.');
-            this.reset();
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contact-form');
 
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                alert('Thank you for your message! I\'ll get back to you soon.');
+                form.reset();
+            } else {
+                alert('Oops! There was a problem submitting your form. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Oops! There was a problem submitting your form. Please try again.');
+        });
+    });
+});
         // Navbar shrink on scroll
         $(window).scroll(function() {
             if ($(document).scrollTop() > 50) {
