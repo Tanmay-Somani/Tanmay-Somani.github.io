@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AIM Technocrats 2023 - Tailored Business Solutions and Consulting Services">
+    <meta name="keywords" content="AIM Technocrats, Consulting, Data Science, Business Solutions, Innovation">
+    <meta name="author" content="AIM Technocrats">
+    <title>AIM Technocrats 2023</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #004b8d;
+            --secondary-color: #f39c12;
+            --accent-color: #1abc9c;
+            --background-light: #f8f9fa;
+            --background-dark: #2c3e50;
+            --text-light: #ffffff;
+            --text-dark: #34495e;
+        }
+        body {
+            font-family: 'Comfortaa', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-light);
+        }
+        .navbar {
+            background-color: var(--primary-color);
+        }
+        .navbar .nav-link {
+            color: white !important;
+        }
+        .hero-section {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 8rem 1rem;
+        }
+        .hero-section h1 {
+            font-size: 2.5rem;
+            animation: fadeIn 2s;
+        }
+        .hero-section p {
+            font-size: 1.25rem;
+            animation: fadeIn 3s;
+        }
+        .section {
+            padding: 4rem 1rem;
+            animation: slideUp 1.5s ease-in-out;
+        }
+        .services-card {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: scaleUp 0.8s;
+        }
+        .services-card:hover {
+            transform: scale(1.1);
+            transition: all 0.3s ease-in-out;
+        }
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        #theme-toggle {
+            border: none;
+            background: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .dark-mode #theme-toggle {
+            color: var(--text-dark);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes scaleUp {
+            from { transform: scale(0.9); }
+            to { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand text-light" href="#">AIM Technocrats 2023</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <h1>Empowering Businesses with Data-Driven Solutions</h1>
+        <p>We provide consulting services that blend business insights with data science to drive innovation and success.</p>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="section">
+    <div class="container">
+        <h2>About Us</h2>
+        <p>AIM Technocrats is a leading consulting firm, offering customized solutions that enhance business processes through data-driven strategies. Our team helps businesses foster innovation, improve efficiency, and achieve sustainable growth.</p>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="section bg-light">
+    <div class="container">
+        <h2>Our Services</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="services-card">
+                    <h3>Data Science Consulting</h3>
+                    <p>Leverage data to make informed business decisions and optimize operations for better results.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <h3>Business Process Optimization</h3>
+                    <p>We streamline processes, helping businesses become more efficient and productive.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <h3>Innovation Strategy</h3>
+                    <p>Our strategies help businesses stay ahead with cutting-edge innovations tailored to their needs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="section">
+    <div class="container">
+        <h2>Contact Us</h2>
+        <form>
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Your Name" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Your Email" required>
+            </div>
+            <div class="mb-3">
+                <textarea class="form-control" rows="3" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+    </div>
+    <p>&copy; 2023 AIM Technocrats. All Rights Reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const toggleButton = document.getElementById('theme-toggle');
+    toggleButton.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const icon = toggleButton.querySelector('i');
+        icon.classList.toggle('fa-moon');
+        icon.classList.toggle('fa-sun');
+    });
+</script>
+</body>
+</html>
