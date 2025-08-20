@@ -98,21 +98,40 @@
             transform: none;
             box-shadow: none;
         }
+
+        /* IMPROVEMENT: Hero section adjusted for better visual impact */
         .hero-section {
             background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
             color: var(--text-light);
             text-align: center;
-            padding: 16rem 2rem; /* Adjusted padding */
+            padding: 14rem 2rem; /* Reduced padding slightly for better balance */
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Ensures it takes up the full screen height */
         }
         .hero-content {
             position: relative;
             z-index: 1;
         }
-        .section {
-            padding: 6rem 0;
+        /* IMPROVEMENT: Made the main heading much larger for better hierarchy */
+        .hero-section h1 {
+            font-size: clamp(3rem, 10vw, 5.5rem); /* Fluid typography for responsiveness */
         }
+
+        /* IMPROVEMENT: Increased section padding for more white space */
+        .section {
+            padding: 8rem 0; /* Increased from 6rem */
+        }
+
+        /* IMPROVEMENT: Made section titles larger and bolder */
+        .section h2 {
+            font-weight: 700;
+            font-size: clamp(2.2rem, 5vw, 3rem); /* Fluid and responsive font size */
+        }
+
         .project-card {
             background-color: var(--accent-color);
             color: var(--text-dark);
@@ -333,10 +352,32 @@
         .container a:hover {
             color: #6c68ef;
         }
+
+        /* IMPROVEMENT: New styles for the 'About Me' section image */
+        .profile-picture {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 2rem;
+            border: 5px solid var(--accent-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        body.dark-mode .profile-picture {
+             border-color: var(--secondary-color);
+        }
+
+        /* IMPROVEMENT: Better mobile optimization */
         @media (max-width: 768px) {
             .navbar { padding: 0.5rem 1rem; }
             .navbar-shrink { padding: 0.4rem 1rem; }
-            .hero-section { padding: 12rem 1rem 3rem; }
+            .hero-section { 
+                padding: 10rem 1rem; /* Reduced padding on mobile */
+                min-height: 70vh; /* Adjust height on smaller screens */
+            }
+            .section {
+                padding: 4rem 0; /* Reduced section padding on mobile */
+            }
             .topmate-button { width: 160px; font-size: 14px; bottom: 15px; right: 15px; }
             .scroll-to-top { bottom: 15px; right: 15px; z-index: 1000; } /* Keep it under topmate button */
             .topmate-button { bottom: 65px; } /* Stack topmate above scroll-to-top */
@@ -376,17 +417,27 @@
         <a href="#portfolio" class="btn btn-lg fade-in">View My Work</a>
     </div>
 </section>
+
+<!-- IMPROVEMENT: Rewritten 'About Me' section for better engagement -->
 <section id="about" class="section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
+                <img src="https://via.placeholder.com/180" alt="A professional headshot of Tanmay Somani" class="profile-picture fade-in">
+                <!-- NOTE: Replace the 'src' above with a link to your actual photo! -->
                 <h2 class="mb-4 fade-in">About Me</h2>
-                <p class="fade-in">As an enthusiastic data scientist and avid learner, I thrive in challenging situations. My passion for technology and data-driven solutions drives me to explore new frontiers while also appreciating the value of established methodologies. I embrace new challenges with fervor, persisting until I triumphantly conquer them.</p>
+                <p class="fade-in">
+                    My journey into data science began with a fascination for uncovering the stories hidden within data. I thrive on a challenge, whether it's building a predictive model from scratch or developing an AI-powered system that automates complex tasks. For me, data is a tool for problem-solving and innovation.
+                </p>
+                <p class="fade-in">
+                    My goal is to leverage my skills in machine learning and data analysis to build intelligent, efficient, and impactful solutions. When I'm not coding, you can find me exploring the latest advancements in AI or contributing to open-source projects.
+                </p>
                 <a href="https://github.com/Tanmay-Somani/Tanmay-Somani.github.io/blob/main/assets/TanmaySomaniResume.pdf" class="btn btn-primary mt-3 fade-in" download>Download Resume</a>
             </div>
         </div>
     </div>
 </section>
+
 <section id="portfolio" class="section bg-light">
     <div class="container">
         <h2 class="mb-5 text-center fade-in">Portfolio</h2>
@@ -749,4 +800,3 @@ document.addEventListener('DOMContentLoaded', fetchPosts);
 </script>
 </body>
 </html>
-
