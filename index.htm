@@ -42,6 +42,50 @@
             --success-color: #28a745;
             --error-color: #dc3545;
         }
+
+        /* --- ACCENT THEME PALETTES --- */
+        [data-accent-theme="theme-green"] {
+            --primary-color: #00695C;
+            --secondary-color: #4DB6AC;
+            --accent-color: #B2DFDB;
+            --card-light: #B2DFDB;
+            --card-dark: #004D40;
+        }
+
+        [data-accent-theme="theme-orange"] {
+            --primary-color: #E65100;
+            --secondary-color: #FB8C00;
+            --accent-color: #FFCC80;
+            --card-light: #FFCC80;
+            --card-dark: #BF360C;
+        }
+
+        /* --- NEW THEMES ADDED BELOW --- */
+        [data-accent-theme="theme-cyber"] {
+            --primary-color: #6A1B9A;   /* Deep Purple */
+            --secondary-color: #EC407A;  /* Hot Pink */
+            --accent-color: #F48FB1;    /* Light Pink */
+            --card-light: #F48FB1;
+            --card-dark: #4A148C;      /* Very Deep Purple */
+        }
+
+        [data-accent-theme="theme-forest"] {
+            --primary-color: #2E7D32;   /* Forest Green */
+            --secondary-color: #66BB6A;  /* Medium Green */
+            --accent-color: #C5E1A5;    /* Light Sage */
+            --card-light: #C5E1A5;
+            --card-dark: #1B5E20;      /* Dark Forest Green */
+        }
+
+        [data-accent-theme="theme-ocean"] {
+            --primary-color: #0277BD;   /* Deep Blue */
+            --secondary-color: #26C6DA;  /* Cyan */
+            --accent-color: #B3E5FC;    /* Sky Blue */
+            --card-light: #B3E5FC;
+            --card-dark: #01579B;      /* Navy Blue */
+        }
+
+
         body {
             font-family: 'Comfortaa', sans-serif;
             line-height: 1.9;
@@ -61,11 +105,10 @@
         body.dark-mode #tech-stack {
             background-color: var(--background-dark) !important;
         }
-        /* --- Smoother Transitions --- */
         .navbar {
             background-color: var(--primary-color);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 1rem 4rem; /* Use consistent padding */
+            padding: 1rem 4rem;
             position: fixed;
             width: 100%;
             z-index: 1000;
@@ -78,7 +121,7 @@
             background-color: var(--secondary-color);
             border: none;
             color: var(--text-light);
-            padding: 0.75rem 1.5rem; /* Slightly larger for better clickability */
+            padding: 0.75rem 1.5rem;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -98,40 +141,32 @@
             transform: none;
             box-shadow: none;
         }
-
-        /* IMPROVEMENT: Hero section adjusted for better visual impact */
         .hero-section {
             background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
             color: var(--text-light);
             text-align: center;
-            padding: 14rem 2rem; /* Reduced padding slightly for better balance */
+            padding: 14rem 2rem;
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh; /* Ensures it takes up the full screen height */
+            min-height: 100vh;
         }
         .hero-content {
             position: relative;
             z-index: 1;
         }
-        /* IMPROVEMENT: Made the main heading much larger for better hierarchy */
         .hero-section h1 {
-            font-size: clamp(3rem, 10vw, 5.5rem); /* Fluid typography for responsiveness */
+            font-size: clamp(3rem, 10vw, 5.5rem);
         }
-
-        /* IMPROVEMENT: Increased section padding for more white space */
         .section {
-            padding: 8rem 0; /* Increased from 6rem */
+            padding: 8rem 0;
         }
-
-        /* IMPROVEMENT: Made section titles larger and bolder */
         .section h2 {
             font-weight: 700;
-            font-size: clamp(2.2rem, 5vw, 3rem); /* Fluid and responsive font size */
+            font-size: clamp(2.2rem, 5vw, 3rem);
         }
-
         .project-card {
             background-color: var(--accent-color);
             color: var(--text-dark);
@@ -139,13 +174,13 @@
             padding: 1.5rem;
             margin-bottom: 2rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            height: 100%; /* Ensures cards in a row are the same height */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            height: 100%;
             display: flex;
             flex-direction: column;
         }
         .project-card p {
-            flex-grow: 1; /* Pushes the button to the bottom */
+            flex-grow: 1;
         }
         body.dark-mode .project-card {
             background-color: var(--card-dark);
@@ -153,7 +188,7 @@
         }
         .project-card:hover {
             transform: translateY(-7px) scale(1.02);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         .icon-link {
             display: inline-block;
@@ -190,7 +225,7 @@
             border-radius: 8px;
             padding: 20px;
             margin: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -238,7 +273,7 @@
             cursor: pointer;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             z-index: 999;
         }
@@ -252,7 +287,6 @@
             transform: translateY(-3px) scale(1.1);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        /* --- Responsive Contact Form --- */
         #contact-form-container {
             max-width: 700px;
             margin: 0 auto;
@@ -285,7 +319,7 @@
             margin-top: 1rem;
             padding: 1rem;
             border-radius: 5px;
-            display: none; /* Hidden by default */
+            display: none;
             font-weight: 500;
         }
         #form-status.success {
@@ -296,8 +330,7 @@
             background-color: var(--error-color);
             color: var(--text-light);
         }
-        /* --- Theme Toggle Button --- */
-        #theme-toggle {
+        #theme-toggle, #accent-toggle {
             border: 2px solid var(--text-light);
             background-color: transparent;
             color: var(--text-light);
@@ -306,21 +339,21 @@
             border-radius: 50%;
             padding: 0;
         }
-        #theme-toggle:hover {
+        #theme-toggle:hover, #accent-toggle:hover {
             background-color: var(--text-light);
             color: var(--primary-color);
         }
-        body.dark-mode #theme-toggle {
+        body.dark-mode #theme-toggle, body.dark-mode #accent-toggle {
             border-color: var(--text-light);
             color: var(--text-light);
         }
-        body.dark-mode #theme-toggle:hover {
+        body.dark-mode #theme-toggle:hover, body.dark-mode #accent-toggle:hover {
             background-color: var(--text-light);
             color: var(--primary-color);
         }
         .carousel-item {
-        padding: 20px;
-        text-align: center;
+            padding: 20px;
+            text-align: center;
         }
         .topmate-button {
             background-color: var(--secondary-color) ;
@@ -335,8 +368,8 @@
             right: 30px;
             width: 200px;
             text-align: center;
-            border-radius: 25px; /* Rounded corners */
-            z-index: 1001; /* Above scroll-to-top */
+            border-radius: 25px;
+            z-index: 1001;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
         .topmate-button:hover {
@@ -352,8 +385,6 @@
         .container a:hover {
             color: #6c68ef;
         }
-
-        /* IMPROVEMENT: New styles for the 'About Me' section image */
         .profile-picture {
             width: 180px;
             height: 180px;
@@ -367,20 +398,35 @@
              border-color: var(--secondary-color);
         }
 
-        /* IMPROVEMENT: Better mobile optimization */
         @media (max-width: 768px) {
             .navbar { padding: 0.5rem 1rem; }
             .navbar-shrink { padding: 0.4rem 1rem; }
             .hero-section { 
-                padding: 10rem 1rem; /* Reduced padding on mobile */
-                min-height: 70vh; /* Adjust height on smaller screens */
+                padding: 10rem 1rem;
+                min-height: 70vh;
             }
             .section {
-                padding: 4rem 0; /* Reduced section padding on mobile */
+                padding: 4rem 1.5rem;
             }
+            .project-card {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            .project-card h3 {
+                font-size: 1.15rem;
+            }
+            .project-card p {
+                font-size: 0.85rem;
+                line-height: 1.7;
+            }
+            .project-card .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
             .topmate-button { width: 160px; font-size: 14px; bottom: 15px; right: 15px; }
-            .scroll-to-top { bottom: 15px; right: 15px; z-index: 1000; } /* Keep it under topmate button */
-            .topmate-button { bottom: 65px; } /* Stack topmate above scroll-to-top */
+            .scroll-to-top { bottom: 15px; right: 15px; z-index: 1000; }
+            .topmate-button { bottom: 65px; }
         }
         .fade-in {
             opacity: 0;
@@ -393,21 +439,20 @@
         }
     </style>
 </head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TZDBY4P7B1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-TZDBY4P7B1');
-</script>
 <body>
 <nav class="navbar">
-    <div class="container-fluid d-flex justify-content-between align-items-center"> <!-- Use container-fluid for full width -->
+    <div class="container-fluid d-flex justify-content-between align-items-center">
         <a href="https://github.com/Tanmay-Somani/Tanmay-Somani.github.io" target="_blank" class="navbar-brand text-light">TS</a>
-        <button id="theme-toggle" class="btn" aria-label="Toggle dark mode">
-            <i class="fas fa-sun"></i>
-        </button>
+        
+        <div class="d-flex">
+            <button id="theme-toggle" class="btn" aria-label="Toggle dark mode">
+                <i class="fas fa-sun"></i>
+            </button>
+            <button id="accent-toggle" class="btn ms-2" aria-label="Change accent color">
+                <i class="fas fa-paint-brush"></i>
+            </button>
+        </div>
+
     </div>
 </nav>
 <section id="home" class="hero-section">
@@ -418,13 +463,11 @@
     </div>
 </section>
 
-<!-- IMPROVEMENT: Rewritten 'About Me' section for better engagement -->
 <section id="about" class="section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
                 <img src="https://via.placeholder.com/180" alt="A professional headshot of Tanmay Somani" class="profile-picture fade-in">
-                <!-- NOTE: Replace the 'src' above with a link to your actual photo! -->
                 <h2 class="mb-4 fade-in">About Me</h2>
                 <p class="fade-in">
                     My journey into data science began with a fascination for uncovering the stories hidden within data. I thrive on a challenge, whether it's building a predictive model from scratch or developing an AI-powered system that automates complex tasks. For me, data is a tool for problem-solving and innovation.
@@ -442,6 +485,7 @@
     <div class="container">
         <h2 class="mb-5 text-center fade-in">Portfolio</h2>
         <div class="row">
+            <!-- Project 1 -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="project-card fade-in">
                     <h3>Book Recommender System</h3>
@@ -449,13 +493,15 @@
                     <a href="https://github.com/WittyhacksCR004/WH020_Linktree" class="btn mt-auto">View Project</a>
                 </div>
             </div>
+            <!-- Project 2 -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="project-card fade-in">
-                    <h3>Facial Recognition Attendance System</h3>
+                    <h3>Facial Recognition Attendance</h3>
                     <p>Developed a machine learning-based attendance system using facial recognition, automating attendance tracking with real-time image processing for accurate management.</p>
                     <a href="https://github.com/Tanmay-Somani/Basic_Face_Detection_Model" class="btn mt-auto">View Project</a>
                 </div>
             </div>
+            <!-- Project 3 -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="project-card fade-in">
                     <h3>Weight Journal and Dashboard</h3>
@@ -463,6 +509,7 @@
                     <a href="https://github.com/Tanmay-Somani/Weight_ml" class="btn mt-auto">View Project</a>
                 </div>
             </div>
+            <!-- Project 4 -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="project-card fade-in">
                     <h3>Stock Analysis Prediction</h3>
@@ -470,23 +517,52 @@
                     <a href="https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization" class="btn mt-auto">View Project</a>
                 </div>
             </div>
+            <!-- Project 5 -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="project-card fade-in">
-                    <h3>Snake Game Using Reinforcement Learning</h3>
+                    <h3>Snake Game AI Agent</h3>
                     <p>Designed a Snake Game powered by reinforcement learning, utilizing Double Deep Q-Learning to train the agent for optimal gameplay and strategic decision-making.</p>
-                    <button class="btn mt-auto" disabled>Project in Progress</button>
+                    <button class="btn mt-auto" disabled>In Progress</button>
                 </div>
             </div>
-             <div class="col-md-6 col-lg-4 mb-4">
+             <!-- Project 6 -->
+            <div class="col-md-6 col-lg-4 mb-4">
                 <div class="project-card fade-in">
                     <h3>FACT: AI Content Predictor</h3>
-                    <p>FACT (Fake AI Content Tracker) is a web application that helps users detect AI-generated content in text, images, and audio. It utilizes machine learning models to classify input content as AI-generated or real.</p>
+                    <p>A web application that helps users detect AI-generated content in text, images, and audio. It utilizes machine learning models to classify input as AI-generated or real.</p>
                     <a href="https://fact-wku3.onrender.com/" class="btn mt-auto">Check Project</a>
                 </div>
             </div>
+            
+            <!-- Project 7 (Placeholder) -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="project-card fade-in">
+                    <h3>Placeholder Project Title 7</h3>
+                    <p>This is a placeholder description. Describe your project here, focusing on the problem you solved, the technologies you used, and the outcome.</p>
+                    <a href="#" class="btn mt-auto">View Project</a>
+                </div>
+            </div>
+            <!-- Project 8 (Placeholder) -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="project-card fade-in">
+                    <h3>Placeholder Project Title 8</h3>
+                    <p>This is a placeholder description. Describe your project here, focusing on the problem you solved, the technologies you used, and the outcome.</p>
+                    <a href="#" class="btn mt-auto">View Project</a>
+                </div>
+            </div>
+            <!-- Project 9 (Placeholder) -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="project-card fade-in">
+                    <h3>Placeholder Project Title 9</h3>
+                    <p>This is a placeholder description. Describe your project here, focusing on the problem you solved, the technologies you used, and the outcome.</p>
+                    <a href="#" class="btn mt-auto">View Project</a>
+                </div>
+            </div>
+            
         </div>
     </div>
 </section>
+
 <section id="latest-posts" class="section bg-light">
     <div class="container">
         <h2 class="mb-5 text-center fade-in">Latest Posts</h2>
@@ -585,7 +661,6 @@ $(document).ready(function() {
         $('body').toggleClass('dark-mode');
         const isDarkMode = $('body').hasClass('dark-mode');
         $(this).find('i').toggleClass('fa-sun fa-moon');
-        // Optional: save theme preference to localStorage
         localStorage.setItem('darkMode', isDarkMode);
     });
 
@@ -595,14 +670,38 @@ $(document).ready(function() {
         $('#theme-toggle').find('i').removeClass('fa-sun').addClass('fa-moon');
     }
 
+    // Accent Color Toggler
+    // --- UPDATED: Added new theme names to the array ---
+    const accentThemes = ['theme-original', 'theme-green', 'theme-orange', 'theme-cyber', 'theme-forest', 'theme-ocean'];
+    let currentAccentIndex = 0;
+
+    // Load saved accent theme from localStorage
+    const savedAccentTheme = localStorage.getItem('accentTheme');
+    if (savedAccentTheme && accentThemes.includes(savedAccentTheme)) {
+        document.body.dataset.accentTheme = savedAccentTheme;
+        currentAccentIndex = accentThemes.indexOf(savedAccentTheme);
+    } else {
+        document.body.dataset.accentTheme = 'theme-original'; // Default
+    }
+
+    $('#accent-toggle').click(function() {
+        // Cycle to the next theme
+        currentAccentIndex = (currentAccentIndex + 1) % accentThemes.length;
+        const newTheme = accentThemes[currentAccentIndex];
+        
+        // Apply the new theme and save it
+        document.body.dataset.accentTheme = newTheme;
+        localStorage.setItem('accentTheme', newTheme);
+    });
+
     // Smooth scrolling for anchor links
     $('a[href^="#"]').on('click', function(event) {
         var target = $(this.getAttribute('href'));
         if (target.length) {
             event.preventDefault();
             $('html, body').stop().animate({
-                scrollTop: target.offset().top - 70 // Adjust for fixed navbar height
-            }, 800); // Slower, smoother scroll
+                scrollTop: target.offset().top - 70
+            }, 800);
         }
     });
 
@@ -633,7 +732,7 @@ $(document).ready(function() {
     // Fade-in animation on scroll
     const faders = document.querySelectorAll('.fade-in');
     const appearOptions = {
-        threshold: 0.2, // Appear when 20% of the element is visible
+        threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
     };
 
@@ -702,8 +801,6 @@ $(document).ready(function() {
 });
 
 // --- Dynamic Content Functions ---
-// (No changes needed for these, keeping them as they are)
-
 async function fetchRSS(url) {
     const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`);
     const data = await response.json();
