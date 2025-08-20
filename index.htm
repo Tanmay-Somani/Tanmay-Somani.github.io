@@ -29,6 +29,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap" rel="stylesheet">
     <title>Tanmay Somani's Data Science Portfolio</title>
     <style>
+        /* --- NEW: PRELOADER STYLES --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: var(--background-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        body.dark-mode #preloader {
+             background-color: var(--background-dark);
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0,0,0,0.1);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        body.loading {
+            overflow: hidden;
+        }
+
+
         :root {
             --primary-color: #4a47a3;
             --secondary-color: #ad62aa;
@@ -188,6 +221,23 @@
         .project-card:hover {
             transform: translateY(-7px) scale(1.02);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .tag {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: var(--primary-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        body.dark-mode .tag {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
         }
         .icon-link {
             display: inline-block;
@@ -432,6 +482,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition-delay: calc(var(--i, 0) * 80ms);
         }
         .fade-in.appear {
             opacity: 1;
@@ -439,16 +490,23 @@
         }
     </style>
 </head>
-<body>
+<!-- NEW: Added the 'loading' class to the body -->
+<body class="loading">
+
+<!-- NEW: Added the preloader element -->
+<div id="preloader">
+    <div class="spinner"></div>
+</div>
+
 <nav class="navbar">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <a href="https://github.com/Tanmay-Somani/Tanmay-Somani.github.io" target="_blank" class="navbar-brand text-light">TS</a>
         
         <div class="d-flex">
-            <button id="theme-toggle" class="btn" aria-label="Toggle dark mode">
+            <button id="theme-toggle" class="btn" aria-label="Toggle dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Toggle Dark Mode">
                 <i class="fas fa-sun"></i>
             </button>
-            <button id="accent-toggle" class="btn ms-2" aria-label="Change accent color">
+            <button id="accent-toggle" class="btn ms-2" aria-label="Change accent color" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Change Accent Color">
                 <i class="fas fa-paint-brush"></i>
             </button>
         </div>
@@ -486,74 +544,113 @@
         <h2 class="mb-5 text-center fade-in">Portfolio</h2>
         <div class="row">
             <!-- Project 1 -->
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4" style="--i:1;">
                 <div class="project-card fade-in">
                     <h3>Book Recommender System</h3>
+                    <div class="project-tags mb-2">
+                        <span class="tag">Python</span>
+                        <span class="tag">Scikit-learn</span>
+                    </div>
                     <p>Created a platform for personalized book recommendations based on user preferences and reading history, featuring curated lists and reviews to boost engagement.</p>
                     <a href="https://github.com/WittyhacksCR004/WH020_Linktree" class="btn mt-auto">View Project</a>
                 </div>
             </div>
             <!-- Project 2 -->
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4" style="--i:2;">
                 <div class="project-card fade-in">
                     <h3>Facial Recognition Attendance</h3>
+                    <div class="project-tags mb-2">
+                        <span class="tag">Python</span>
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">ML</span>
+                    </div>
                     <p>Developed a machine learning-based attendance system using facial recognition, automating attendance tracking with real-time image processing for accurate management.</p>
                     <a href="https://github.com/Tanmay-Somani/Basic_Face_Detection_Model" class="btn mt-auto">View My Github</a>
                 </div>
             </div>
             <!-- Project 3 -->
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4" style="--i:3;">
                 <div class="project-card fade-in">
                     <h3>Weight Journal and Dashboard</h3>
+                    <div class="project-tags mb-2">
+                        <span class="tag">Python</span>
+                        <span class="tag">Matplotlib</span>
+                    </div>
                     <p>A Python app that allows users to log their weight, visualize trends, and set future goals, enhancing personal health management.</p>
                     <a href="https://github.com/Tanmay-Somani/Weight_ml" class="btn mt-auto">Downloadable app</a>
                 </div>
             </div>
             <!-- Project 4 -->
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4" style="--i:4;">
                 <div class="project-card fade-in">
                     <h3>Stock Analysis Prediction</h3>
+                    <div class="project-tags mb-2">
+                        <span class="tag">NLP</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">APIs</span>
+                    </div>
                     <p>This script scrapes stock news headlines from Finviz, extracts essential data, and organizes it for analysis, including sentiment evaluation and visualization.</p>
                     <a href="https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization" class="btn mt-auto">View Project</a>
                 </div>
             </div>
             <!-- Project 5 -->
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4" style="--i:5;">
                 <div class="project-card fade-in">
                     <h3>Snake Game AI Agent</h3>
+                    <div class="project-tags mb-2">
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">Reinforcement Learning</span>
+                    </div>
                     <p>Designed a Snake Game powered by reinforcement learning, utilizing Double Deep Q-Learning to train the agent for optimal gameplay and strategic decision-making.</p>
                     <button class="btn mt-auto" disabled>In Progress</button>
                 </div>
             </div>
              <!-- Project 6 -->
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4" style="--i:6;">
                 <div class="project-card fade-in">
                     <h3>FACT: AI Content Predictor</h3>
+                    <div class="project-tags mb-2">
+                        <span class="tag">Flask</span>
+                        <span class="tag">TensorFlow</span>
+                        <span class="tag">HTML/CSS</span>
+                    </div>
                     <p>A web application that helps users detect AI-generated content in text, images, and audio. It utilizes machine learning models to classify input as AI-generated or real.</p>
                     <a href="https://fact-wku3.onrender.com/" class="btn mt-auto">Check Project</a>
                 </div>
             </div>
             
             <!-- Project 7 (Placeholder) -->
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4" style="--i:7;">
                 <div class="project-card fade-in">
                     <h3>Placeholder Project Title 7</h3>
+                    <div class="project-tags mb-2">
+                        <span class="tag">Tech 1</span>
+                        <span class="tag">Tech 2</span>
+                    </div>
                     <p>This is a placeholder description. Describe your project here, focusing on the problem you solved, the technologies you used, and the outcome.</p>
                     <button class="btn mt-auto" disabled>In Progress</button>
                 </div>
             </div>
             <!-- Project 8 (Placeholder) -->
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4" style="--i:8;">
                 <div class="project-card fade-in">
                     <h3>Placeholder Project Title 8</h3>
+                    <div class="project-tags mb-2">
+                        <span class="tag">Tech 1</span>
+                        <span class="tag">Tech 2</span>
+                    </div>
                     <p>This is a placeholder description. Describe your project here, focusing on the problem you solved, the technologies you used, and the outcome.</p>
                     <button class="btn mt-auto" disabled>In Progress</button>
                 </div>
             </div>
             <!-- Project 9 (Placeholder) -->
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4" style="--i:9;">
                 <div class="project-card fade-in">
                     <h3>Placeholder Project Title 9</h3>
+                    <div class="project-tags mb-2">
+                        <span class="tag">Tech 1</span>
+                        <span class="tag">Tech 2</span>
+                    </div>
                     <p>This is a placeholder description. Describe your project here, focusing on the problem you solved, the technologies you used, and the outcome.</p>
                     <button class="btn mt-auto" disabled>In Progress</button>
                 </div>
@@ -655,7 +752,24 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+// NEW: Preloader logic using window.load
+window.addEventListener('load', function() {
+    const preloader = document.getElementById('preloader');
+    const body = document.querySelector('body');
+    preloader.style.opacity = '0';
+    body.classList.remove('loading');
+    // Remove the preloader from the DOM after the fade-out transition
+    setTimeout(function() {
+        preloader.style.display = 'none';
+    }, 500);
+});
+
+
 $(document).ready(function() {
+    // Initialize Bootstrap Tooltips
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
     // Theme toggle
     $('#theme-toggle').click(function() {
         $('body').toggleClass('dark-mode');
@@ -671,7 +785,6 @@ $(document).ready(function() {
     }
 
     // Accent Color Toggler
-    // --- UPDATED: Added new theme names to the array ---
     const accentThemes = ['theme-original', 'theme-green', 'theme-orange', 'theme-cyber', 'theme-forest', 'theme-ocean'];
     let currentAccentIndex = 0;
 
