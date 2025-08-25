@@ -28,6 +28,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity@latest/dist/toxicity.min.js"></script>
     
     <title>Tanmay Somani's Data Science Portfolio</title>
     <style>
@@ -109,10 +111,23 @@
         .modal-content { background-color: var(--background-light); color: var(--text-dark); border: none; }
         body.dark-mode .modal-content { background-color: var(--card-dark); color: var(--text-light); }
         body.dark-mode .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+
+        #spotlight-cursor { position: fixed; left: 0; top: 0; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(173, 98, 170, 0.2), transparent 60%); transform: translate(-50%, -50%); pointer-events: none; z-index: 9999; transition: background 0.4s ease; opacity: 0; }
+        body:not(.loading):hover #spotlight-cursor { opacity: 1; }
+        body.dark-mode #spotlight-cursor { background: radial-gradient(circle, rgba(247, 166, 164, 0.15), transparent 70%); }
+        #scroll-progress-bar { position: fixed; top: 0; left: 0; height: 4px; background-color: var(--accent-color); width: 0%; z-index: 1001; transition: background-color 0.4s ease; }
+        #cookie-consent-banner { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--card-dark); color: var(--text-light); padding: 1rem 1.5rem; display: none; justify-content: center; align-items: center; gap: 1rem; z-index: 1010; flex-wrap: wrap; text-align: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); transform: translateY(100%); transition: transform 0.5s ease-in-out; }
+        body.dark-mode #cookie-consent-banner { background-color: var(--card-light); color: var(--text-dark); }
+        #cookie-consent-banner.show { transform: translateY(0); }
+        #cookie-consent-banner p { margin: 0; }
+
+        @media print { * { background: transparent !important; color: #000 !important; box-shadow: none !important; text-shadow: none !important; } nav, #theme-toggle, #accent-toggle, .hero-section .btn, .project-card .btn, .post-card .btn, .tech-button, #contact-form-container, .topmate-button, footer .d-flex, .scroll-to-top, #preloader, #project-hover-preview, .modal, #posts-carousel .carousel-control-prev, #posts-carousel .carousel-control-next, #spotlight-cursor, #scroll-progress-bar, #cookie-consent-banner { display: none !important; } body { font-size: 12pt; margin: 1cm; } .section { padding: 1rem 0; } h2, h3 { page-break-after: avoid; } h2 { border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 1.5rem; } a { text-decoration: underline; color: #444 !important; } a[href^="http"]:after { content: " (" attr(href) ")"; font-size: 0.9em; color: #555; } .project-card, img { page-break-inside: avoid; } .project-card { border: 1px solid #ccc; } .col-md-6, .col-lg-4 { width: 100%; flex: 0 0 100%; max-width: 100%; } .btn[download] { display: none; } .btn[download]:after { content: "My resume is available for download on the web version of this portfolio."; display: block; padding: 1rem; border: 1px dashed #999; text-align: center; } }
     </style>
 </head>
 <body class="loading">
 
+<div id="spotlight-cursor"></div>
+<div id="scroll-progress-bar"></div>
 <div id="preloader"><div class="spinner"></div></div>
 
 <nav class="navbar navbar-expand-lg">
@@ -149,7 +164,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
-                <img src="images/test.PNG" alt="A professional headshot of Tanmay Somani" class="profile-picture fade-in">
+                <img src="images/test.PNG" alt="A professional headshot of Tanmay Somani" class="profile-picture fade-in" loading="lazy">
                 <h2 class="mb-4 fade-in">About Me</h2>
                 <p class="fade-in">My journey into data science began with a fascination for uncovering the stories hidden within data. I thrive on a challenge, whether it's building a predictive model from scratch or developing an AI-powered system that automates complex tasks. For me, data is a tool for problem-solving and innovation.</p>
                 <p class="fade-in">My goal is to leverage my skills in machine learning and data analysis to build intelligent, efficient, and impactful solutions. When I'm not coding, you can find me exploring the latest advancements in AI or contributing to open-source projects.</p>
@@ -246,7 +261,7 @@
                     data-github-url="https://rss-substack-production.up.railway.app/">
                     <h3>Substack RSS Feed Scraper</h3>
                     <div class="project-tags mb-2"><span class="tag">Python</span><span class="tag">XLS</span><span class="tag">Requests</span></div>
-                    <p>A Python-based tool that extracts RSS feeds from Substack blogs and parses content using BeautifulSoup. It allows you to monitor latest posts, generate structured data, and integrate with other automation workflows as well as download it in various formats.</p>
+                    <p>A Python-based tool that extracts RSS feeds from blogs and parses content. It allows you to monitor latest posts, generate structured data, and integrate with other automation workflows.</p>
                     <button class="btn mt-auto" data-bs-toggle="modal" data-bs-target="#projectModal">View Details</button>
                 </div>
             </article>
@@ -259,7 +274,7 @@
                     data-github-url="https://github.com/Tanmay-Somani/Growth-Dashboard-DeskApp">
                     <h3>Growth Dashboard DeskApp</h3>
                     <div class="project-tags mb-2"><span class="tag">Python</span><span class="tag">Tkinter</span><span class="tag">Matplotlib</span></div>
-                    <p>A desktop application designed to help users track and visualize their personal growth, productivity, and daily activities. The app provides a clean dashboard to monitor progress over time, set goals, and maintain focus.</p>
+                    <p>A desktop application designed to help users track and visualize their personal growth, productivity, and daily activities. The app provides a clean dashboard to monitor progress over time.</p>
                     <button class="btn mt-auto" data-bs-toggle="modal" data-bs-target="#projectModal">View Details</button>
                 </div>
             </article>
@@ -313,7 +328,10 @@
     </div>
 </section>
 
-<div><a href="https://topmate.io/embed/profile/tanmay_somani?theme=D5534D" class="topmate-button" target="_blank">Connect on Topmate</a></div>
+<div id="cookie-consent-banner">
+    <p>This site uses local storage to save your theme preferences. By continuing to use this site, you agree to this practice.</p>
+    <button id="accept-cookies" class="btn">Accept</button>
+</div>
 
 <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -323,7 +341,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img id="modalProjectImage" src="" alt="Project screenshot" class="img-fluid mb-3 rounded">
+                <img id="modalProjectImage" src="" alt="Project screenshot" class="img-fluid mb-3 rounded" loading="lazy">
                 <p id="modalProjectDescription">Project description goes here.</p>
                 <p><strong>Technologies Used:</strong> <span id="modalProjectTags"></span></p>
             </div>
@@ -346,22 +364,21 @@
             <a href="https://medium.com/@tanmaysomani2003" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
             <a href="mailto:tanmaysomani2003@gmail.com" class="icon-link" aria-label="Email"><i class="fas fa-envelope fa-2x"></i></a>
             <a href="https://www.linkedin.com/in/tcode/" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
-            <a href="https://substack.com/@tanmaysomani2k3" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Substack"><i class="fa-brands fa-stack-exchange fa-2x"></i></a>
         </div>
     </div>
 </footer>
 
 <div class="scroll-to-top"><i class="fas fa-arrow-up"></i></div>
+<div><a href="https://topmate.io/embed/profile/tanmay_somani?theme=D5534D" class="topmate-button" target="_blank">Connect on Topmate</a></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 window.addEventListener('load', function() {
     const preloader = document.getElementById('preloader');
-    const body = document.querySelector('body');
     preloader.style.opacity = '0';
-    body.classList.remove('loading');
-    setTimeout(function() { preloader.style.display = 'none'; }, 500);
+    document.body.classList.remove('loading');
+    setTimeout(() => { preloader.style.display = 'none'; }, 500);
 });
 
 $(document).ready(function() {
@@ -370,9 +387,8 @@ $(document).ready(function() {
 
     $('#theme-toggle').click(function() {
         $('body').toggleClass('dark-mode');
-        const isDarkMode = $('body').hasClass('dark-mode');
+        localStorage.setItem('darkMode', $('body').hasClass('dark-mode'));
         $(this).find('i').toggleClass('fa-sun fa-moon');
-        localStorage.setItem('darkMode', isDarkMode);
     });
 
     if (localStorage.getItem('darkMode') === 'true') {
@@ -398,124 +414,123 @@ $(document).ready(function() {
     });
 
     $('a[href^="#"]').on('click', function(event) {
-        var target = $(this.getAttribute('href'));
+        const target = $(this.getAttribute('href'));
         if (target.length) {
             event.preventDefault();
             $('html, body').stop().animate({ scrollTop: target.offset().top - 70 }, 800);
         }
     });
 
-    $(window).scroll(function() {
+    $(window).scroll(() => {
         if ($(document).scrollTop() > 50) { $('.navbar').addClass('navbar-shrink'); } 
         else { $('.navbar').removeClass('navbar-shrink'); }
-    });
-
-    $(window).scroll(function() {
         if ($(this).scrollTop() > 200) { $('.scroll-to-top').addClass('show'); } 
         else { $('.scroll-to-top').removeClass('show'); }
     });
 
-    $('.scroll-to-top').click(function() {
-        $('html, body').animate({scrollTop : 0}, 800);
+    $('.scroll-to-top').click(() => {
+        $('html, body').animate({ scrollTop: 0 }, 800);
         return false;
     });
 
-    $('.navbar-nav .nav-link').on('click', function() {
-        if ($('.navbar-toggler').is(':visible')) {
-            $('.navbar-toggler').click();
-        }
+    $('.navbar-nav .nav-link').on('click', () => {
+        if ($('.navbar-toggler').is(':visible')) { $('.navbar-toggler').click(); }
     });
 
     const faders = document.querySelectorAll('.fade-in');
     const appearOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
-            if (!entry.isIntersecting) { return; } 
-            else { entry.target.classList.add('appear'); observer.unobserve(entry.target); }
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('appear');
+            observer.unobserve(entry.target);
         });
     }, appearOptions);
-    faders.forEach(fader => { appearOnScroll.observe(fader); });
+    faders.forEach(fader => appearOnScroll.observe(fader));
+
+    const spotlight = $('#spotlight-cursor');
+    const progressBar = $('#scroll-progress-bar');
+    const cookieBanner = $('#cookie-consent-banner');
+    const acceptCookiesBtn = $('#accept-cookies');
+
+    $(window).on('mousemove', e => {
+        spotlight.css({ 'left': e.clientX + 'px', 'top': e.clientY + 'px' });
+    });
+
+    $(window).on('scroll', () => {
+        const scrollPercentage = ($(window).scrollTop() / ($(document).height() - $(window).height())) * 100;
+        progressBar.css('width', scrollPercentage + '%');
+    });
+
+    if (!localStorage.getItem('cookieConsentGiven')) {
+        cookieBanner.css('display', 'flex');
+        setTimeout(() => cookieBanner.addClass('show'), 100);
+    }
+
+    acceptCookiesBtn.on('click', () => {
+        localStorage.setItem('cookieConsentGiven', 'true');
+        cookieBanner.removeClass('show');
+    });
 
     $('#projectModal').on('show.bs.modal', function (event) {
-        var card = $(event.relatedTarget).closest('.project-card');
-        var title = card.data('title');
-        var description = card.data('description');
-        var imageUrl = card.data('image');
-        var tags = card.data('tags');
-        var githubUrl = card.data('github-url');
-        var caseStudyUrl = card.data('case-study');
-        var modal = $(this);
-        modal.find('.modal-title').text(title);
-        modal.find('#modalProjectImage').attr('src', imageUrl);
-        modal.find('#modalProjectDescription').text(description);
-        modal.find('#modalProjectTags').text(tags);
-        modal.find('#modalGithubLink').attr('href', githubUrl);
-        var caseStudyButton = modal.find('#modalCaseStudyLink');
+        const card = $(event.relatedTarget).closest('.project-card');
+        $(this).find('.modal-title').text(card.data('title'));
+        $(this).find('#modalProjectImage').attr('src', card.data('image'));
+        $(this).find('#modalProjectDescription').text(card.data('description'));
+        $(this).find('#modalProjectTags').text(card.data('tags'));
+        $(this).find('#modalGithubLink').attr('href', card.data('github-url'));
+        const caseStudyButton = $(this).find('#modalCaseStudyLink');
+        const caseStudyUrl = card.data('case-study');
         if (caseStudyUrl) { caseStudyButton.attr('href', caseStudyUrl).show(); } 
         else { caseStudyButton.hide(); }
     });
 
     const hoverPreview = $('#project-hover-preview');
     $('.project-card').on('mousemove', function(e) {
-        let imageUrl = $(this).data('image');
+        const imageUrl = $(this).data('image');
         if (imageUrl) {
-            hoverPreview.css({
-                'background-image': `url(${imageUrl})`,
-                'top': e.clientY + 15 + 'px',
-                'left': e.clientX + 15 + 'px'
-            }).show();
+            hoverPreview.css({ 'background-image': `url(${imageUrl})`, 'top': e.clientY + 15 + 'px', 'left': e.clientX + 15 + 'px' }).show();
         }
-    }).on('mouseleave', function() { hoverPreview.hide(); });
+    }).on('mouseleave', () => hoverPreview.hide());
 
-    const form = document.getElementById('contact-form');
-    const formStatus = document.getElementById('form-status');
-    form.addEventListener('submit', function(e) {
+    const form = $('#contact-form');
+    const formStatus = $('#form-status');
+    form.on('submit', function(e) {
         e.preventDefault();
-        const submitButton = form.querySelector('button[type="submit"]');
-        const formData = new FormData(form);
-        submitButton.disabled = true;
-        submitButton.textContent = 'Sending...';
-        fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } })
-        .then(response => {
-            if (response.ok) {
-                formStatus.textContent = 'Thank you for your message! I\'ll get back to you soon.';
-                formStatus.className = 'success';
-                formStatus.style.display = 'block';
-                form.reset();
-            } else {
-                response.json().then(data => {
-                    if (Object.hasOwn(data, 'errors')) {
-                        formStatus.textContent = data["errors"].map(error => error["message"]).join(", ");
-                    } else {
-                        formStatus.textContent = 'Oops! There was a problem submitting your form.';
-                    }
-                    formStatus.className = 'error';
-                    formStatus.style.display = 'block';
-                })
+        const submitButton = form.find('button[type="submit"]');
+        submitButton.prop('disabled', true).text('Sending...');
+        $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            data: form.serialize(),
+            dataType: 'json',
+            success: () => {
+                formStatus.text('Thank you for your message! I\'ll get back to you soon.').removeClass('error').addClass('success').show();
+                form[0].reset();
+            },
+            error: () => {
+                formStatus.text('Oops! There was a problem submitting your form.').removeClass('success').addClass('error').show();
+            },
+            complete: () => {
+                submitButton.prop('disabled', false).text('Send Message');
             }
-        })
-        .catch(error => {
-            formStatus.textContent = 'Oops! There was a network error. Please try again.';
-            formStatus.className = 'error';
-            formStatus.style.display = 'block';
-        })
-        .finally(() => {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Send Message';
         });
     });
+
+    const images = $('img[loading="lazy"]');
+    $(window).on('beforeprint', () => images.removeAttr('loading'));
+    $(window).on('afterprint', () => images.attr('loading', 'lazy'));
 });
 
 async function fetchRSS(url) {
     const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`);
-    const data = await response.json();
-    return data.items;
+    return await response.json();
 }
 
 async function fetchPosts() {
     try {
-        const mediumPosts = await fetchRSS('https://medium.com/@tanmaysomani2003/feed');
-        const allPosts = [...mediumPosts].sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate)).slice(0, 5);
+        const data = await fetchRSS('https://medium.com/feed/@tanmaysomani2003');
+        const allPosts = data.items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate)).slice(0, 5);
         displayPosts(allPosts);
     } catch (error) {
         console.error('Error fetching posts:', error);
@@ -524,31 +539,27 @@ async function fetchPosts() {
 }
 
 function displayPosts(posts) {
-    const carouselInner = document.querySelector('#posts-carousel .carousel-inner');
-    carouselInner.innerHTML = '';
+    const carouselInner = $('#posts-carousel .carousel-inner');
+    carouselInner.empty();
     if (posts.length === 0) { displayError(); return; }
     posts.forEach((post, index) => {
         const postHtml = `<div class="carousel-item ${index === 0 ? 'active' : ''}"><div class="post-card"><h5>${post.title}</h5><p class="mb-2">Platform: Medium</p><p class="mb-3">Date: ${new Date(post.pubDate).toLocaleDateString()}</p><a href="${post.link}" target="_blank" class="btn">Read More</a></div></div>`;
-        carouselInner.innerHTML += postHtml;
+        carouselInner.append(postHtml);
     });
-    new bootstrap.Carousel(document.querySelector('#posts-carousel'));
+    new bootstrap.Carousel($('#posts-carousel'));
 }
 
 function displayError() {
-    const carouselInner = document.querySelector('#posts-carousel .carousel-inner');
-    carouselInner.innerHTML = `<div class="carousel-item active"><div class="post-card"><h3>Oops! Something went wrong.</h3><p>We couldn't fetch the latest posts. Please check back later.</p></div></div>`;
+    $('#posts-carousel .carousel-inner').html(`<div class="carousel-item active"><div class="post-card"><h3>Oops! Something went wrong.</h3><p>We couldn't fetch the latest posts. Please check back later.</p></div></div>`);
 }
 
-const techStack = [ { name: 'Python', icon: 'fab fa-python' }, { name: 'TensorFlow', icon: 'fas fa-brain' }, { name: 'Power BI', icon: 'fas fa-chart-bar' }, { name: 'SQL', icon: 'fas fa-database' }, { name: 'Pandas', icon: 'fas fa-table' }, { name: 'Jupyter', icon: 'fas fa-book-open' }, { name: 'Git', icon: 'fab fa-git-alt' }, { name: 'Excel', icon: 'fas fa-file-excel' },{ name: 'Bash', icon: 'fas fa-terminal' } ,{ name: 'AWS', icon: 'fab fa-aws' },{ name: 'FastAPI', icon: 'fas fa-rocket' },{ name: 'GCP', icon: 'fab fa-google' }];
-const techStackContainer = document.getElementById('tech-stack-container');
+const techStack = [ { name: 'Python', icon: 'fab fa-python' }, { name: 'TensorFlow', icon: 'fas fa-brain' }, { name: 'Power BI', icon: 'fas fa-chart-bar' }, { name: 'SQL', icon: 'fas fa-database' }, { name: 'Pandas', icon: 'fas fa-table' }, { name: 'Jupyter', icon: 'fas fa-book-open' }, { name: 'Git', icon: 'fab fa-git-alt' }, { name: 'Excel', icon: 'fas fa-file-excel' }, { name: 'Bash', icon: 'fas fa-terminal' }, { name: 'AWS', icon: 'fab fa-aws' }, { name: 'FastAPI', icon: 'fas fa-rocket' }, { name: 'GCP', icon: 'fab fa-google' }];
+const techStackContainer = $('#tech-stack-container');
 techStack.forEach(tech => {
-    const techElement = document.createElement('div');
-    techElement.className = 'col-6 col-md-3 mb-4';
-    techElement.innerHTML = `<button class="tech-button fade-in"><i class="${tech.icon}"></i><span>${tech.name}</span></button>`;
-    techStackContainer.appendChild(techElement);
+    techStackContainer.append(`<div class="col-6 col-md-3 mb-4"><button class="tech-button fade-in"><i class="${tech.icon}"></i><span>${tech.name}</span></button></div>`);
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     fetchPosts();
     new Typed('#typed-text', {
         strings: ["Data Scientist", "AI/ML Engineer", "Problem Solver", "Open-Source Contributor"],
@@ -574,8 +585,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "https://github.com/Tanmay-Somani",
         "https://www.linkedin.com/in/tcode/",
         "https://twitter.com/TSVA0",
-        "https://medium.com/@tanmaysomani2003",
-        "https://substack.com/@tanmaysomani2k3"
+        "https://medium.com/@tanmaysomani2003"
     ],
     "knowsAbout": [ "Python", "Machine Learning", "Data Science", "Artificial Intelligence", "TensorFlow", "Scikit-learn", "Pandas", "OpenCV", "Reinforcement Learning", "Flask", "SQL" ],
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://github.com/Tanmay-Somani/Tanmay-Somani.github.io" },
