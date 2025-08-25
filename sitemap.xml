@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main Homepage -->
+  <url>
+    <loc>https://tanmay-somani.github.io/Tanmay-Somani.github.io/index.html</loc>
+    <lastmod>2025-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.00</priority>
+  </url>
+  
+  <!-- Project or Content Page -->
+  <url>
+    <loc>https://tanmay-somani.github.io/Tanmay-Somani.github.io/aimtechnocrats.html</loc>
+    <lastmod>2025-08-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+</urlset>
