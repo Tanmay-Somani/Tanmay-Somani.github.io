@@ -234,11 +234,16 @@
                 </div>
             </article>
             <article class="col-md-6 col-lg-4 mb-4" style="--i:5;">
-                <div class="project-card fade-in">
+                <div class="project-card fade-in"
+                     data-title="Snake Game AI Agent"
+                     data-image="images/project5.jpg"
+                     data-description="Designed a Snake Game powered by reinforcement learning, utilizing Double Deep Q-Learning to train the agent for optimal gameplay and strategic decision-making. This project is currently in progress."
+                     data-tags="PyTorch, Reinforcement Learning"
+                     data-github-url="#">
                     <h3>Snake Game AI Agent</h3>
                     <div class="project-tags mb-2"><span class="tag">PyTorch</span><span class="tag">Reinforcement Learning</span></div>
                     <p>Designed a Snake Game powered by reinforcement learning, utilizing Double Deep Q-Learning to train the agent for optimal gameplay and strategic decision-making.</p>
-                    <button class="btn mt-auto" disabled>In Progress</button>
+                    <button class="btn mt-auto" data-bs-toggle="modal" data-bs-target="#projectModal">View Details</button>
                 </div>
             </article>
             <article class="col-md-6 col-lg-4 mb-4" style="--i:6;">
@@ -281,11 +286,16 @@
                 </div>
             </article>
             <article class="col-md-6 col-lg-4 mb-4" style="--i:9;">
-                <div class="project-card fade-in">
+                <div class="project-card fade-in"
+                     data-title="Placeholder Project Title 9"
+                     data-image="images/project9.jpg"
+                     data-description="This is a placeholder description. This project is currently in progress. Describe your project here, focusing on the problem you solved, the technologies you used, and the outcome."
+                     data-tags="Tech 1, Tech 2"
+                     data-github-url="#">
                     <h3>Placeholder Project Title 9</h3>
                     <div class="project-tags mb-2"><span class="tag">Tech 1</span><span class="tag">Tech 2</span></div>
                     <p>This is a placeholder description. Describe your project here, focusing on the problem you solved, the technologies you used, and the outcome.</p>
-                    <button class="btn mt-auto" disabled>In Progress</button>
+                    <button class="btn mt-auto" data-bs-toggle="modal" data-bs-target="#projectModal">View Details</button>
                 </div>
             </article>
         </div>
@@ -562,9 +572,62 @@ const techStackContainer = $('#tech-stack-container');
 techStack.forEach(tech => {
     techStackContainer.append(`<div class="col-6 col-md-3 mb-4"><button class="tech-button fade-in"><i class="${tech.icon}"></i><span>${tech.name}</span></button></div>`);
 });
+async function loadAndUseToxicityModel() {
+    const threshold = 0.8;
+    const messageInput = document.getElementById('message');
+    const toxicityWarning = document.getElementById('toxicity-warning');
+    const submitButton = document.getElementById('contact-submit-button');
 
+    if (!messageInput || !toxicityWarning || !submitButton) {
+        console.error("Required contact form elements not found.");
+        return;
+    }
+    
+    try {
+        const model = await toxicity.load(threshold);
+        console.log("Toxicity model loaded successfully.");
+        
+        messageInput.addEventListener('input', async (e) => {
+            const sentences = [e.target.value];
+            
+            // If the input is empty, clear the warning and enable the button
+            if (!sentences[0].trim()) {
+                toxicityWarning.textContent = '';
+                toxicityWarning.classList.remove('visible');
+                submitButton.disabled = false;
+                return;
+            }
+
+            const predictions = await model.classify(sentences);
+            let isToxic = false;
+
+            predictions.forEach(prediction => {
+                if (prediction.results[0].match) {
+                    isToxic = true;
+                    // Capitalize the first letter for better display
+                    const label = prediction.label.charAt(0).toUpperCase() + prediction.label.slice(1);
+                    toxicityWarning.textContent = `Warning: ${label} detected. Please be respectful.`;
+                }
+            });
+
+            if (isToxic) {
+                toxicityWarning.classList.add('visible');
+                submitButton.disabled = true;
+            } else {
+                toxicityWarning.textContent = '';
+                toxicityWarning.classList.remove('visible');
+                submitButton.disabled = false;
+            }
+        });
+    } catch (err) {
+        console.error("Failed to load the toxicity model:", err);
+        toxicityWarning.textContent = 'Toxicity check is currently unavailable.';
+        toxicityWarning.classList.add('visible');
+    }
+}
 document.addEventListener('DOMContentLoaded', () => {
     fetchPosts();
+    loadAndUseToxicityModel();
     new Typed('#typed-text', {
         strings: ["Data Scientist", "AI/ML Engineer", "Problem Solver", "Open-Source Contributor"],
         typeSpeed: 50,
