@@ -99,6 +99,9 @@
         .container a:hover { color: #6c68ef; }
         .profile-picture { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin: 0 auto 2rem; border: 5px solid var(--accent-color); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         body.dark-mode .profile-picture { border-color: var(--secondary-color); }
+        #toxicity-warning{text-align:right;padding-top:5px;font-size:.9em;font-weight:500;height:20px;color:var(--error-color);opacity:0;transition:opacity .3s ease-in-out}
+        #toxicity-warning.visible{opacity:1}
+        #contact-submit-btn:disabled{background-color:#ccc;color:#666;cursor:not-allowed;transform:none;box-shadow:none}
         @media (max-width: 768px) { .navbar { padding: 0.5rem 1rem; } .navbar-shrink { padding: 0.4rem 1rem; } .hero-section { padding: 10rem 1rem; min-height: 70vh; } .section { padding: 4rem 1.5rem; } .project-card { padding: 1rem; margin-bottom: 1.5rem; } .project-card h3 { font-size: 1.15rem; } .project-card p { font-size: 0.85rem; line-height: 1.7; } .project-card .btn { padding: 0.5rem 1rem; font-size: 0.9rem; } .topmate-button { width: 160px; font-size: 14px; bottom: 15px; right: 15px; } .scroll-to-top { bottom: 15px; right: 15px; z-index: 1000; } .topmate-button { bottom: 65px; } }
         .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; transition-delay: calc(var(--i, 0) * 80ms); }
         .fade-in.appear { opacity: 1; transform: translateY(0); }
@@ -111,7 +114,6 @@
         .modal-content { background-color: var(--background-light); color: var(--text-dark); border: none; }
         body.dark-mode .modal-content { background-color: var(--card-dark); color: var(--text-light); }
         body.dark-mode .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
-
         #spotlight-cursor { position: fixed; left: 0; top: 0; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(173, 98, 170, 0.2), transparent 60%); transform: translate(-50%, -50%); pointer-events: none; z-index: 9999; transition: background 0.4s ease; opacity: 0; }
         body:not(.loading):hover #spotlight-cursor { opacity: 1; }
         body.dark-mode #spotlight-cursor { background: radial-gradient(circle, rgba(247, 166, 164, 0.15), transparent 70%); }
@@ -320,8 +322,10 @@
             <form action="https://formspree.io/f/xeoqjbpk" method="POST" id="contact-form">
                 <div class="mb-3"><input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required></div>
                 <div class="mb-3"><input type="email" name="_replyto" class="form-control" id="email" placeholder="Your Email" required></div>
-                <div class="mb-3"><textarea name="message" class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea></div>
-                <div class="text-center"><button type="submit" class="btn btn-lg w-100">Send Message</button></div>
+                <div class="mb-3"><textarea name="message" class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea>
+                    <div id="toxicity-warning"></div>
+                </div>
+                <div class="text-center"><button type="submit" class="btn btn-lg w-100" id="contact-submit-button">Send Message</button></div>
             </form>
             <div id="form-status"></div>
         </div>
