@@ -28,8 +28,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity@latest/dist/toxicity.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity@latest/dist/toxicity.min.js"></script> -->
     
     <title>Tanmay Somani's Data Science Portfolio</title>
     <style>
@@ -572,6 +572,7 @@ const techStackContainer = $('#tech-stack-container');
 techStack.forEach(tech => {
     techStackContainer.append(`<div class="col-6 col-md-3 mb-4"><button class="tech-button fade-in"><i class="${tech.icon}"></i><span>${tech.name}</span></button></div>`);
 });
+/* Commented out this function to remove performance issues
 async function loadAndUseToxicityModel() {
     const threshold = 0.8;
     const messageInput = document.getElementById('message');
@@ -625,9 +626,10 @@ async function loadAndUseToxicityModel() {
         toxicityWarning.classList.add('visible');
     }
 }
+    */
 document.addEventListener('DOMContentLoaded', () => {
     fetchPosts();
-    loadAndUseToxicityModel();
+    // loadAndUseToxicityModel();
     new Typed('#typed-text', {
         strings: ["Data Scientist", "AI/ML Engineer", "Problem Solver", "Open-Source Contributor"],
         typeSpeed: 50,
