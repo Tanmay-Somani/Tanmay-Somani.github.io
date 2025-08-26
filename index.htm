@@ -285,10 +285,6 @@ body.dark-mode #spotlight-cursor { background: radial-gradient(circle, rgba(247,
 
 #scroll-progress-bar { position: fixed; top: 0; left: 0; height: 4px; background-color: var(--accent-color); width: 0%; z-index: 1001; transition: background-color 0.4s ease; }
 
-
-/* --- Responsive Design --- */
-
-/* Tablet & Collapsed Navbar */
 @media (max-width: 991.98px) {
     .navbar-collapse {
         background-color: rgba(0,0,0,0.2);
@@ -297,20 +293,11 @@ body.dark-mode #spotlight-cursor { background: radial-gradient(circle, rgba(247,
         margin-top: 1rem;
         border-radius: 8px;
     }
-    .navbar-collapse .d-flex {
-        justify-content: center;
-        width: 100%;
-    }
-}
-
-/* Mobile Devices */
+    .navbar-collapse .d-flex {justify-content: center;width: 100%;}}
 @media (max-width: 768px) {
     .navbar { padding: 0.5rem 1rem; }
     .navbar-shrink { padding: 0.4rem 1rem; }
-    .navbar-collapse .d-flex {
-        justify-content: center;
-        width: 100%;
-    }
+    .navbar-collapse .d-flex {justify-content: center;width: 100%;}
     .hero-section { padding: 9rem 1rem; min-height: 80vh; }
     .hero-section h1 { font-size: clamp(2.8rem, 12vw, 4rem); }
 
