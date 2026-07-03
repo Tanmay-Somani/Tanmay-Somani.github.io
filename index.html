@@ -586,38 +586,130 @@
         /* ============================================================
            PORTFOLIO
            ============================================================ */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-            gap: 1px; /* hairline gap — cards sit flush, gap shows bg */
-            background: var(--border-strong);
-            border: 1px solid var(--border-strong);
+        .carousel-container {
+            position: relative;
+            width: 100%;
         }
-        [data-theme="funky"] .project-grid {
-            background: var(--crt-green);
-            border-color: var(--crt-green);
+        .carousel-container::before,
+        .carousel-container::after {
+            content: "";
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 80px;
+            z-index: 5;
+            pointer-events: none;
         }
-        .project-card {
+        .carousel-container::before {
+            left: 0;
+            background: linear-gradient(90deg, var(--bg-primary), transparent);
+        }
+        .carousel-container::after {
+            right: 0;
+            background: linear-gradient(270deg, var(--bg-primary), transparent);
+        }
+        .carousel-track {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 1.5rem 2.5rem 2rem;
+            scrollbar-width: none;
+            cursor: grab;
+        }
+        .carousel-track:active { cursor: grabbing; }
+        .carousel-track::-webkit-scrollbar { display: none; }
+        .carousel-card {
+            flex: 0 0 370px;
+            min-height: 300px;
+            scroll-snap-align: center;
             background: var(--bg-card);
-            padding: 1.6rem;
-            transition: background 0.2s;
+            border: 1px solid var(--border-strong);
+            padding: 1.8rem;
             display: flex; flex-direction: column;
             position: relative;
+            filter: blur(var(--scroll-blur, 0px));
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        filter 0.12s linear;
+            will-change: transform, filter;
         }
-        .project-card:hover { background: var(--bg-secondary); }
-        [data-theme="funky"] .project-card:hover {
-            background: rgba(51,255,51,0.05);
+        .carousel-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: var(--shadow-lg);
+            z-index: 2;
         }
-        /* left accent bar on hover */
-        .project-card::before {
+        .carousel-card::before {
             content: ""; position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
             background: var(--accent); opacity: 0;
-            transition: opacity 0.2s;
+            transition: opacity 0.25s;
         }
-        .project-card:hover::before { opacity: 1; }
-        [data-theme="funky"] .project-card::before {
+        .carousel-card:hover::before { opacity: 1; }
+        [data-theme="funky"] .carousel-card {
+            border-color: rgba(51,255,51,0.25);
+        }
+        [data-theme="funky"] .carousel-card:hover {
+            background: rgba(51,255,51,0.05);
+            box-shadow: 0 0 30px rgba(51,255,51,0.20);
+            transform: translateY(-4px);
+        }
+        [data-theme="funky"] .carousel-card::before {
             background: var(--crt-green);
             box-shadow: 0 0 12px var(--crt-green);
+        }
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            width: 46px; height: 46px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            color: var(--text-secondary);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-sm);
+        }
+        .carousel-nav:hover {
+            background: var(--accent);
+            color: var(--text-on-accent);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .carousel-nav--prev { left: 0.5rem; }
+        .carousel-nav--next { right: 0.5rem; }
+        [data-theme="funky"] .carousel-nav {
+            border-color: var(--crt-green);
+            color: var(--crt-green);
+            box-shadow: 0 0 8px rgba(51,255,51,0.15);
+        }
+        [data-theme="funky"] .carousel-nav:hover {
+            background: rgba(51,255,51,0.15);
+            color: var(--crt-green);
+            border-color: var(--crt-green);
+            box-shadow: 0 0 20px rgba(51,255,51,0.30);
+            transform: translateY(-50%);
+        }
+        .carousel-progress {
+            width: 100%; height: 2px;
+            background: var(--border);
+            overflow: hidden;
+        }
+        .carousel-progress-fill {
+            height: 100%; width: 0%;
+            background: var(--accent);
+            transition: width 0.15s linear;
+        }
+        [data-theme="dark"] .carousel-progress-fill {
+            box-shadow: 0 0 8px var(--accent);
+        }
+        [data-theme="funky"] .carousel-progress-fill {
+            background: var(--crt-green);
+            box-shadow: 0 0 6px var(--crt-green);
         }
 
         .project-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.75rem; }
@@ -646,8 +738,8 @@
         }
         [data-theme="funky"] .project-status.wip { color: #ffff00; border-color: rgba(255,255,0,0.40); background: rgba(255,255,0,0.08); }
 
-        .project-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
-        .project-card p { font-size: 0.855rem; color: var(--text-secondary); flex-grow: 1; margin-bottom: 0.9rem; line-height: 1.65; }
+        .carousel-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .carousel-card p { font-size: 0.855rem; color: var(--text-secondary); flex-grow: 1; margin-bottom: 0.9rem; line-height: 1.65; }
         .project-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 1rem; }
         .tag {
             background: var(--tag-bg); color: var(--tag-text);
@@ -956,7 +1048,10 @@
            RESPONSIVE
            ============================================================ */
         @media (max-width: 767px) {
-            .project-grid { grid-template-columns: 1fr; }
+            .carousel-card { flex: 0 0 280px; min-height: 260px; }
+            .carousel-track { gap: 1rem; padding: 1rem 1.5rem 1.5rem; }
+            .carousel-nav { width: 36px; height: 36px; font-size: 0.8rem; }
+            .carousel-container::before, .carousel-container::after { width: 40px; }
             .skills-grid  { grid-template-columns: repeat(2,1fr); }
             .posts-row    { grid-template-columns: 1fr; }
             .topmate-btn  { font-size: 0.78rem; padding: 0.55rem 1rem; bottom: 1rem; right: 1rem; }
@@ -1097,7 +1192,16 @@
                 <h2 id="portfolio-heading" class="section-title">Portfolio</h2>
                 <p class="section-subtitle">A selection of projects in ML, AI, and data engineering.</p>
             </div>
-            <div class="project-grid" id="portfolio-grid"></div>
+            <div class="carousel-container" id="carousel-container">
+                <div class="carousel-track" id="carousel-track"></div>
+                <button class="carousel-nav carousel-nav--prev" id="carousel-prev" aria-label="Previous projects">
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="carousel-nav carousel-nav--next" id="carousel-next" aria-label="Next projects">
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+                <div class="carousel-progress"><div class="carousel-progress-fill" id="carousel-progress-fill"></div></div>
+            </div>
         </div>
     </section>
 
@@ -1279,11 +1383,11 @@ const SKILLS = [
     {name:"Bash",       icon:"fas fa-terminal",   level:80}
 ];
 
-/* ── RENDER PROJECTS ─────────────────────────────── */
+/* ── RENDER PROJECTS (CAROUSEL) ──────────────────── */
 function renderProjects() {
-    const grid = document.getElementById('portfolio-grid');
-    if (!grid) return;
-    grid.innerHTML = PROJECTS.map((p, i) => {
+    const track = document.getElementById('carousel-track');
+    if (!track) return;
+    track.innerHTML = PROJECTS.map((p, i) => {
         const githubBtn = p.github
             ? `<a href="${p.github}" target="_blank" rel="noopener noreferrer" class="project-link-btn" aria-label="View ${p.title} on GitHub"><i class="fab fa-github" aria-hidden="true"></i> Code</a>`
             : '';
@@ -1295,7 +1399,7 @@ function renderProjects() {
             : `<span class="project-status">Done</span>`;
         const tags = p.tags.map(t => `<span class="tag">${t}</span>`).join('');
         return `
-        <article class="project-card fade-in" style="transition-delay:${i*55}ms">
+        <article class="carousel-card">
             <div class="project-card-top">
                 <div class="project-icon" aria-hidden="true"><i class="${p.icon}"></i></div>
                 ${wipBadge}
@@ -1306,7 +1410,141 @@ function renderProjects() {
             <div class="project-links">${githubBtn}${liveBtn}</div>
         </article>`;
     }).join('');
-    observeFadeIns();
+    initCarousel();
+}
+
+/* ── CAROUSEL ENGINE ────────────────────────────── */
+function initCarousel() {
+    const track = document.getElementById('carousel-track');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    const progressFill = document.getElementById('carousel-progress-fill');
+    if (!track) return;
+
+    const CARD_SCROLL = 394; // card width + gap
+
+    // --- Arrow navigation ---
+    prevBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -CARD_SCROLL, behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', () => {
+        track.scrollBy({ left: CARD_SCROLL, behavior: 'smooth' });
+    });
+
+    // --- Scroll progress + velocity blur ---
+    let lastScrollLeft = track.scrollLeft;
+    let lastTime = performance.now();
+    let blurRAF = null;
+    let currentBlur = 0;
+
+    function decayBlur() {
+        currentBlur *= 0.82;
+        if (currentBlur < 0.08) {
+            currentBlur = 0;
+            track.style.setProperty('--scroll-blur', '0px');
+            blurRAF = null;
+            return;
+        }
+        track.style.setProperty('--scroll-blur', currentBlur.toFixed(2) + 'px');
+        blurRAF = requestAnimationFrame(decayBlur);
+    }
+
+    track.addEventListener('scroll', () => {
+        // Progress bar
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const pct = maxScroll > 0 ? (track.scrollLeft / maxScroll) * 100 : 0;
+        progressFill.style.width = pct + '%';
+
+        // Velocity-based motion blur
+        const now = performance.now();
+        const dt = now - lastTime;
+        const dx = Math.abs(track.scrollLeft - lastScrollLeft);
+        const velocity = dt > 0 ? dx / dt : 0; // px/ms
+
+        const targetBlur = Math.min(velocity * 3, 5);
+        currentBlur += (targetBlur - currentBlur) * 0.4;
+        track.style.setProperty('--scroll-blur', currentBlur.toFixed(2) + 'px');
+
+        lastScrollLeft = track.scrollLeft;
+        lastTime = now;
+
+        if (!blurRAF && currentBlur > 0.05) {
+            blurRAF = requestAnimationFrame(decayBlur);
+        }
+    }, { passive: true });
+
+    // --- Drag to scroll with momentum ---
+    let isDragging = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let dragVelocity = 0;
+    let dragLastX = 0;
+    let dragLastTime = 0;
+    let hasDragged = false;
+
+    track.addEventListener('mousedown', (e) => {
+        if (e.target.closest('a, button')) return;
+        isDragging = true;
+        hasDragged = false;
+        startX = e.pageX;
+        scrollStart = track.scrollLeft;
+        dragLastX = e.pageX;
+        dragLastTime = performance.now();
+        dragVelocity = 0;
+        track.style.scrollSnapType = 'none';
+        track.style.scrollBehavior = 'auto';
+        e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx = e.pageX - startX;
+        if (Math.abs(dx) > 3) hasDragged = true;
+        track.scrollLeft = scrollStart - dx;
+
+        const now = performance.now();
+        const dt = now - dragLastTime;
+        if (dt > 0) {
+            dragVelocity = (e.pageX - dragLastX) / dt;
+        }
+        dragLastX = e.pageX;
+        dragLastTime = now;
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        track.style.scrollSnapType = '';
+        track.style.scrollBehavior = '';
+
+        const momentum = dragVelocity * 180;
+        if (Math.abs(momentum) > 25) {
+            track.scrollBy({ left: -momentum, behavior: 'smooth' });
+        }
+    });
+
+    // Prevent accidental link clicks after dragging
+    track.addEventListener('click', (e) => {
+        if (hasDragged) {
+            e.preventDefault();
+            e.stopPropagation();
+            hasDragged = false;
+        }
+    }, true);
+
+    // --- Keyboard navigation ---
+    track.setAttribute('tabindex', '0');
+    track.setAttribute('role', 'region');
+    track.setAttribute('aria-label', 'Project carousel — use arrow keys to navigate');
+    track.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            track.scrollBy({ left: -CARD_SCROLL, behavior: 'smooth' });
+            e.preventDefault();
+        } else if (e.key === 'ArrowRight') {
+            track.scrollBy({ left: CARD_SCROLL, behavior: 'smooth' });
+            e.preventDefault();
+        }
+    });
 }
 
 /* ── RENDER SKILLS ───────────────────────────────── */
