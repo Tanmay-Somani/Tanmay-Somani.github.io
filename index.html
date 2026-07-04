@@ -43,10 +43,13 @@
                    with electric cyan #22d3ee — the colour of
                    TensorBoard curves and UMAP scatter plots.
 
-           FUNKY = Proper retro terminal: phosphor green on CRT
-                   black. Full monospace font swap, scanline
-                   overlay, blinking cursor, glow everything.
-                   Inspired by 1980s Unix terminals and WarGames.
+           FUNKY = Glitchy retro terminal: hot red on ink-blue-black,
+                   with electric blue as a chromatic-aberration
+                   fringe on key focal points (nav brand, hero
+                   name, section labels). Full monospace font
+                   swap, scanline overlay, blinking cursor, glow
+                   everything. Inspired by damaged CRT displays,
+                   VHS tracking errors, and anaglyph 3D fringing.
 
            ALL THEMES: border-radius = 0 everywhere. Sharp edges.
            ============================================================ */
@@ -104,28 +107,29 @@
 
         /* ── FUNKY (retro CRT terminal) ── */
         [data-theme="funky"] {
-            --bg-primary:    #020402;
-            --bg-secondary:  #050805;
-            --bg-card:       #070c07;
-            --bg-nav:        rgba(2,4,2,0.96);
-            --text-primary:  #33ff33;
-            --text-secondary:#22cc22;
-            --text-muted:    #1a8c1a;
-            --text-on-accent:#020402;
-            --accent:        #33ff33;
-            --accent-hover:  #66ff66;
-            --accent-soft:   rgba(51,255,51,0.10);
-            --accent-glow:   rgba(51,255,51,0.30);
-            --border:        rgba(51,255,51,0.25);
-            --border-strong: rgba(51,255,51,0.50);
-            --shadow-sm: 0 0 6px rgba(51,255,51,0.20);
-            --shadow-md: 0 0 18px rgba(51,255,51,0.28);
-            --shadow-lg: 0 0 42px rgba(51,255,51,0.38);
-            --tag-bg:    rgba(51,255,51,0.12);
-            --tag-text:  #33ff33;
-            --grid-line: rgba(51,255,51,0.08);
+            --bg-primary:    #060512;
+            --bg-secondary:  #0a0818;
+            --bg-card:       #0d0a1f;
+            --bg-nav:        rgba(6,5,18,0.96);
+            --text-primary:  #ff2954;
+            --text-secondary:#ff6b8a;
+            --text-muted:    #b23a54;
+            --text-on-accent:#060512;
+            --accent:        #ff2954;
+            --accent-hover:  #ff5c7a;
+            --accent-soft:   rgba(255,41,84,0.10);
+            --accent-glow:   rgba(255,41,84,0.30);
+            --border:        rgba(255,41,84,0.25);
+            --border-strong: rgba(255,41,84,0.50);
+            --shadow-sm: 0 0 6px rgba(255,41,84,0.20);
+            --shadow-md: 0 0 18px rgba(255,41,84,0.28);
+            --shadow-lg: 0 0 42px rgba(255,41,84,0.38);
+            --tag-bg:    rgba(255,41,84,0.12);
+            --tag-text:  #ff2954;
+            --grid-line: rgba(255,41,84,0.08);
             --radius: 0px;
-            --crt-green: #33ff33;
+            --crt-red: #ff2954;
+            --crt-blue: #2ee6ff;
         }
 
         /* Commented out extras:
@@ -243,7 +247,7 @@
             transition: width 0.1s linear;
         }
         [data-theme="funky"] #scroll-progress-bar {
-            box-shadow: 0 0 8px var(--crt-green), 0 0 24px var(--crt-green);
+            box-shadow: 0 0 8px var(--crt-red), 0 0 24px var(--crt-red);
         }
 
         /* ============================================================
@@ -262,8 +266,8 @@
         }
         .navbar.scrolled { box-shadow: var(--shadow-md); }
         [data-theme="funky"] .navbar {
-            border-bottom: 1px solid var(--crt-green);
-            box-shadow: 0 2px 20px rgba(51,255,51,0.15);
+            border-bottom: 1px solid var(--crt-red);
+            box-shadow: 0 2px 20px rgba(255,41,84,0.15);
         }
         .navbar-inner {
             width: 100%; max-width: 1200px; margin: 0 auto;
@@ -277,8 +281,8 @@
         }
         [data-theme="funky"] .nav-brand {
             font-family: 'Share Tech Mono', monospace;
-            color: var(--crt-green);
-            text-shadow: 0 0 10px var(--crt-green);
+            color: var(--crt-red);
+            text-shadow: 0 0 10px var(--crt-red), -1.5px 0 var(--crt-blue), 1.5px 0 rgba(255,41,84,0.6);
             letter-spacing: 0.08em;
         }
         .nav-brand-badge {
@@ -288,8 +292,9 @@
             font-size: 0.78rem; font-weight: 700;
         }
         [data-theme="funky"] .nav-brand-badge {
-            background: var(--crt-green); color: #020402;
-            box-shadow: 0 0 12px var(--crt-green);
+            background: var(--crt-red); color: #060512;
+            box-shadow: 0 0 12px var(--crt-red), 0 0 20px rgba(46,230,255,0.35);
+            border: 1px solid var(--crt-blue);
         }
         .nav-links { display: flex; align-items: center; gap: 0; list-style: none; }
         .nav-links a {
@@ -297,16 +302,38 @@
             padding: 0.45rem 0.8rem;
             transition: color 0.2s, background 0.2s;
             display: block;
+            position: relative;
         }
         .nav-links a:hover { color: var(--text-primary); background: var(--border); }
+        /* QOL: highlight whichever section is currently in view */
+        .nav-links a.active { color: var(--accent); }
+        .nav-links a.active::after {
+            content: "";
+            position: absolute; left: 0.8rem; right: 0.8rem; bottom: 0.15rem;
+            height: 2px; background: var(--accent);
+        }
         [data-theme="funky"] .nav-links a {
             font-family: 'Share Tech Mono', monospace;
             color: var(--text-secondary);
         }
         [data-theme="funky"] .nav-links a:hover {
-            color: var(--crt-green); background: rgba(51,255,51,0.08);
-            text-shadow: 0 0 8px var(--crt-green);
+            color: var(--crt-red); background: rgba(255,41,84,0.08);
+            text-shadow: 0 0 8px var(--crt-red);
         }
+        [data-theme="funky"] .nav-links a.active { color: var(--crt-red); }
+        [data-theme="funky"] .nav-links a.active::after { background: var(--crt-red); box-shadow: 0 0 6px var(--crt-red); }
+        /* QOL: skip-to-content link for keyboard/screen-reader users, hidden until focused */
+        .skip-link {
+            position: fixed;
+            top: -60px; left: 1rem;
+            z-index: 10000;
+            background: var(--accent);
+            color: var(--text-on-accent);
+            padding: 0.65rem 1.1rem;
+            font-size: 0.85rem; font-weight: 600;
+            transition: top 0.2s ease;
+        }
+        .skip-link:focus { top: 1rem; }
         .nav-controls { display: flex; align-items: center; }
         .icon-btn {
             height: 36px; padding: 0 0.85rem;
@@ -319,13 +346,13 @@
         .icon-btn:hover { background: var(--border); color: var(--text-primary); }
         .icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
         [data-theme="funky"] .icon-btn {
-            border-color: var(--crt-green); color: var(--crt-green);
+            border-color: var(--crt-red); color: var(--crt-red);
             font-family: 'Share Tech Mono', monospace;
-            box-shadow: inset 0 0 6px rgba(51,255,51,0.08);
+            box-shadow: inset 0 0 6px rgba(255,41,84,0.08);
         }
         [data-theme="funky"] .icon-btn:hover {
-            background: rgba(51,255,51,0.12); color: var(--crt-green);
-            box-shadow: 0 0 12px rgba(51,255,51,0.25);
+            background: rgba(255,41,84,0.12); color: var(--crt-red);
+            box-shadow: 0 0 12px rgba(255,41,84,0.25);
         }
 
         /* Mobile hamburger */
@@ -362,6 +389,7 @@
         .hero::before {
             content: "";
             position: absolute; inset: 0; pointer-events: none;
+            z-index: 1;
             background:
                 linear-gradient(90deg, var(--accent-glow) 0%, transparent 60%),
                 linear-gradient(180deg, transparent 40%, var(--accent-glow) 100%);
@@ -369,11 +397,18 @@
         }
         [data-theme="funky"] .hero::before {
             background:
-                linear-gradient(90deg, rgba(51,255,51,0.06) 0%, transparent 70%);
+                linear-gradient(90deg, rgba(255,41,84,0.06) 0%, transparent 70%);
             opacity: 1;
         }
+        /* Animated node/edge network — sits behind the gradient overlay and hero text */
+        .hero-network-canvas {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
         .hero-inner {
-            position: relative; z-index: 1;
+            position: relative; z-index: 2;
             max-width: 760px; margin: 0 auto; text-align: center;
         }
         .hero-eyebrow {
@@ -385,10 +420,10 @@
             margin-bottom: 1.5rem;
         }
         [data-theme="funky"] .hero-eyebrow {
-            background: rgba(51,255,51,0.08);
-            color: var(--crt-green);
-            border-color: var(--crt-green);
-            box-shadow: 0 0 10px rgba(51,255,51,0.20);
+            background: rgba(255,41,84,0.08);
+            color: var(--crt-red);
+            border-color: var(--crt-red);
+            box-shadow: 0 0 10px rgba(255,41,84,0.20);
             font-family: 'Share Tech Mono', monospace;
         }
         .blink {
@@ -397,8 +432,8 @@
             background: var(--accent); vertical-align: text-bottom;
         }
         [data-theme="funky"] .blink {
-            background: var(--crt-green);
-            box-shadow: 0 0 8px var(--crt-green);
+            background: var(--crt-red);
+            box-shadow: 0 0 8px var(--crt-red);
         }
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
@@ -409,11 +444,23 @@
         }
         [data-theme="funky"] .hero-title {
             letter-spacing: 0.04em;
-            text-shadow: 0 0 20px rgba(51,255,51,0.5), 0 0 60px rgba(51,255,51,0.2);
+            text-shadow: 0 0 20px rgba(255,41,84,0.5), 0 0 60px rgba(255,41,84,0.2);
         }
         .name-accent {
             color: var(--accent);
             position: relative; display: inline-block;
+        }
+        /* Light & Dark: animated gradient shimmer sweeping across the name */
+        [data-theme="light"] .name-accent,
+        [data-theme="dark"] .name-accent {
+            background: linear-gradient(90deg, var(--accent) 0%, var(--text-primary) 45%, var(--accent) 90%);
+            background-size: 250% auto;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: nameShimmer 7s linear infinite;
+        }
+        @keyframes nameShimmer {
+            0%   { background-position: 0% 50%; }
+            100% { background-position: 250% 50%; }
         }
         /* Light: underline data-viz style */
         [data-theme="light"] .name-accent::after {
@@ -425,10 +472,22 @@
         [data-theme="dark"] .name-accent {
             text-shadow: 0 0 24px rgba(34,211,238,0.40);
         }
-        /* Funky: phosphor glow */
+        /* Funky: phosphor glow with a subtle CRT flicker */
         [data-theme="funky"] .name-accent {
-            color: var(--crt-green);
-            text-shadow: 0 0 20px var(--crt-green), 0 0 60px rgba(51,255,51,0.4);
+            color: var(--crt-red);
+            text-shadow: 0 0 20px var(--crt-red), 0 0 60px rgba(255,41,84,0.4);
+            animation: crtFlicker 3.4s infinite;
+        }
+        @keyframes crtFlicker {
+            0%, 19%, 21%, 23%, 80%, 100% { opacity: 1; }
+            20%, 22% { opacity: 0.72; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            [data-theme="light"] .name-accent,
+            [data-theme="dark"] .name-accent,
+            [data-theme="funky"] .name-accent {
+                animation: none;
+            }
         }
 
         .hero-typed {
@@ -437,8 +496,8 @@
         }
         .hero-typed #typed-text { color: var(--accent); font-weight: 600; }
         [data-theme="funky"] .hero-typed #typed-text {
-            color: var(--crt-green);
-            text-shadow: 0 0 10px var(--crt-green);
+            color: var(--crt-red);
+            text-shadow: 0 0 10px var(--crt-red);
         }
         .hero-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
 
@@ -456,7 +515,15 @@
         }
         [data-theme="funky"] .stat-num {
             font-family: 'Share Tech Mono', monospace;
-            text-shadow: 0 0 12px var(--crt-green);
+            text-shadow: 0 0 12px var(--crt-red);
+        }
+        .stat-infinity { animation: statPulse 2.6s ease-in-out infinite; }
+        @keyframes statPulse {
+            0%, 100% { opacity: 1; text-shadow: 0 0 0 transparent; }
+            50%      { opacity: 0.75; text-shadow: 0 0 16px var(--accent-glow); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .stat-infinity { animation: none; }
         }
         .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.08em; }
 
@@ -479,15 +546,15 @@
         .btn-primary-custom:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
         [data-theme="funky"] .btn-primary-custom {
-            background: transparent; color: var(--crt-green);
-            border: 1px solid var(--crt-green);
-            box-shadow: inset 0 0 8px rgba(51,255,51,0.08), 0 0 12px rgba(51,255,51,0.12);
+            background: transparent; color: var(--crt-red);
+            border: 1px solid var(--crt-red);
+            box-shadow: inset 0 0 8px rgba(255,41,84,0.08), 0 0 12px rgba(255,41,84,0.12);
             font-family: 'Share Tech Mono', monospace;
             text-transform: uppercase; letter-spacing: 0.08em;
         }
         [data-theme="funky"] .btn-primary-custom:hover {
-            background: rgba(51,255,51,0.12); color: var(--crt-green);
-            box-shadow: 0 0 24px rgba(51,255,51,0.35);
+            background: rgba(255,41,84,0.12); color: var(--crt-red);
+            box-shadow: 0 0 24px rgba(255,41,84,0.35);
             transform: none;
         }
 
@@ -505,12 +572,12 @@
         }
         .btn-ghost:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
         [data-theme="funky"] .btn-ghost {
-            border-color: rgba(51,255,51,0.40); color: var(--text-secondary);
+            border-color: rgba(255,41,84,0.40); color: var(--text-secondary);
             font-family: 'Share Tech Mono', monospace;
         }
         [data-theme="funky"] .btn-ghost:hover {
-            border-color: var(--crt-green); color: var(--crt-green);
-            background: rgba(51,255,51,0.06); transform: none;
+            border-color: var(--crt-red); color: var(--crt-red);
+            background: rgba(255,41,84,0.06); transform: none;
         }
 
         /* ============================================================
@@ -530,18 +597,18 @@
             width: 18px; height: 2px; background: var(--accent);
         }
         [data-theme="funky"] .section-label {
-            color: var(--crt-green);
+            color: var(--crt-red);
             font-family: 'Share Tech Mono', monospace;
-            text-shadow: 0 0 8px var(--crt-green);
+            text-shadow: 0 0 8px var(--crt-red);
         }
-        [data-theme="funky"] .section-label::before { background: var(--crt-green); box-shadow: 0 0 6px var(--crt-green); }
+        [data-theme="funky"] .section-label::before { background: var(--crt-red); box-shadow: 0 0 6px var(--crt-red); }
         .section-title {
             font-size: clamp(1.75rem, 4vw, 2.5rem);
             font-weight: 700; letter-spacing: -0.03em;
         }
         [data-theme="funky"] .section-title {
             letter-spacing: 0.04em;
-            text-shadow: 0 0 16px rgba(51,255,51,0.35);
+            text-shadow: 0 0 16px rgba(255,41,84,0.35);
         }
         .section-subtitle { font-size: 0.95rem; color: var(--text-secondary); margin-top: 0.6rem; max-width: 520px; }
 
@@ -563,8 +630,8 @@
             box-shadow: var(--shadow-lg);
         }
         [data-theme="funky"] .about-avatar {
-            border-color: var(--crt-green);
-            box-shadow: 0 0 24px rgba(51,255,51,0.30);
+            border-color: var(--crt-red);
+            box-shadow: 0 0 24px rgba(255,41,84,0.30);
             filter: grayscale(40%) brightness(0.9) contrast(1.1);
         }
         .about-body p { color: var(--text-secondary); margin-bottom: 0.9rem; font-size: 0.925rem; }
@@ -577,9 +644,9 @@
             text-transform: uppercase; letter-spacing: 0.06em;
         }
         [data-theme="funky"] .badge-pill {
-            background: rgba(51,255,51,0.08); color: var(--crt-green);
-            border-color: rgba(51,255,51,0.40);
-            box-shadow: 0 0 6px rgba(51,255,51,0.15);
+            background: rgba(255,41,84,0.08); color: var(--crt-red);
+            border-color: rgba(255,41,84,0.40);
+            box-shadow: 0 0 6px rgba(255,41,84,0.15);
             font-family: 'Share Tech Mono', monospace;
         }
 
@@ -598,6 +665,8 @@
             width: 80px;
             z-index: 5;
             pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
         .carousel-container::before {
             left: 0;
@@ -606,6 +675,19 @@
         .carousel-container::after {
             right: 0;
             background: linear-gradient(270deg, var(--bg-primary), transparent);
+        }
+        /* QOL: hide the edge fade once you've scrolled all the way to that edge */
+        .carousel-container.at-start::before { opacity: 0; }
+        .carousel-container.at-end::after { opacity: 0; }
+        /* QOL: no text-selection ghosting while drag-scrolling */
+        .carousel-track.is-dragging,
+        .carousel-track.is-dragging .carousel-card {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .carousel-track:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: -3px;
         }
         .carousel-track {
             display: flex;
@@ -616,6 +698,7 @@
             padding: 1.5rem 2.5rem 2rem;
             scrollbar-width: none;
             cursor: grab;
+            overscroll-behavior-x: contain; /* QOL: swipes here don't trigger page-back gestures or scroll chaining */
         }
         .carousel-track:active { cursor: grabbing; }
         .carousel-track::-webkit-scrollbar { display: none; }
@@ -625,17 +708,72 @@
             scroll-snap-align: center;
             background: var(--bg-card);
             border: 1px solid var(--border-strong);
-            padding: 1.8rem;
+            padding: 0;
             display: flex; flex-direction: column;
             position: relative;
-            filter: blur(var(--scroll-blur, 0px));
-            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-                        box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-                        filter 0.12s linear;
+            transform: translate3d(var(--glitch-tx, 0px), 0, 0) skewX(var(--glitch-skew, 0deg));
+            filter: drop-shadow(var(--glitch-rx, 0px) 0 0 rgba(255,0,90,var(--glitch-intensity, 0)))
+                    drop-shadow(var(--glitch-bx, 0px) 0 0 rgba(0,229,255,var(--glitch-intensity, 0)))
+                    contrast(calc(1 + var(--glitch-intensity, 0) * 0.35))
+                    saturate(calc(1 + var(--glitch-intensity, 0) * 0.6));
+            transition: box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        filter 0.08s linear, transform 0.08s linear;
             will-change: transform, filter;
+            overflow: hidden;
+        }
+        .carousel-card-body {
+            padding: 1.8rem;
+            display: flex; flex-direction: column;
+            flex: 1 1 auto;
+        }
+        /* Generated project thumbnail — a gradient + watermark icon, per-card hue set inline */
+        .project-thumb {
+            position: relative;
+            height: 128px;
+            flex: 0 0 auto;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg,
+                hsl(var(--thumb-hue, 190) 70% 42%),
+                hsl(calc(var(--thumb-hue, 190) + 45) 70% 30%));
+            border-bottom: 1px solid var(--border-strong);
+        }
+        .project-thumb::before {
+            content: "";
+            position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.20) 1px, transparent 1px);
+            background-size: 15px 15px;
+            opacity: 0.55;
+        }
+        .project-thumb i {
+            position: relative;
+            font-size: 3.6rem;
+            color: rgba(255,255,255,0.32);
+            transform: rotate(-10deg) scale(1.35);
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .carousel-card:hover .project-thumb i {
+            transform: rotate(-4deg) scale(1.5);
+        }
+        [data-theme="dark"] .project-thumb {
+            background: linear-gradient(135deg,
+                hsl(calc(var(--thumb-hue, 190)) 55% 22%),
+                hsl(calc(var(--thumb-hue, 190) + 45) 55% 14%));
+        }
+        [data-theme="funky"] .project-thumb {
+            background: #0a0818;
+            filter: none;
+        }
+        [data-theme="funky"] .project-thumb::before {
+            background-image: radial-gradient(rgba(255,41,84,0.25) 1px, transparent 1px);
+            opacity: 0.7;
+        }
+        [data-theme="funky"] .project-thumb i {
+            color: rgba(255,41,84,0.45);
+            text-shadow: 0 0 16px rgba(255,41,84,0.5);
         }
         .carousel-card:hover {
-            transform: translateY(-8px) scale(1.03);
+            transform: translate3d(var(--glitch-tx, 0px), -8px, 0) scale(1.03) skewX(var(--glitch-skew, 0deg));
             box-shadow: var(--shadow-lg);
             z-index: 2;
         }
@@ -645,17 +783,46 @@
             transition: opacity 0.25s;
         }
         .carousel-card:hover::before { opacity: 1; }
+        /* Glitch scanline / slice overlay, intensity driven by scroll velocity */
+        .carousel-card::after {
+            content: "";
+            position: absolute; inset: 0;
+            pointer-events: none;
+            z-index: 3;
+            opacity: var(--glitch-intensity, 0);
+            mix-blend-mode: overlay;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(255,255,255,0.10) 0px,
+                    rgba(255,255,255,0.10) 1px,
+                    transparent 1px,
+                    transparent 3px
+                );
+            clip-path: inset(
+                calc(50% - var(--glitch-slice-h, 0px) - var(--glitch-slice-y, 0%)) 0
+                calc(50% - var(--glitch-slice-h, 0px) + var(--glitch-slice-y, 0%)) 0
+            );
+        }
+        /* QOL: fully suppress the glitch/jitter for users who've asked for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .carousel-card {
+                transform: none !important;
+                filter: none !important;
+            }
+            .carousel-card::after { display: none; }
+        }
         [data-theme="funky"] .carousel-card {
-            border-color: rgba(51,255,51,0.25);
+            border-color: rgba(255,41,84,0.25);
         }
         [data-theme="funky"] .carousel-card:hover {
-            background: rgba(51,255,51,0.05);
-            box-shadow: 0 0 30px rgba(51,255,51,0.20);
+            background: rgba(255,41,84,0.05);
+            box-shadow: 0 0 30px rgba(255,41,84,0.20);
             transform: translateY(-4px);
         }
         [data-theme="funky"] .carousel-card::before {
-            background: var(--crt-green);
-            box-shadow: 0 0 12px var(--crt-green);
+            background: var(--crt-red);
+            box-shadow: 0 0 12px var(--crt-red);
         }
         .carousel-nav {
             position: absolute;
@@ -680,18 +847,29 @@
             box-shadow: var(--shadow-md);
             transform: translateY(-50%) scale(1.1);
         }
+        .carousel-nav:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        /* QOL: dim + disable the arrow once there's nothing further to scroll to */
+        .carousel-nav:disabled {
+            opacity: 0.3;
+            cursor: default;
+            pointer-events: none;
+            transform: translateY(-50%);
+        }
         .carousel-nav--prev { left: 0.5rem; }
         .carousel-nav--next { right: 0.5rem; }
         [data-theme="funky"] .carousel-nav {
-            border-color: var(--crt-green);
-            color: var(--crt-green);
-            box-shadow: 0 0 8px rgba(51,255,51,0.15);
+            border-color: var(--crt-red);
+            color: var(--crt-red);
+            box-shadow: 0 0 8px rgba(255,41,84,0.15);
         }
         [data-theme="funky"] .carousel-nav:hover {
-            background: rgba(51,255,51,0.15);
-            color: var(--crt-green);
-            border-color: var(--crt-green);
-            box-shadow: 0 0 20px rgba(51,255,51,0.30);
+            background: rgba(255,41,84,0.15);
+            color: var(--crt-red);
+            border-color: var(--crt-red);
+            box-shadow: 0 0 20px rgba(255,41,84,0.30);
             transform: translateY(-50%);
         }
         .carousel-progress {
@@ -708,8 +886,8 @@
             box-shadow: 0 0 8px var(--accent);
         }
         [data-theme="funky"] .carousel-progress-fill {
-            background: var(--crt-green);
-            box-shadow: 0 0 6px var(--crt-green);
+            background: var(--crt-red);
+            box-shadow: 0 0 6px var(--crt-red);
         }
 
         .project-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.75rem; }
@@ -720,8 +898,8 @@
             font-size: 0.95rem;
         }
         [data-theme="funky"] .project-icon {
-            background: rgba(51,255,51,0.10); color: var(--crt-green);
-            box-shadow: 0 0 8px rgba(51,255,51,0.20);
+            background: rgba(255,41,84,0.10); color: var(--crt-red);
+            box-shadow: 0 0 8px rgba(255,41,84,0.20);
         }
         .project-status {
             font-size: 0.68rem; font-weight: 600; padding: 0.18rem 0.55rem;
@@ -732,8 +910,8 @@
         .project-status.wip { background: rgba(234,179,8,0.10); color: #a16207; border-color: rgba(234,179,8,0.25); }
         [data-theme="dark"] .project-status.wip { color: #fbbf24; background: rgba(251,191,36,0.10); }
         [data-theme="funky"] .project-status {
-            background: rgba(51,255,51,0.08); color: var(--crt-green);
-            border-color: rgba(51,255,51,0.40);
+            background: rgba(255,41,84,0.08); color: var(--crt-red);
+            border-color: rgba(255,41,84,0.40);
             font-family: 'Share Tech Mono', monospace;
         }
         [data-theme="funky"] .project-status.wip { color: #ffff00; border-color: rgba(255,255,0,0.40); background: rgba(255,255,0,0.08); }
@@ -747,7 +925,7 @@
             text-transform: uppercase; letter-spacing: 0.05em;
         }
         [data-theme="funky"] .tag {
-            border: 1px solid rgba(51,255,51,0.30);
+            border: 1px solid rgba(255,41,84,0.30);
             font-family: 'Share Tech Mono', monospace;
         }
         .project-links { display: flex; gap: 0.5rem; margin-top: auto; }
@@ -761,12 +939,12 @@
         }
         .project-link-btn:hover { background: var(--accent); color: var(--text-on-accent); border-color: var(--accent); }
         [data-theme="funky"] .project-link-btn {
-            border-color: rgba(51,255,51,0.35); color: var(--text-muted);
+            border-color: rgba(255,41,84,0.35); color: var(--text-muted);
             font-family: 'Share Tech Mono', monospace;
         }
         [data-theme="funky"] .project-link-btn:hover {
-            background: rgba(51,255,51,0.12); color: var(--crt-green);
-            border-color: var(--crt-green); box-shadow: 0 0 10px rgba(51,255,51,0.25);
+            background: rgba(255,41,84,0.12); color: var(--crt-red);
+            border-color: var(--crt-red); box-shadow: 0 0 10px rgba(255,41,84,0.25);
         }
 
         /* ============================================================
@@ -780,7 +958,7 @@
             border: 1px solid var(--border-strong);
         }
         [data-theme="funky"] .skills-grid {
-            background: rgba(51,255,51,0.25); border-color: var(--crt-green);
+            background: rgba(255,41,84,0.25); border-color: var(--crt-red);
         }
         .skill-card {
             background: var(--bg-card);
@@ -790,7 +968,7 @@
             text-align: center; cursor: default;
         }
         .skill-card:hover { background: var(--bg-secondary); }
-        [data-theme="funky"] .skill-card:hover { background: rgba(51,255,51,0.05); }
+        [data-theme="funky"] .skill-card:hover { background: rgba(255,41,84,0.05); }
         .skill-icon {
             width: 44px; height: 44px;
             background: var(--accent-soft); color: var(--accent);
@@ -798,8 +976,8 @@
             font-size: 1.2rem;
         }
         [data-theme="funky"] .skill-icon {
-            background: rgba(51,255,51,0.10); color: var(--crt-green);
-            box-shadow: 0 0 10px rgba(51,255,51,0.20);
+            background: rgba(255,41,84,0.10); color: var(--crt-red);
+            box-shadow: 0 0 10px rgba(255,41,84,0.20);
         }
         .skill-name { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
         [data-theme="funky"] .skill-name { font-family: 'Share Tech Mono', monospace; }
@@ -814,8 +992,8 @@
         }
         [data-theme="dark"] .skill-level-fill { box-shadow: 0 0 6px var(--accent); }
         [data-theme="funky"] .skill-level-fill {
-            background: var(--crt-green);
-            box-shadow: 0 0 8px var(--crt-green);
+            background: var(--crt-red);
+            box-shadow: 0 0 8px var(--crt-red);
             transition: width 1.1s steps(20);
         }
 
@@ -829,14 +1007,14 @@
             background: var(--border-strong);
             border: 1px solid var(--border-strong);
         }
-        [data-theme="funky"] .posts-row { background: rgba(51,255,51,0.25); border-color: var(--crt-green); }
+        [data-theme="funky"] .posts-row { background: rgba(255,41,84,0.25); border-color: var(--crt-red); }
         .post-card {
             background: var(--bg-card); padding: 1.4rem;
             transition: background 0.2s;
             display: flex; flex-direction: column; gap: 0.6rem;
         }
         .post-card:hover { background: var(--bg-secondary); }
-        [data-theme="funky"] .post-card:hover { background: rgba(51,255,51,0.05); }
+        [data-theme="funky"] .post-card:hover { background: rgba(255,41,84,0.05); }
         .post-platform {
             display: inline-flex; align-items: center; gap: 0.35rem;
             font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
@@ -844,9 +1022,9 @@
             padding: 0.18rem 0.55rem;
         }
         [data-theme="funky"] .post-platform {
-            background: rgba(51,255,51,0.08); color: var(--crt-green);
+            background: rgba(255,41,84,0.08); color: var(--crt-red);
             font-family: 'Share Tech Mono', monospace;
-            border: 1px solid rgba(51,255,51,0.30);
+            border: 1px solid rgba(255,41,84,0.30);
         }
         .post-card h3 { font-size: 0.92rem; font-weight: 700; line-height: 1.4; }
         .post-date { font-size: 0.77rem; color: var(--text-muted); }
@@ -869,13 +1047,13 @@
         .social-link:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
         .social-link i { width: 15px; text-align: center; }
         [data-theme="funky"] .social-link {
-            border-color: rgba(51,255,51,0.20); color: var(--text-secondary);
+            border-color: rgba(255,41,84,0.20); color: var(--text-secondary);
             font-family: 'Share Tech Mono', monospace;
         }
         [data-theme="funky"] .social-link:hover {
-            color: var(--crt-green); border-color: var(--crt-green);
-            background: rgba(51,255,51,0.06);
-            box-shadow: 0 0 10px rgba(51,255,51,0.15);
+            color: var(--crt-red); border-color: var(--crt-red);
+            background: rgba(255,41,84,0.06);
+            box-shadow: 0 0 10px rgba(255,41,84,0.15);
         }
         .contact-form { display: flex; flex-direction: column; gap: 0.85rem; }
         .form-field { display: flex; flex-direction: column; gap: 0.35rem; }
@@ -894,16 +1072,16 @@
         }
         [data-theme="funky"] .form-field input,
         [data-theme="funky"] .form-field textarea {
-            background: #050805; border-color: rgba(51,255,51,0.35);
-            color: var(--crt-green); font-family: 'Share Tech Mono', monospace;
-            caret-color: var(--crt-green);
+            background: #0a0818; border-color: rgba(255,41,84,0.35);
+            color: var(--crt-red); font-family: 'Share Tech Mono', monospace;
+            caret-color: var(--crt-red);
         }
         [data-theme="funky"] .form-field input::placeholder,
-        [data-theme="funky"] .form-field textarea::placeholder { color: rgba(51,255,51,0.35); }
+        [data-theme="funky"] .form-field textarea::placeholder { color: rgba(255,41,84,0.35); }
         [data-theme="funky"] .form-field input:focus,
         [data-theme="funky"] .form-field textarea:focus {
-            border-color: var(--crt-green);
-            box-shadow: 0 0 0 2px rgba(51,255,51,0.18), 0 0 12px rgba(51,255,51,0.12);
+            border-color: var(--crt-red);
+            box-shadow: 0 0 0 2px rgba(255,41,84,0.18), 0 0 12px rgba(255,41,84,0.12);
         }
         #form-status {
             padding: 0.65rem 0.9rem; font-size: 0.855rem; font-weight: 500; display: none;
@@ -913,7 +1091,7 @@
         #form-status.error   { background: rgba(220,38,38,0.08); color: #dc2626; border-color: rgba(220,38,38,0.25); }
         [data-theme="dark"] #form-status.success { color: #34d399; }
         [data-theme="dark"] #form-status.error   { color: #f87171; }
-        [data-theme="funky"] #form-status.success { color: var(--crt-green); border-color: var(--crt-green); background: rgba(51,255,51,0.06); }
+        [data-theme="funky"] #form-status.success { color: var(--crt-red); border-color: var(--crt-red); background: rgba(255,41,84,0.06); }
         [data-theme="funky"] #form-status.error   { color: #ff4444; border-color: #ff4444; background: rgba(255,68,68,0.06); }
 
         /* ============================================================
@@ -924,7 +1102,7 @@
             border-top: 1px solid var(--border-strong);
             padding: 2.5rem 1.5rem; text-align: center;
         }
-        [data-theme="funky"] footer { border-top-color: rgba(51,255,51,0.35); }
+        [data-theme="funky"] footer { border-top-color: rgba(255,41,84,0.35); }
         .footer-inner { max-width: 1200px; margin: 0 auto; }
         .footer-socials { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1.25rem; }
         .footer-icon-link {
@@ -939,12 +1117,12 @@
             transform: translateY(-2px);
         }
         [data-theme="funky"] .footer-icon-link {
-            border-color: rgba(51,255,51,0.25); color: var(--text-muted);
+            border-color: rgba(255,41,84,0.25); color: var(--text-muted);
         }
         [data-theme="funky"] .footer-icon-link:hover {
-            color: var(--crt-green); border-color: var(--crt-green);
-            background: rgba(51,255,51,0.08);
-            box-shadow: 0 0 10px rgba(51,255,51,0.20); transform: none;
+            color: var(--crt-red); border-color: var(--crt-red);
+            background: rgba(255,41,84,0.08);
+            box-shadow: 0 0 10px rgba(255,41,84,0.20); transform: none;
         }
         .footer-copyright { font-size: 0.78rem; color: var(--text-muted); }
         .footer-copyright a { color: var(--text-muted); }
@@ -968,11 +1146,11 @@
         #scroll-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
         #scroll-to-top:hover { background: var(--accent); color: var(--text-on-accent); border-color: var(--accent); }
         [data-theme="funky"] #scroll-to-top {
-            border-color: rgba(51,255,51,0.35); color: var(--crt-green);
+            border-color: rgba(255,41,84,0.35); color: var(--crt-red);
         }
         [data-theme="funky"] #scroll-to-top:hover {
-            background: rgba(51,255,51,0.12); color: var(--crt-green);
-            box-shadow: 0 0 12px rgba(51,255,51,0.30);
+            background: rgba(255,41,84,0.12); color: var(--crt-red);
+            box-shadow: 0 0 12px rgba(255,41,84,0.30);
         }
 
         /* ============================================================
@@ -994,15 +1172,15 @@
             transform: translateY(-2px); box-shadow: var(--shadow-lg);
         }
         [data-theme="funky"] .topmate-btn {
-            background: transparent; color: var(--crt-green);
-            border-color: var(--crt-green);
-            box-shadow: 0 0 16px rgba(51,255,51,0.20);
+            background: transparent; color: var(--crt-red);
+            border-color: var(--crt-red);
+            box-shadow: 0 0 16px rgba(255,41,84,0.20);
             font-family: 'Share Tech Mono', monospace;
             text-transform: uppercase; letter-spacing: 0.06em;
         }
         [data-theme="funky"] .topmate-btn:hover {
-            background: rgba(51,255,51,0.12); color: var(--crt-green);
-            box-shadow: 0 0 28px rgba(51,255,51,0.35); transform: none;
+            background: rgba(255,41,84,0.12); color: var(--crt-red);
+            box-shadow: 0 0 28px rgba(255,41,84,0.35); transform: none;
         }
 
         /* ============================================================
@@ -1072,6 +1250,8 @@
 </head>
 <body class="loading" data-theme="light">
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <div id="preloader" role="status" aria-label="Loading page"><div class="preloader-ring"></div></div>
 <div id="scroll-progress-bar" role="progressbar" aria-hidden="true"></div>
 
@@ -1112,6 +1292,7 @@
 
     <!-- HERO -->
     <section id="home" class="hero" aria-labelledby="hero-heading">
+        <canvas id="hero-network" class="hero-network-canvas" aria-hidden="true"></canvas>
         <div class="hero-inner">
             <div class="hero-eyebrow fade-in">
                 <span class="blink" aria-hidden="true"></span>
@@ -1134,15 +1315,15 @@
             </div>
             <div class="hero-stats fade-in" aria-label="Quick stats">
                 <div class="stat-item">
-                    <span class="stat-num">9+</span>
+                    <span class="stat-num" data-target="9" data-suffix="+">0+</span>
                     <span class="stat-label">Projects Shipped</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-num">12+</span>
+                    <span class="stat-num" data-target="12" data-suffix="+">0+</span>
                     <span class="stat-label">Technologies</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-num">∞</span>
+                    <span class="stat-num stat-infinity">∞</span>
                     <span class="stat-label">Models to Train</span>
                 </div>
             </div>
@@ -1398,16 +1579,23 @@ function renderProjects() {
             ? `<span class="project-status wip">In Progress</span>`
             : `<span class="project-status">Done</span>`;
         const tags = p.tags.map(t => `<span class="tag">${t}</span>`).join('');
+        // Spread thumbnail hues evenly around the color wheel so each card reads distinctly.
+        const hue = (i * 47) % 360;
         return `
         <article class="carousel-card">
-            <div class="project-card-top">
-                <div class="project-icon" aria-hidden="true"><i class="${p.icon}"></i></div>
-                ${wipBadge}
+            <div class="project-thumb" style="--thumb-hue:${hue}" aria-hidden="true">
+                <i class="${p.icon}"></i>
             </div>
-            <h3>${p.title}</h3>
-            <p>${p.description}</p>
-            <div class="project-tags" aria-label="Technologies">${tags}</div>
-            <div class="project-links">${githubBtn}${liveBtn}</div>
+            <div class="carousel-card-body">
+                <div class="project-card-top">
+                    <div class="project-icon" aria-hidden="true"><i class="${p.icon}"></i></div>
+                    ${wipBadge}
+                </div>
+                <h3>${p.title}</h3>
+                <p>${p.description}</p>
+                <div class="project-tags" aria-label="Technologies">${tags}</div>
+                <div class="project-links">${githubBtn}${liveBtn}</div>
+            </div>
         </article>`;
     }).join('');
     initCarousel();
@@ -1419,34 +1607,84 @@ function initCarousel() {
     const prevBtn = document.getElementById('carousel-prev');
     const nextBtn = document.getElementById('carousel-next');
     const progressFill = document.getElementById('carousel-progress-fill');
+    const container = document.getElementById('carousel-container');
     if (!track) return;
 
-    const CARD_SCROLL = 394; // card width + gap
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // QOL 1: measure the real card width + gap instead of a hardcoded number,
+    // so arrow/keyboard scrolling always advances exactly one card at any breakpoint.
+    let CARD_SCROLL = 394;
+    function measureCardScroll() {
+        const firstCard = track.querySelector('.carousel-card');
+        if (!firstCard) return;
+        const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0');
+        CARD_SCROLL = firstCard.getBoundingClientRect().width + gap;
+    }
+    measureCardScroll();
+
+    // QOL 2: keep that measurement correct across resizes/orientation changes.
+    let resizeTO = null;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTO);
+        resizeTO = setTimeout(() => { measureCardScroll(); updateEdgeState(); }, 150);
+    });
 
     // --- Arrow navigation ---
     prevBtn.addEventListener('click', () => {
-        track.scrollBy({ left: -CARD_SCROLL, behavior: 'smooth' });
+        track.scrollBy({ left: -CARD_SCROLL, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
     nextBtn.addEventListener('click', () => {
-        track.scrollBy({ left: CARD_SCROLL, behavior: 'smooth' });
+        track.scrollBy({ left: CARD_SCROLL, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
 
-    // --- Scroll progress + velocity blur ---
+    // QOL 3: disable the arrow buttons + fade the edge gradient once you can't scroll further that way.
+    function updateEdgeState() {
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const atStart = track.scrollLeft <= 1;
+        const atEnd = track.scrollLeft >= maxScroll - 1;
+        prevBtn.disabled = atStart;
+        nextBtn.disabled = atEnd;
+        if (container) {
+            container.classList.toggle('at-start', atStart);
+            container.classList.toggle('at-end', atEnd || maxScroll <= 0);
+        }
+    }
+    updateEdgeState();
+
+    // --- Scroll progress + velocity glitch ---
     let lastScrollLeft = track.scrollLeft;
     let lastTime = performance.now();
-    let blurRAF = null;
-    let currentBlur = 0;
+    let glitchRAF = null;
+    let currentGlitch = 0; // 0..1 intensity
 
-    function decayBlur() {
-        currentBlur *= 0.82;
-        if (currentBlur < 0.08) {
-            currentBlur = 0;
-            track.style.setProperty('--scroll-blur', '0px');
-            blurRAF = null;
+    function applyGlitchVars(intensity) {
+        const jitterX  = (Math.random() - 0.5) * 10 * intensity;
+        const rx       = (Math.random() - 0.5) * 14 * intensity;
+        const bx       = (Math.random() - 0.5) * 14 * intensity;
+        const skew     = (Math.random() - 0.5) * 4 * intensity;
+        const sliceH   = Math.random() * 40 * intensity;
+        const sliceY   = (Math.random() - 0.5) * 30 * intensity;
+
+        track.style.setProperty('--glitch-intensity', intensity.toFixed(2));
+        track.style.setProperty('--glitch-tx', jitterX.toFixed(1) + 'px');
+        track.style.setProperty('--glitch-rx', rx.toFixed(1) + 'px');
+        track.style.setProperty('--glitch-bx', bx.toFixed(1) + 'px');
+        track.style.setProperty('--glitch-skew', skew.toFixed(2) + 'deg');
+        track.style.setProperty('--glitch-slice-h', sliceH.toFixed(1) + 'px');
+        track.style.setProperty('--glitch-slice-y', sliceY.toFixed(1) + '%');
+    }
+
+    function decayGlitch() {
+        currentGlitch *= 0.80;
+        if (currentGlitch < 0.03) {
+            currentGlitch = 0;
+            applyGlitchVars(0);
+            glitchRAF = null;
             return;
         }
-        track.style.setProperty('--scroll-blur', currentBlur.toFixed(2) + 'px');
-        blurRAF = requestAnimationFrame(decayBlur);
+        applyGlitchVars(currentGlitch);
+        glitchRAF = requestAnimationFrame(decayGlitch);
     }
 
     track.addEventListener('scroll', () => {
@@ -1454,26 +1692,39 @@ function initCarousel() {
         const maxScroll = track.scrollWidth - track.clientWidth;
         const pct = maxScroll > 0 ? (track.scrollLeft / maxScroll) * 100 : 0;
         progressFill.style.width = pct + '%';
+        updateEdgeState();
 
-        // Velocity-based motion blur
+        // QOL 4: skip the glitch effect entirely for reduced-motion users.
+        if (prefersReducedMotion) { lastScrollLeft = track.scrollLeft; return; }
+
+        // Velocity-based glitch intensity
         const now = performance.now();
         const dt = now - lastTime;
         const dx = Math.abs(track.scrollLeft - lastScrollLeft);
         const velocity = dt > 0 ? dx / dt : 0; // px/ms
 
-        const targetBlur = Math.min(velocity * 3, 5);
-        currentBlur += (targetBlur - currentBlur) * 0.4;
-        track.style.setProperty('--scroll-blur', currentBlur.toFixed(2) + 'px');
+        const targetGlitch = Math.min(velocity * 0.6, 1);
+        currentGlitch += (targetGlitch - currentGlitch) * 0.5;
+        applyGlitchVars(currentGlitch);
 
         lastScrollLeft = track.scrollLeft;
         lastTime = now;
 
-        if (!blurRAF && currentBlur > 0.05) {
-            blurRAF = requestAnimationFrame(decayBlur);
+        if (!glitchRAF && currentGlitch > 0.02) {
+            glitchRAF = requestAnimationFrame(decayGlitch);
         }
     }, { passive: true });
 
-    // --- Drag to scroll with momentum ---
+    // QOL 5: let a plain vertical mouse-wheel/trackpad scroll drive the horizontal carousel,
+    // so people don't need to know to hold Shift.
+    track.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+            track.scrollLeft += e.deltaY;
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // --- Drag to scroll with momentum (mouse + touch) ---
     let isDragging = false;
     let startX = 0;
     let scrollStart = 0;
@@ -1482,46 +1733,68 @@ function initCarousel() {
     let dragLastTime = 0;
     let hasDragged = false;
 
-    track.addEventListener('mousedown', (e) => {
-        if (e.target.closest('a, button')) return;
+    function dragStart(x, target) {
+        if (target && target.closest && target.closest('a, button')) return false;
         isDragging = true;
         hasDragged = false;
-        startX = e.pageX;
+        startX = x;
         scrollStart = track.scrollLeft;
-        dragLastX = e.pageX;
+        dragLastX = x;
         dragLastTime = performance.now();
         dragVelocity = 0;
         track.style.scrollSnapType = 'none';
         track.style.scrollBehavior = 'auto';
-        e.preventDefault();
-    });
+        track.classList.add('is-dragging'); // QOL 6: suppress text selection while dragging
+        return true;
+    }
 
-    window.addEventListener('mousemove', (e) => {
+    function dragMove(x) {
         if (!isDragging) return;
-        const dx = e.pageX - startX;
+        const dx = x - startX;
         if (Math.abs(dx) > 3) hasDragged = true;
         track.scrollLeft = scrollStart - dx;
 
         const now = performance.now();
         const dt = now - dragLastTime;
-        if (dt > 0) {
-            dragVelocity = (e.pageX - dragLastX) / dt;
-        }
-        dragLastX = e.pageX;
+        if (dt > 0) dragVelocity = (x - dragLastX) / dt;
+        dragLastX = x;
         dragLastTime = now;
-    });
+    }
 
-    window.addEventListener('mouseup', () => {
+    function dragEnd() {
         if (!isDragging) return;
         isDragging = false;
         track.style.scrollSnapType = '';
         track.style.scrollBehavior = '';
+        track.classList.remove('is-dragging');
 
-        const momentum = dragVelocity * 180;
-        if (Math.abs(momentum) > 25) {
-            track.scrollBy({ left: -momentum, behavior: 'smooth' });
+        if (!prefersReducedMotion) {
+            const momentum = dragVelocity * 180;
+            if (Math.abs(momentum) > 25) {
+                track.scrollBy({ left: -momentum, behavior: 'smooth' });
+            }
         }
+    }
+
+    track.addEventListener('mousedown', (e) => {
+        if (dragStart(e.pageX, e.target)) e.preventDefault();
     });
+    window.addEventListener('mousemove', (e) => dragMove(e.pageX));
+    window.addEventListener('mouseup', dragEnd);
+    // QOL 7: release the drag if the mouse leaves the window or the tab loses focus,
+    // so the carousel never gets stuck thinking it's still being dragged.
+    window.addEventListener('blur', dragEnd);
+    document.addEventListener('mouseleave', dragEnd);
+
+    // QOL 8: native touch swipe support for mobile (previously mouse-only).
+    track.addEventListener('touchstart', (e) => {
+        dragStart(e.touches[0].pageX, e.target);
+    }, { passive: true });
+    track.addEventListener('touchmove', (e) => {
+        if (isDragging) dragMove(e.touches[0].pageX);
+    }, { passive: true });
+    track.addEventListener('touchend', dragEnd);
+    track.addEventListener('touchcancel', dragEnd);
 
     // Prevent accidental link clicks after dragging
     track.addEventListener('click', (e) => {
@@ -1537,11 +1810,19 @@ function initCarousel() {
     track.setAttribute('role', 'region');
     track.setAttribute('aria-label', 'Project carousel — use arrow keys to navigate');
     track.addEventListener('keydown', (e) => {
+        const behavior = prefersReducedMotion ? 'auto' : 'smooth';
         if (e.key === 'ArrowLeft') {
-            track.scrollBy({ left: -CARD_SCROLL, behavior: 'smooth' });
+            track.scrollBy({ left: -CARD_SCROLL, behavior });
             e.preventDefault();
         } else if (e.key === 'ArrowRight') {
-            track.scrollBy({ left: CARD_SCROLL, behavior: 'smooth' });
+            track.scrollBy({ left: CARD_SCROLL, behavior });
+            e.preventDefault();
+        } else if (e.key === 'Home') {
+            // QOL 9: jump straight to the first/last project instead of arrow-mashing.
+            track.scrollTo({ left: 0, behavior });
+            e.preventDefault();
+        } else if (e.key === 'End') {
+            track.scrollTo({ left: track.scrollWidth, behavior });
             e.preventDefault();
         }
     });
@@ -1632,7 +1913,13 @@ function applyTheme(i) {
 }
 function initTheme() {
     const saved = localStorage.getItem('ts-theme');
-    themeIdx = saved !== null ? parseInt(saved, 10) : 0;
+    if (saved !== null) {
+        themeIdx = parseInt(saved, 10);
+    } else {
+        // QOL 1: first-time visitors get a theme matching their OS preference instead of always Light.
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        themeIdx = prefersDark ? THEMES.findIndex(t => t.key === 'dark') : 0;
+    }
     applyTheme(themeIdx);
 }
 document.getElementById('theme-toggle').addEventListener('click', () => {
@@ -1645,41 +1932,99 @@ const navToggle  = document.getElementById('nav-toggle');
 const navLinks   = document.getElementById('nav-links-list');
 const navControls = document.querySelector('.nav-controls');
 
+function closeMobileNav() {
+    navLinks.classList.remove('open');
+    navControls.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.querySelector('i').className = 'fas fa-bars';
+}
+
 navToggle.addEventListener('click', () => {
     const open = navLinks.classList.toggle('open');
     navControls.classList.toggle('open');
     navToggle.setAttribute('aria-expanded', open);
     navToggle.querySelector('i').className = open ? 'fas fa-times' : 'fas fa-bars';
 });
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    navControls.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.querySelector('i').className = 'fas fa-bars';
-}));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
+
+// QOL 2: tapping/clicking anywhere outside the open mobile menu closes it.
+document.addEventListener('click', (e) => {
+    const isOpen = navLinks.classList.contains('open');
+    if (isOpen && !e.target.closest('nav')) closeMobileNav();
+});
+
+// QOL 3: Escape closes the mobile menu and returns focus to the toggle button.
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+        closeMobileNav();
+        navToggle.focus();
+    }
+});
+
+// QOL 4: resizing back to desktop width auto-closes a menu left open on mobile.
+let navResizeTO = null;
+window.addEventListener('resize', () => {
+    clearTimeout(navResizeTO);
+    navResizeTO = setTimeout(() => {
+        if (window.innerWidth > 767) closeMobileNav();
+    }, 150);
+});
 
 /* ── SCROLL BEHAVIOURS ───────────────────────────── */
 const navbar     = document.getElementById('navbar');
 const scrollBtn  = document.getElementById('scroll-to-top');
 const progressBar = document.getElementById('scroll-progress-bar');
+const prefersReducedMotionGlobal = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-window.addEventListener('scroll', () => {
+// QOL 5: batch scroll-driven DOM updates into a single requestAnimationFrame per frame
+// instead of running on every raw scroll event, which is cheaper on long pages.
+let scrollTicking = false;
+function handleScroll() {
     const st  = window.scrollY;
     const max = document.documentElement.scrollHeight - window.innerHeight;
     navbar.classList.toggle('scrolled', st > 20);
     scrollBtn.classList.toggle('visible', st > 300);
-    progressBar.style.width = (st / max * 100) + '%';
+    progressBar.style.width = (max > 0 ? (st / max * 100) : 0) + '%';
+    scrollTicking = false;
+}
+window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+        requestAnimationFrame(handleScroll);
+        scrollTicking = true;
+    }
 }, {passive:true});
 
-scrollBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+scrollBtn.addEventListener('click', () => {
+    // QOL 6: honor reduced-motion here too, matching the carousel's behaviour.
+    window.scrollTo({top:0, behavior: prefersReducedMotionGlobal ? 'auto' : 'smooth'});
+});
 
 /* ── SMOOTH ANCHOR SCROLL ────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
         const t = document.querySelector(a.getAttribute('href'));
-        if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+        if (t) { e.preventDefault(); t.scrollIntoView({behavior: prefersReducedMotionGlobal ? 'auto' : 'smooth'}); }
     });
 });
+
+/* ── ACTIVE NAV-LINK HIGHLIGHTING ─────────────────── */
+// QOL 7: highlight whichever section is currently in view as the person scrolls.
+(function initActiveNav() {
+    const sections = ['about','portfolio','skills','posts','contact']
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+    const links = [...navLinks.querySelectorAll('a')];
+    if (!sections.length || !links.length) return;
+
+    const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
+        });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+    sections.forEach(s => navObserver.observe(s));
+})();
 
 /* ── FADE-IN OBSERVER ────────────────────────────── */
 function observeFadeIns() {
@@ -1691,11 +2036,46 @@ function observeFadeIns() {
     document.querySelectorAll('.fade-in:not(.visible)').forEach(el => obs.observe(el));
 }
 
+/* ── HERO STAT COUNT-UP ──────────────────────────── */
+function initStatCounters() {
+    const nums = document.querySelectorAll('.stat-num[data-target]');
+    if (!nums.length) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            obs.unobserve(entry.target);
+            const el = entry.target;
+            const target = parseInt(el.dataset.target, 10);
+            const suffix = el.dataset.suffix || '';
+            if (reduced || !target) { el.textContent = target + suffix; return; }
+
+            const duration = 1100;
+            const startTime = performance.now();
+            function tick(now) {
+                const p = Math.min((now - startTime) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+                el.textContent = Math.round(target * eased) + suffix;
+                if (p < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        });
+    }, { threshold: 0.4 });
+
+    nums.forEach(el => obs.observe(el));
+}
+
 /* ── CONTACT FORM ────────────────────────────────── */
-document.getElementById('contact-form').addEventListener('submit', async function(e) {
+const contactForm = document.getElementById('contact-form');
+const formStatus = document.getElementById('form-status');
+contactForm.addEventListener('input', () => {
+    if (formStatus.style.display === 'block') formStatus.style.display = 'none';
+});
+contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn    = document.getElementById('contact-submit');
-    const status = document.getElementById('form-status');
+    const status = formStatus;
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Sending...';
     try {
@@ -1722,9 +2102,14 @@ const cookieBanner = document.getElementById('cookie-banner');
 if (!localStorage.getItem('ts-cookie')) {
     setTimeout(() => cookieBanner.classList.add('visible'), 1200);
 }
-document.getElementById('cookie-accept').addEventListener('click', () => {
+function acceptCookies() {
     localStorage.setItem('ts-cookie', '1');
     cookieBanner.classList.remove('visible');
+}
+document.getElementById('cookie-accept').addEventListener('click', acceptCookies);
+// QOL 10: Escape dismisses the cookie banner too, same as clicking the accept button.
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && cookieBanner.classList.contains('visible')) acceptCookies();
 });
 
 /* ── TYPED.JS ────────────────────────────────────── */
@@ -1736,22 +2121,125 @@ new Typed('#typed-text', {
 /* ── FOOTER YEAR ─────────────────────────────────── */
 document.getElementById('footer-year').textContent = new Date().getFullYear();
 
+/* ── HERO NETWORK BACKGROUND ─────────────────────── */
+function initHeroNetwork() {
+    const canvas = document.getElementById('hero-network');
+    const hero = document.getElementById('home');
+    if (!canvas || !hero) return;
+    const ctx = canvas.getContext('2d');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let nodes = [];
+    let rafId = null;
+
+    function accentColor() {
+        return getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#0d9488';
+    }
+    function hexToRgb(hex) {
+        // supports #rgb and #rrggbb; falls back to a sensible teal if parsing fails
+        const m = hex.replace('#','').match(/.{1,2}/g);
+        if (!m) return [13,148,136];
+        if (hex.length === 4) return m.map(c => parseInt(c+c,16));
+        return m.map(c => parseInt(c,16));
+    }
+
+    function resize() {
+        w = hero.clientWidth; h = hero.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const density = 16000; // px^2 per node — keeps it sparse and subtle
+        const count = Math.max(18, Math.min(60, Math.round((w * h) / density)));
+        nodes = Array.from({length: count}, () => ({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.18,
+            vy: (Math.random() - 0.5) * 0.18,
+        }));
+    }
+
+    function drawFrame(animate) {
+        ctx.clearRect(0, 0, w, h);
+        const [r, g, b] = hexToRgb(accentColor());
+        const linkDist = Math.min(150, w / 6);
+
+        if (animate) {
+            nodes.forEach(n => {
+                n.x += n.vx; n.y += n.vy;
+                if (n.x < 0 || n.x > w) n.vx *= -1;
+                if (n.y < 0 || n.y > h) n.vy *= -1;
+            });
+        }
+
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < linkDist) {
+                    ctx.strokeStyle = `rgba(${r},${g},${b},${0.16 * (1 - dist / linkDist)})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[i].x, nodes[i].y);
+                    ctx.lineTo(nodes[j].x, nodes[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        ctx.fillStyle = `rgba(${r},${g},${b},0.55)`;
+        nodes.forEach(n => {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2);
+            ctx.fill();
+        });
+    }
+
+    function loop() {
+        drawFrame(true);
+        rafId = requestAnimationFrame(loop);
+    }
+
+    resize();
+    if (reduced) {
+        drawFrame(false); // one static frame — no motion for reduced-motion users
+    } else {
+        loop();
+    }
+
+    let resizeTO = null;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTO);
+        resizeTO = setTimeout(() => {
+            resize();
+            if (reduced) drawFrame(false);
+        }, 200);
+    });
+}
+
 /* ── INIT ────────────────────────────────────────── */
 initTheme();
 renderProjects();
 renderSkills();
 fetchPosts();
 observeFadeIns();
+initStatCounters();
+initHeroNetwork();
 </script>
 
 <!-- Preloader dismiss -->
 <script>
-window.addEventListener('load', () => {
+function dismissPreloader() {
     const pre = document.getElementById('preloader');
+    if (!pre || pre.dataset.dismissed) return;
+    pre.dataset.dismissed = '1';
     pre.style.opacity = '0';
     document.body.classList.remove('loading');
     setTimeout(() => pre.remove(), 500);
-});
+}
+window.addEventListener('load', dismissPreloader);
+// QOL: safety net — never let a slow/blocked asset leave the page stuck on the loading screen.
+setTimeout(dismissPreloader, 6000);
 </script>
 
 <script type="application/ld+json">
