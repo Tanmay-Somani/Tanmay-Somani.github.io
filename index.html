@@ -17,7 +17,7 @@
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Light/Dark: Inter + Space Grotesk + Fraunces/JetBrains Mono (book). Funky: Share Tech Mono -->
@@ -2144,8 +2144,8 @@
                         <a href="https://medium.com/@tanmaysomani2003" target="_blank" rel="noopener noreferrer" class="social-link">
                             <i class="fab fa-medium" aria-hidden="true"></i> Medium
                         </a>
-                        <a href="https://twitter.com/TSVA0" target="_blank" rel="noopener noreferrer" class="social-link">
-                            <i class="fab fa-twitter" aria-hidden="true"></i> Twitter / X
+                        <a href="https://x.com/TSVA0" target="_blank" rel="noopener noreferrer" class="social-link">
+                            <i class="fab fa-x-twitter" aria-hidden="true"></i> X (Twitter)
                         </a>
                         <a href="mailto:tanmaysomani2003@gmail.com" class="social-link">
                             <i class="fas fa-envelope" aria-hidden="true"></i> tanmaysomani2003@gmail.com
@@ -2190,11 +2190,14 @@
             <a href="https://www.linkedin.com/in/tcode/" target="_blank" rel="noopener noreferrer" class="footer-icon-link" aria-label="LinkedIn">
                 <i class="fab fa-linkedin" aria-hidden="true"></i>
             </a>
-            <a href="https://twitter.com/TSVA0" target="_blank" rel="noopener noreferrer" class="footer-icon-link" aria-label="Twitter">
-                <i class="fab fa-twitter" aria-hidden="true"></i>
+            <a href="https://x.com/TSVA0" target="_blank" rel="noopener noreferrer" class="footer-icon-link" aria-label="X (Twitter)">
+                <i class="fab fa-x-twitter" aria-hidden="true"></i>
             </a>
             <a href="https://medium.com/@tanmaysomani2003" target="_blank" rel="noopener noreferrer" class="footer-icon-link" aria-label="Medium">
                 <i class="fab fa-medium" aria-hidden="true"></i>
+            </a>
+            <a href="https://substack.com/@tanmaysomani2k3" target="_blank" rel="noopener noreferrer" class="footer-icon-link" aria-label="Substack">
+                <i class="fab fa-substack" aria-hidden="true"></i>
             </a>
             <a href="mailto:tanmaysomani2003@gmail.com" class="footer-icon-link" aria-label="Email">
                 <i class="fas fa-envelope" aria-hidden="true"></i>
@@ -2958,34 +2961,43 @@ function renderSkills() {
 async function fetchPosts() {
     const container = document.getElementById('posts-row');
     const MEDIUM_RSS = 'https://medium.com/feed/@tanmaysomani2003';
-    const PROXY = `https://api.allorigins.win/get?url=${encodeURIComponent(MEDIUM_RSS)}`;
-    try {
-        const res = await fetch(PROXY);
-        if (!res.ok) throw new Error('proxy failed');
-        const data = await res.json();
-        const xml = new DOMParser().parseFromString(data.contents, 'text/xml');
-        const items = [...xml.querySelectorAll('item')].slice(0, 5);
-        if (!items.length) throw new Error('no items');
-        container.innerHTML = items.map(item => {
-            const title = item.querySelector('title')?.textContent || 'Untitled';
-            const link  = item.querySelector('link')?.textContent || '#';
-            const date  = new Date(item.querySelector('pubDate')?.textContent)
-                .toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric'});
-            return `
-            <article class="post-card fade-in">
-                <div class="post-platform"><i class="fab fa-medium" aria-hidden="true"></i> Medium</div>
-                <h3>${title}</h3>
-                <p class="post-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> ${date}</p>
-                <a href="${link}" target="_blank" rel="noopener noreferrer" class="btn-ghost"
-                   style="align-self:flex-start;padding:0.42rem 0.9rem;font-size:0.78rem;"
-                   aria-label="Read: ${title}">
-                    Read <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-            </article>`;
-        }).join('');
-        observeFadeIns();
-    } catch(err) {
-        console.warn('Posts unavailable:', err);
+    const enc = encodeURIComponent(MEDIUM_RSS);
+    /* CORS-friendly sources tried in order; Medium blocks direct browser reads */
+    const SOURCES = [
+        { url: `https://api.rss2json.com/v1/api.json?rss_url=${enc}`, kind: 'rss2json' },
+        { url: `https://api.allorigins.win/get?url=${enc}`,           kind: 'allorigins' },
+        { url: `https://corsproxy.io/?url=${enc}`,                    kind: 'corsproxy' }
+    ];
+    let items = null;
+    for (const src of SOURCES) {
+        try {
+            const res = await fetch(src.url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            if (src.kind === 'rss2json') {
+                const data = await res.json();
+                items = (data.items || []).slice(0, 5).map(it => ({
+                    title: it.title || 'Untitled',
+                    link:  it.link || '#',
+                    date:  it.pubDate || ''
+                }));
+            } else {
+                const text = (src.kind === 'allorigins') ? (await res.json()).contents : await res.text();
+                const xml = new DOMParser().parseFromString(text, 'text/xml');
+                items = [...xml.querySelectorAll('item')].slice(0, 5).map(item => ({
+                    title: item.querySelector('title')?.textContent || 'Untitled',
+                    link:  item.querySelector('link')?.textContent || '#',
+                    date:  item.querySelector('pubDate')?.textContent || ''
+                }));
+            }
+            if (items.length) break;
+            items = null;
+        } catch (err) {
+            console.warn(`Posts source failed (${src.kind}):`, err);
+            items = null;
+        }
+    }
+    if (!items) {
+        console.warn('Posts unavailable: all sources failed');
         container.innerHTML = `
         <article class="post-card" style="grid-column:1/-1;text-align:center;padding:2.5rem;">
             <p style="color:var(--text-muted);margin-bottom:1.25rem;">Could not load posts right now.</p>
@@ -2994,7 +3006,25 @@ async function fetchPosts() {
                 Read on Medium <i class="fas fa-external-link-alt" aria-hidden="true"></i>
             </a>
         </article>`;
+        return;
     }
+    container.innerHTML = items.map(it => {
+        const when = it.date
+            ? new Date(it.date).toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric'})
+            : '';
+        return `
+            <article class="post-card fade-in">
+                <div class="post-platform"><i class="fab fa-medium" aria-hidden="true"></i> Medium</div>
+                <h3>${it.title}</h3>
+                <p class="post-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> ${when}</p>
+                <a href="${it.link}" target="_blank" rel="noopener noreferrer" class="btn-ghost"
+                   style="align-self:flex-start;padding:0.42rem 0.9rem;font-size:0.78rem;"
+                   aria-label="Read: ${it.title}">
+                    Read <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </article>`;
+    }).join('');
+    observeFadeIns();
 }
 
 /* ── THEME CYCLING ───────────────────────────────── */
@@ -3103,10 +3133,25 @@ scrollBtn.addEventListener('click', () => {
 /* ── SMOOTH ANCHOR SCROLL ────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-        const t = document.querySelector(a.getAttribute('href'));
+        let t = document.querySelector(a.getAttribute('href'));
+        // QOL: portfolio jumps land on the flip book itself, not the section heading.
+        if (t && t.id === 'portfolio') {
+            const book = document.getElementById('flip-book');
+            if (book && book.offsetParent !== null) t = book;
+        }
         if (t) { e.preventDefault(); t.scrollIntoView({behavior: prefersReducedMotionGlobal ? 'auto' : 'smooth'}); }
     });
 });
+
+// QOL: arriving via an external #portfolio link (sitemap, 404) also lands on the book.
+function initBookLanding() {
+    if (location.hash !== '#portfolio') return;
+    const book = document.getElementById('flip-book');
+    if (!book || book.offsetParent === null) return;
+    requestAnimationFrame(() => {
+        book.scrollIntoView({behavior: prefersReducedMotionGlobal ? 'auto' : 'smooth', block: 'start'});
+    });
+}
 
 /* ── ACTIVE NAV-LINK HIGHLIGHTING ─────────────────── */
 // QOL 7: highlight whichever section is currently in view as the person scrolls.
@@ -3353,6 +3398,7 @@ fetchPosts();
 observeFadeIns();
 initStatCounters();
 initResumeSplit();
+initBookLanding();
 initHeroNetwork();
 </script>
 
@@ -3377,7 +3423,7 @@ setTimeout(dismissPreloader, 6000);
     "name":"Tanmay Somani","jobTitle":"Data Scientist",
     "description":"Data Scientist and AI/ML Engineer building intelligent, impactful systems.",
     "url":"https://tanmay-somani.github.io","image":"images/test.PNG",
-    "sameAs":["https://github.com/Tanmay-Somani","https://www.linkedin.com/in/tcode/","https://twitter.com/TSVA0","https://medium.com/@tanmaysomani2003"],
+    "sameAs":["https://github.com/Tanmay-Somani","https://www.linkedin.com/in/tcode/","https://x.com/TSVA0","https://medium.com/@tanmaysomani2003","https://substack.com/@tanmaysomani2k3"],
     "knowsAbout":["Python","Machine Learning","Data Science","Artificial Intelligence","TensorFlow","Scikit-learn","Pandas","OpenCV","Reinforcement Learning","Flask","SQL"]
 }
 </script>
