@@ -1026,13 +1026,15 @@
             font-size: clamp(11px, 1.85vw, 16px);
             display: flex; flex-direction: column; align-items: center;
             position: relative;
-            container-type: inline-size; /* sheets size type off the book width */
         }
 
         .book-pages {
             position: relative;
             width: min(var(--bw), 100%);
             aspect-ratio: 880 / 528;
+            /* cq units must track the BOOK's true width (this box), not the
+               scene, which can stretch wider than --bw on desktop */
+            container-type: inline-size;
         }
 
         /* ── z0 drawn base ─────────────────────────────── */
@@ -1181,17 +1183,26 @@
         }
         .left-sheet  { padding-left: 2.7em; padding-right: 1.3em; }
         .right-sheet { padding-right: 2.7em; padding-left: 1.3em; }
-        /* Vertical centring that degrades gracefully: when content is shorter
-           than the page it floats to the middle; when it overflows, auto
-           margins collapse to zero and the top stays anchored (no clipping).
-           Media pages instead stretch their body so screenshots fill the page. */
+        /* Body sizing, with a real safety net: when content is shorter than
+           the page it floats to the middle (auto margins); when it overflows,
+           min-height:0 lets the body shrink and overflow-y turns it into a
+           scroll container - nothing is ever silently clipped. Text pages
+           stretch instead so .btn-row's margin-top:auto genuinely pins the
+           action row to the page's bottom edge; the TOC title page re-centres. */
         .sheet-body {
             display: flex; flex-direction: column;
-            min-width: 0; width: 100%;
+            min-width: 0; min-height: 0; width: 100%;
             flex: 0 1 auto;
             margin: auto 0;
+            overflow-y: auto; /* scroll fallback: never lose content */
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-strong) transparent;
         }
+        .sheet-body::-webkit-scrollbar { width: 4px; }
+        .sheet-body::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+        .left-sheet .sheet-body { flex: 1 1 auto; margin: 0; }
         .right-sheet .sheet-body { flex: 1 1 auto; margin: 0; }
+        .toc-title .sheet-body { flex: 0 1 auto; margin: auto 0; }
 
         .kicker {
             display: block;
