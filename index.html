@@ -1209,6 +1209,14 @@
         .right-sheet .sheet-body { flex: 1 1 auto; margin: 0; }
         .toc-title .sheet-body { flex: 0 1 auto; margin: auto 0; }
 
+        /* Ink veil: on first mount the codex shows bare paper for one second,
+           then all page contents fade in together. Reduced-motion users never
+           get the pending class, so nothing transitions for them. */
+        .sheet-body, .cover-frame, .folio { transition: opacity 0.55s ease; }
+        #flip-book.ink-pending .sheet-body,
+        #flip-book.ink-pending .cover-frame,
+        #flip-book.ink-pending .folio { opacity: 0; }
+
         .kicker {
             display: block;
             font-family: 'JetBrains Mono', monospace;
@@ -2905,6 +2913,15 @@ function buildBook() {
     });
 
     initSheetSlideshows(track);
+
+    /* Ink veil: hold page contents invisible for ~1s after the codex mounts,
+       so first paint shows finished paper instead of half-set type; then the
+       ink fades in as one piece. */
+    const sceneEl = document.getElementById('flip-book');
+    if (sceneEl && !prefersReducedMotionGlobal) {
+        sceneEl.classList.add('ink-pending');
+        setTimeout(() => sceneEl.classList.remove('ink-pending'), 1000);
+    }
 }
 
 /* ── SHEET SLIDESHOWS (multi-screenshot projects) ── */
