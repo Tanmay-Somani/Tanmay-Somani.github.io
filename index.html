@@ -27,6 +27,11 @@
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TZDBY4P7B1');</script>
 
     <style>
+        /* The hidden attribute MUST always win: author display rules
+           (e.g. .book-scene's flex) would otherwise override the browser
+           default and leave "hidden" elements visible as empty shells. */
+        [hidden] { display: none !important; }
+
         /* ============================================================
            DESIGN TOKENS
            ============================================================
@@ -2935,7 +2940,10 @@ function initSheetSlideshows(root) {
 
 let bookBuilt = false;
 function updatePortfolioMode() {
-    const useBook = window.innerWidth >= 640; // flips are JS-driven — no browser gate needed
+    // Book needs BOTH width and height: phones in landscape (tall enough to
+    // pass a width check alone) still get the carousel instead of the book.
+    const shortSide = Math.min(window.innerWidth, window.innerHeight);
+    const useBook = shortSide >= 600;
     const scene = document.getElementById('flip-book');
     const fallback = document.getElementById('carousel-container');
     if (!scene || !fallback) return;
