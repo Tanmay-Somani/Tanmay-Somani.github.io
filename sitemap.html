@@ -1,152 +1,480 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Sitemap - Tanmay Somani's Portfolio</title>
-    <meta name="description" content="Tanmay Somani's Data Science Portfolio Sitemap" />
-    <meta name="keywords" content="Tanmay Somani, Data Science, Portfolio, Sitemap" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap | Tanmay Somani</title>
+    <meta name="description" content="Full sitemap of Tanmay Somani's portfolio - pages, sections, all projects, and social profiles.">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Your existing CSS styles remain unchanged */
-        * {box-sizing: border-box !important;}
-        html {font-family: sans-serif;}
-        body { background:#f1eee6; max-width:980px; margin:0 auto; padding:5px; font: 14px ;font-family: 'Comfortaa', sans-serif; min-height: 100%; }
-        h1 { font-size: 26px; }
-
-        div.footerinfo { margin-top:16px; color:#666; font-size:12px; text-align:right; }
-        div.footerinfo * { font-size:12px; }
-        .sitemap{margin:5em 0}
-        .primaryNav{clear:both;width:100%;margin-top:3em 0}
-        .primaryNav #home{position:absolute;margin-top:-3em;margin-bottom:0;min-width:14.5em;width:100%}
-        .primaryNav #home:before{display:none}
-        .primaryNav #home.long-cell:before{display:block;position:absolute;border-width:0;border-color:#ccc;border-style:solid;z-index:-1;border-left-width:2px;border-top-width:2px;top:1.375em}
-        @media screen and (max-width:1111px){.primaryNav #home.long-cell:before{left:-40px;box-shadow:-10px 0 0 0 #fff}}
-        .primaryNav #home img{float:left;margin-right:4px}
-        .primaryNav li a {color: #4a47a3;text-decoration: none;transition: color 0.3s ease;}
-        .primaryNav li a:hover {color: #363470;}
-        .primaryNav ul{display:flex;flex-wrap:wrap;list-style:none;position:relative;padding-inline-start:40px}
-        .primaryNav li{flex:1;flex-basis:14.5em;padding-right:1.25em;position:relative;min-width:14.5em}
-        .primaryNav li ul li{min-width:12.5em}
-        .primaryNav li ul li ul li{min-width:10.5em}
-        .primaryNav>ul>li{margin-top:3em}
-        .primaryNav li a{margin:0;padding:.875em .9375em .9375em .9375em;display:block;font-size:.9375em;background:#fff;border:1px solid #ccc;border-radius:3px;box-shadow:0 3px 3px #666;text-decoration:none}
-        .primaryNav li a:hover{box-shadow:0 3px 3px 1px #666}
-        .primaryNav a:link:after,.primaryNav a:visited:after,.utilityNav a:link:after,.utilityNav a:visited:after{display:block;font-weight:600;font-size:.75em;margin-top:.25em;word-wrap:break-word;color:#666}
-        .primaryNav ul ul{display:block}
-        .primaryNav ul ul li{padding-top:.9875em;padding-right:0}
-        .primaryNav ul ul li:first-child{padding-top:2em}
-        .primaryNav ul ul ul{margin-top:.6em;padding-top:.6em;padding-bottom:.625em}
-        .primaryNav ul ul ul li{padding-top:.3125em;padding-bottom:.3125em}
-        .primaryNav ul ul ul li a{font-size:.75em;padding:.75em;min-width:90%;width:auto;margin-right:0;margin-left:auto}
-        .primaryNav ul ul ul li:first-child{padding-top:1em}
-        .primaryNav ul ul ul li a:link:after,.primaryNav ul ul ul li a:visited:after{font-size:.75em}
-        .primaryNav ul ul ul ul{margin-top:0;padding-top:.3125em;padding-bottom:.3125em}
-        .primaryNav ul ul ul ul li a{padding:.75em;min-width:80%;width:auto}
-        .primaryNav ul ul ul ul li a:link:after,.primaryNav ul ul ul ul li a:visited:after{display:none}
-        .primaryNav ul li:after,.primaryNav ul li:before,.primaryNav ul:after,.primaryNav ul:before{display:block;content:'';position:absolute;border-width:0;border-color:#ccc;border-style:solid;z-index:-2}
-        .primaryNav>ul>li:before{height:1.375em;top:-1.375em;right:calc(50% + .625em);width:calc(100% - 2px);border-top-width:2px;border-right-width:2px}
-        .primaryNav>ul>li:first-child+li:before{border-top-width:0;height:5em;top:-5em}
-        .primaryNav ul ul li:after{width:50%;height:.9875em;top:0;right:1px;border-left-width:2px}
-        .primaryNav ul ul li:first-child:before{width:50%;height:1.3125em;top:.9875em;right:1px;border-left-width:2px}
-        .primaryNav>ul>li:last-child:after{border-bottom-width:0}
-        .primaryNav ul ul ul li:before{width:calc(50% - 15px)!important;height:calc(100% - 2px);top:-50%;left:0;border-left-width:2px;border-bottom-width:2px}
-        .primaryNav ul ul ul li:first-child:before{height:2.125em;top:-1px;border-top-width:2px}
-        .primaryNav ul ul ul:before{width:50%;height:1.25em;top:-10px;right:1px;border-left-width:2px}
-        .primaryNav ul ul ul li:after{border-width:0}
-        .primaryNav ul ul ul ul li:before,.primaryNav ul ul ul ul li:first-child:before{display:none}
-        .primaryNav ul ul ul ul:before{width:1px;height:calc(100% + 2.5em);top:-2.5em;left:0;border-left-width:2px}
-        @media screen and (max-width:30em){.primaryNav ul{display:block}.primaryNav li{width:100%;padding-right:0}.primaryNav #home{width:100%;position:relative;margin-bottom:-1em;margin-top:0}}
-        @media screen and (min-width:30em){.primaryNav>ul>li{max-width:50%}}
-        @media screen and (min-width:38.5em){.primaryNav>ul>li{max-width:33%}}
-        @media screen and (min-width:50em){.primaryNav>ul>li{max-width:25%}}
-        @media screen and (min-width:61em){.primaryNav>ul>li{max-width:20%}}
-        @media screen and (min-width:73em){.primaryNav>ul>li{max-width:16.66%}}
-        @media screen and (min-width:84.5em){.primaryNav>ul>li{max-width:14.285%}}
-        @media screen and (min-width:96em){.primaryNav>ul>li{max-width:12.5%}}
-        @media screen and (min-width:107.5em){.primaryNav>ul>li{max-width:11.11%}}
-        @media screen and (min-width:119em){.primaryNav>ul>li{max-width:10%}}
-    </style>
-</head>
-    <script type="text/javascript">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Share+Tech+Mono&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZDBY4P7B1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-TZDBY4P7B1');
+    </script>
+    <script>
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "t1v2afgs9r");
-        </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TZDBY4P7B1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    </script>
+    <style>
+        :root {
+            --bg-primary:    #f7f8fc;
+            --bg-secondary:  #eef0f7;
+            --bg-card:       #ffffff;
+            --text-primary:  #0b0f1a;
+            --text-secondary:#3a4160;
+            --text-muted:    #6b7399;
+            --text-on-accent:#ffffff;
+            --accent:        #0d9488;
+            --accent-hover:  #0f766e;
+            --accent-soft:   #ccfbf1;
+            --accent-glow:   rgba(13,148,136,0.18);
+            --border:        rgba(11,15,26,0.08);
+            --border-strong: rgba(11,15,26,0.18);
+            --shadow-sm: 0 1px 2px rgba(11,15,26,0.06);
+            --shadow-md: 0 4px 12px rgba(11,15,26,0.09);
+            --tag-bg:    rgba(13,148,136,0.10);
+            --tag-text:  #0f766e;
+            --grid-line: rgba(13,148,136,0.07);
+            --radius: 0px;
+            --stamp:    #a16207;
+            --scanline: rgba(255,41,84,0);
+        }
+        [data-theme="dark"] {
+            --bg-primary:    #0a0f1e;
+            --bg-secondary:  #0f1628;
+            --bg-card:       #141c30;
+            --text-primary:  #e8f0fe;
+            --text-secondary:#94a3c4;
+            --text-muted:    #4a5a80;
+            --text-on-accent:#0a0f1e;
+            --accent:        #22d3ee;
+            --accent-hover:  #06b6d4;
+            --accent-soft:   rgba(34,211,238,0.10);
+            --accent-glow:   rgba(34,211,238,0.22);
+            --border:        rgba(34,211,238,0.10);
+            --border-strong: rgba(34,211,238,0.22);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.40);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.55);
+            --tag-bg:    rgba(34,211,238,0.12);
+            --tag-text:  #22d3ee;
+            --grid-line: rgba(34,211,238,0.05);
+            --radius: 0px;
+            --stamp:      #fbbf24;
+            --scanline:   rgba(255,41,84,0);
+        }
+        [data-theme="funky"] {
+            --bg-primary:    #060512;
+            --bg-secondary:  #0a0818;
+            --bg-card:       #0d0a1f;
+            --text-primary:  #ff2954;
+            --text-secondary:#ff6b8a;
+            --text-muted:    #b23a54;
+            --text-on-accent:#060512;
+            --accent:        #ff2954;
+            --accent-hover:  #ff5c7a;
+            --accent-soft:   rgba(255,41,84,0.10);
+            --accent-glow:   rgba(255,41,84,0.30);
+            --border:        rgba(255,41,84,0.25);
+            --border-strong: rgba(255,41,84,0.50);
+            --shadow-sm: 0 0 6px rgba(255,41,84,0.20);
+            --shadow-md: 0 0 18px rgba(255,41,84,0.28);
+            --tag-bg:    rgba(255,41,84,0.12);
+            --tag-text:  #ff2954;
+            --grid-line: rgba(255,41,84,0.08);
+            --radius: 0px;
+            --crt-red: #ff2954;
+            --crt-blue: #2ee6ff;
+            --stamp:      #ffff00;
+            --scanline:   rgba(255,41,84,.05);
+        }
 
-    gtag('config', 'G-TZDBY4P7B1');
-</script>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s, color 0.3s;
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+            background: repeating-linear-gradient(0deg, var(--scanline) 0 1px, transparent 1px 3px);
+        }
+
+        .sm-wrap { max-width: 1100px; margin: 0 auto; padding: clamp(1.25rem, 4vw, 3rem) clamp(1rem, 4vw, 2.5rem) 3rem; }
+
+        .sm-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1.25rem;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border-strong);
+        }
+        .sm-brand {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .sm-brand:hover { text-decoration: underline; }
+        [data-theme="funky"] .sm-brand { color: var(--crt-red); text-shadow: 0 0 8px rgba(255,41,84,0.55); }
+        .sm-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .sm-back:hover { color: var(--accent); }
+
+        .sm-kicker {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.32em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        [data-theme="funky"] .sm-kicker { color: var(--crt-red); text-shadow: 0 0 8px rgba(255,41,84,0.55); }
+        .sm-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: clamp(2rem, 6vw, 2.75rem);
+            letter-spacing: -0.02em;
+            margin-bottom: 0.35rem;
+        }
+        .sm-sub { color: var(--text-muted); max-width: 62ch; margin-bottom: 2.75rem; }
+
+        .sm-section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 2.5rem 0 1.1rem;
+        }
+        .sm-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border-strong); }
+
+        .sm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 0.9rem;
+        }
+
+        .sm-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem 1.15rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+            text-decoration: none;
+            color: inherit;
+        }
+        .sm-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+        }
+
+        .sm-page-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+        .sm-page-link i { color: var(--accent); width: 1.1em; text-align: center; }
+        .sm-page-desc { color: var(--text-muted); font-size: 0.8rem; line-height: 1.5; }
+        [data-theme="funky"] .sm-card { font-family: 'Share Tech Mono', monospace; }
+
+        .sm-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+        .sm-proj-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        .sm-chip {
+            flex-shrink: 0;
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 0.18rem 0.55rem;
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            border-radius: var(--radius);
+            white-space: nowrap;
+        }
+        .sm-wip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.66rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--stamp);
+            white-space: nowrap;
+        }
+        .sm-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.9rem;
+            margin-top: auto;
+        }
+        .sm-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .sm-link i { font-size: 0.72rem; }
+        .sm-link:hover { color: var(--accent); }
+
+        .sm-footer {
+            margin-top: 3.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-strong);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .sm-footer a { color: var(--text-secondary); text-decoration: none; }
+        .sm-footer a:hover { color: var(--accent); }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; }
+            .sm-card:hover { transform: none; }
+        }
+    </style>
+</head>
 <body>
-<h1>Sitemap - Tanmay Somani's Data Science Portfolio</h1>
-<div class="sitemap">
-    <nav class="primaryNav">
-        <ul>
-            <li id="home"><a href="index.html"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjUxMHB4IiBoZWlnaHQ9IjUxMHB4IiB2aWV3Qm94PSIwIDAgNTEwIDUxMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEwIDUxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPGcgaWQ9ImhvbWUiPg0KCQk8cG9seWdvbiBwb2ludHM9IjIwNCw0NzEuNzUgMjA0LDMxOC43NSAzMDYsMzE4Ljc1IDMwNiw0NzEuNzUgNDMzLjUsNDcxLjc1IDQzMy41LDI2Ny43NSA1MTAsMjYyLjc1IDI1NSwzOC4yNSAwLDI2Ny43NSANCgkJCTc2LjUsMjY3Ljc1IDc2LjUsNDcxLjc1IAkJIi8+DQoJPC9nPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=" width="16" height="16" alt="homepage" /> Home page</a></li>
-            <li>
-                <a href="index.html#about">About</a>
-                <ul>
-                    <li><a href="index.html#about">About Me</a></li>
-                    <li><a href="assets/Tanmay_Somani_Resume.pdf">Resume</a></li>
-                </ul>
-            </li>
+    <div class="sm-wrap">
+        <header class="sm-topbar">
+            <a class="sm-brand" href="index.html">tanmay-somani.github.io</a>
+            <a class="sm-back" href="index.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to site</a>
+        </header>
 
-            <li>
-                <a href="index.html#portfolio">Portfolio</a>
-                <ul>
-                    <li>
-                        <a href="index.html#portfolio">Projects</a>
-                        <ul>
-                            <li><a href="https://github.com/WittyhacksCR004/WH020_Linktree">Book Recommender System</a></li>
-                            <li><a href="https://github.com/Tanmay-Somani/Basic_Face_Detection_Model">Facial Recognition Attendance</a></li>
-                            <li><a href="https://github.com/Tanmay-Somani/Weight_ml">Weight Journal and Dashboard</a></li>
-                            <li><a href="https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization">Stock Analysis Prediction</a></li>
-                            <li><a href="https://fact-wku3.onrender.com/">FACT: AI Content Predictor</a></li>
-                            <li><a href="#">Snake Game AI Agent (In Progress)</a></li>
-                            <li><a href="#">Placeholder Project 7 (In Progress)</a></li>
-                            <li><a href="#">Placeholder Project 8 (In Progress)</a></li>
-                            <li><a href="#">Placeholder Project 9 (In Progress)</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+        <p class="sm-kicker">&gt; SITE_MAP_INDEX</p>
+        <h1 class="sm-title">Sitemap</h1>
+        <p class="sm-sub">Every page, section, project, and profile in one place.
+            If it exists on this site, you will find a door to it below.</p>
 
-            <li>
-                <a href="index.html#tech-stack">Tech Stack</a>
-            </li>
+        <nav aria-label="Sitemap">
 
-            <li>
-                <a href="index.html#latest-posts">Latest Posts</a>
-            </li>
+            <h2 class="sm-section-label">Pages &amp; Sections</h2>
+            <div class="sm-grid">
+                <a class="sm-card" href="index.html">
+                    <span class="sm-page-link"><i class="fas fa-house" aria-hidden="true"></i> Home</span>
+                    <span class="sm-page-desc">Landing page and hero.</span>
+                </a>
+                <a class="sm-card" href="index.html#about">
+                    <span class="sm-page-link"><i class="fas fa-user" aria-hidden="true"></i> About</span>
+                    <span class="sm-page-desc">Who I am, plus resume download.</span>
+                </a>
+                <a class="sm-card" href="index.html#portfolio">
+                    <span class="sm-page-link"><i class="fas fa-book-open" aria-hidden="true"></i> Portfolio</span>
+                    <span class="sm-page-desc">Project Codex - the flip book.</span>
+                </a>
+                <a class="sm-card" href="index.html#skills">
+                    <span class="sm-page-link"><i class="fas fa-layer-group" aria-hidden="true"></i> Tech Stack</span>
+                    <span class="sm-page-desc">Tools and technologies I work with.</span>
+                </a>
+                <a class="sm-card" href="index.html#posts">
+                    <span class="sm-page-link"><i class="fas fa-newspaper" aria-hidden="true"></i> Latest Posts</span>
+                    <span class="sm-page-desc">Recent writing pulled from Medium.</span>
+                </a>
+                <a class="sm-card" href="index.html#contact">
+                    <span class="sm-page-link"><i class="fas fa-envelope" aria-hidden="true"></i> Contact</span>
+                    <span class="sm-page-desc">Get in touch directly.</span>
+                </a>
+                <a class="sm-card" href="AIMTechnocrats.html">
+                    <span class="sm-page-link"><i class="fas fa-lock" aria-hidden="true"></i> AIM Technocrats</span>
+                    <span class="sm-page-desc">Founder's secret page.</span>
+                </a>
+                <a class="sm-card" href="assets/Tanmay_Somani_Resume.pdf" download>
+                    <span class="sm-page-link"><i class="fas fa-file-pdf" aria-hidden="true"></i> Resume (PDF)</span>
+                    <span class="sm-page-desc">Current ATS-friendly resume.</span>
+                </a>
+                <a class="sm-card" href="sitemap.xml">
+                    <span class="sm-page-link"><i class="fas fa-code" aria-hidden="true"></i> sitemap.xml</span>
+                    <span class="sm-page-desc">Machine-readable site index.</span>
+                </a>
+            </div>
 
-            <li><a href="index.html#contact">Contact</a>
-                <ul>
-                    <li><a href="index.html#contact-form">Contact Form</a></li>
-                    <li><a href="https://topmate.io/tanmay_somani">Topmate</a></li>
-                </ul>
-            </li>
+            <h2 class="sm-section-label">Projects &middot; 21</h2>
+            <div class="sm-grid">
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Aetherium</h3><span class="sm-chip">FastAPI</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Aetherium-Colab-Agent" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">LifeLog-AI</h3><span class="sm-chip">LangChain</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/LifeLog-AI" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Context Manager</h3><span class="sm-chip">Python</span></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">TLDR Gmail Agent</h3><span class="sm-chip">Python</span></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Algorithmic Backtesting Engine</h3><span class="sm-chip">Python</span></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">AQI Analysis &amp; Forecast</h3><span class="sm-chip">TensorFlow</span></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Urban Heat Stress Router</h3><span class="sm-chip">GeoPandas</span></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Image Colorizer</h3><span class="sm-chip">Streamlit</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Image_Colorizer" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Gesture Game Hub</h3><span class="sm-chip">MediaPipe</span></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">FACT: AI Content Detector</h3><span class="sm-chip">Django</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://fact-wku3.onrender.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Substack RSS Scraper</h3><span class="sm-chip">Python</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://rss-substack-production.up.railway.app/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">LinkedIn Authority Engine</h3><span class="sm-chip">Gemini</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Linkedin_Automation_Engine" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Job Opportunity Dataset</h3><span class="sm-chip">Groq</span></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Book Recommender System</h3><span class="sm-chip">Python</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/WittyhacksCR004/WH020_Linktree" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Facial Recognition Attendance</h3><span class="sm-chip">Python</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Basic_Face_Detection_Model" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Weight Journal</h3><span class="sm-chip">CustomTkinter</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Weight_ml" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Growth Dashboard DeskApp</h3><span class="sm-chip">Tkinter</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Growth-Dashboard-DeskApp" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Stock Sentiment Analysis</h3><span class="sm-chip">NLP</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">License Plate Detection</h3><span class="sm-chip">Python</span></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Native AI Browser</h3><span class="sm-chip">Electron</span><span class="sm-wip"><i class="fas fa-pen-nib" aria-hidden="true"></i> In Progress</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/AI-native-broswer" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+                <article class="sm-card">
+                    <div class="sm-card-top"><h3 class="sm-proj-title">Snake Game AI Agent</h3><span class="sm-chip">PyTorch</span><span class="sm-wip"><i class="fas fa-pen-nib" aria-hidden="true"></i> In Progress</span></div>
+                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
+                </article>
+            </div>
 
-            <li>
-                <a href="#">Social Links</a>
-                <ul>
-                    <li><a href="https://github.com/Tanmay-Somani">GitHub</a></li>
-                    <li><a href="https://twitter.com/TSVA0">Twitter</a></li>
-                    <li><a href="https://medium.com/@tanmaysomani2003">Medium</a></li>
-                    <li><a href="mailto:tanmaysomani2003@gmail.com">Email</a></li>
-                    <li><a href="https://www.linkedin.com/in/tcode/">LinkedIn</a></li>
-                    <li><a href="https://substack.com/@tanmaysomani2k3">Substack</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-</div>
-<footer class="footerinfo">Created for Tanmay Somani's Data Science Portfolio | <a href="AIMTechnocrats.html"> Founder's Secret</a></footer>
+            <h2 class="sm-section-label">Socials</h2>
+            <div class="sm-grid">
+                <a class="sm-card" href="https://github.com/Tanmay-Somani" target="_blank" rel="noopener noreferrer">
+                    <span class="sm-page-link"><i class="fab fa-github" aria-hidden="true"></i> GitHub</span>
+                    <span class="sm-page-desc">Code, contributions, and this site's source.</span>
+                </a>
+                <a class="sm-card" href="https://www.linkedin.com/in/tcode/" target="_blank" rel="noopener noreferrer">
+                    <span class="sm-page-link"><i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn</span>
+                    <span class="sm-page-desc">Professional timeline and network.</span>
+                </a>
+                <a class="sm-card" href="https://x.com/TSVA0" target="_blank" rel="noopener noreferrer">
+                    <span class="sm-page-link"><i class="fab fa-x-twitter" aria-hidden="true"></i> X (Twitter)</span>
+                    <span class="sm-page-desc">Short thoughts and updates.</span>
+                </a>
+                <a class="sm-card" href="https://medium.com/@tanmaysomani2003" target="_blank" rel="noopener noreferrer">
+                    <span class="sm-page-link"><i class="fab fa-medium" aria-hidden="true"></i> Medium</span>
+                    <span class="sm-page-desc">Long-form articles on ML and building.</span>
+                </a>
+                <a class="sm-card" href="https://substack.com/@tanmaysomani2k3" target="_blank" rel="noopener noreferrer">
+                    <span class="sm-page-link"><i class="fab fa-substack" aria-hidden="true"></i> Substack</span>
+                    <span class="sm-page-desc">Newsletter editions worth the inbox space.</span>
+                </a>
+                <a class="sm-card" href="mailto:tanmaysomani2003@gmail.com">
+                    <span class="sm-page-link"><i class="fas fa-envelope" aria-hidden="true"></i> Email</span>
+                    <span class="sm-page-desc">tanmaysomani2003@gmail.com</span>
+                </a>
+                <a class="sm-card" href="https://topmate.io/tanmay_somani" target="_blank" rel="noopener noreferrer">
+                    <span class="sm-page-link"><i class="fas fa-calendar-check" aria-hidden="true"></i> Topmate</span>
+                    <span class="sm-page-desc">Book a 1:1 session with me.</span>
+                </a>
+            </div>
+
+        </nav>
+
+        <footer class="sm-footer">
+            <span>&copy; <span id="sm-year">2026</span> Tanmay Somani</span>
+            <span>Looking for something that isn't here? <a href="404.html">Try the void</a>.</span>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('sm-year').textContent = new Date().getFullYear();
+        (function () {
+            var themes = ['light', 'dark', 'funky'];
+            var idx = parseInt(localStorage.getItem('ts-theme'), 10);
+            if (!(idx >= 0 && idx < themes.length)) {
+                idx = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 1 : 0;
+            }
+            document.body.dataset.theme = themes[idx];
+        })();
+    </script>
 </body>
 </html>

@@ -3,106 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Page Not Found - Tanmay Somani</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>404 - Page Not Found | Tanmay Somani</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Page not found. Head back to Tanmay Somani's portfolio.">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Share+Tech+Mono&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* 1. REPLICATE THE CSS THEME VARIABLES FROM YOUR MAIN PAGE */
         :root {
-            --primary-color: #4a47a2;
-            --secondary-color: #ad62aa;
-            --accent-color: #f7a6a4;
-            --background-light: #f8f9fa;
-            --background-dark: #1a1a2e;
-            --text-light: #ffffff;
-            --text-dark: #16213e;
+            --bg-primary:    #f7f8fc;
+            --bg-secondary:  #eef0f7;
+            --bg-card:       #ffffff;
+            --bg-nav:        rgba(247,248,252,0.92);
+            --text-primary:  #0b0f1a;
+            --text-secondary:#3a4160;
+            --text-muted:    #6b7399;
+            --text-on-accent:#ffffff;
+            --accent:        #0d9488;
+            --accent-hover:  #0f766e;
+            --accent-soft:   #ccfbf1;
+            --accent-glow:   rgba(13,148,136,0.18);
+            --border:        rgba(11,15,26,0.08);
+            --border-strong: rgba(11,15,26,0.18);
+            --shadow-sm: 0 1px 2px rgba(11,15,26,0.06);
+            --shadow-md: 0 4px 12px rgba(11,15,26,0.09);
+            --shadow-lg: 0 12px 36px rgba(11,15,26,0.12);
+            --tag-bg:    rgba(13,148,136,0.10);
+            --tag-text:  #0f766e;
+            --grid-line: rgba(13,148,136,0.07);
+            --radius: 0px;
+            --scanline: rgba(255,41,84,0);
+        }
+        [data-theme="dark"] {
+            --bg-primary:    #0a0f1e;
+            --bg-secondary:  #0f1628;
+            --bg-card:       #141c30;
+            --bg-nav:        rgba(10,15,30,0.88);
+            --text-primary:  #e8f0fe;
+            --text-secondary:#94a3c4;
+            --text-muted:    #4a5a80;
+            --text-on-accent:#0a0f1e;
+            --accent:        #22d3ee;
+            --accent-hover:  #06b6d4;
+            --accent-soft:   rgba(34,211,238,0.10);
+            --accent-glow:   rgba(34,211,238,0.22);
+            --border:        rgba(34,211,238,0.10);
+            --border-strong: rgba(34,211,238,0.22);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.40);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.55);
+            --shadow-lg: 0 16px 56px rgba(0,0,0,0.65);
+            --tag-bg:    rgba(34,211,238,0.12);
+            --tag-text:  #22d3ee;
+            --grid-line: rgba(34,211,238,0.05);
+            --radius: 0px;
+            --scanline:   rgba(255,41,84,0);
+        }
+        [data-theme="funky"] {
+            --bg-primary:    #060512;
+            --bg-secondary:  #0a0818;
+            --bg-card:       #0d0a1f;
+            --bg-nav:        rgba(6,5,18,0.96);
+            --text-primary:  #ff2954;
+            --text-secondary:#ff6b8a;
+            --text-muted:    #b23a54;
+            --text-on-accent:#060512;
+            --accent:        #ff2954;
+            --accent-hover:  #ff5c7a;
+            --accent-soft:   rgba(255,41,84,0.10);
+            --accent-glow:   rgba(255,41,84,0.30);
+            --border:        rgba(255,41,84,0.25);
+            --border-strong: rgba(255,41,84,0.50);
+            --shadow-sm: 0 0 6px rgba(255,41,84,0.20);
+            --shadow-md: 0 0 18px rgba(255,41,84,0.28);
+            --shadow-lg: 0 0 42px rgba(255,41,84,0.38);
+            --tag-bg:    rgba(255,41,84,0.12);
+            --tag-text:  #ff2954;
+            --grid-line: rgba(255,41,84,0.08);
+            --radius: 0px;
+            --crt-red: #ff2954;
+            --crt-blue: #2ee6ff;
+            --scanline:   rgba(255,41,84,.05);
         }
 
-        /* Accent Theme Palettes */
-        [data-accent-theme="theme-green"] { --primary-color: #00695C; --secondary-color: #4DB6AC; --accent-color: #B2DFDB; }
-        [data-accent-theme="theme-orange"] { --primary-color: #E65100; --secondary-color: #FB8C00; --accent-color: #FFCC80; }
-        [data-accent-theme="theme-cyber"] { --primary-color: #6A1B9A; --secondary-color: #EC407A; --accent-color: #F48FB1; }
-        [data-accent-theme="theme-forest"] { --primary-color: #2E7D32; --secondary-color: #66BB6A; --accent-color: #C5E1A5; }
-        [data-accent-theme="theme-ocean"] { --primary-color: #0277BD; --secondary-color: #26C6DA; --accent-color: #B3E5FC; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* 2. STYLE THE 404 PAGE USING THE THEME VARIABLES */
         body {
-            font-family: 'Comfortaa', sans-serif;
-            /* Use the same gradient as your hero section */
-            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
-            color: var(--text-light); /* Use light text for the dark background */
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
             text-align: center;
-            margin: 0;
-            padding: 1rem;
-            transition: background 0.4s ease;
+            padding: clamp(1rem, 4vw, 3rem);
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        /* The body.dark-mode is not strictly needed for the background, but good for consistency */
-        body.dark-mode {
-            /* The gradient will simply update with the new theme colors */
+        /* CRT scanlines - only visible in funky mode via the token */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+            background: repeating-linear-gradient(0deg, var(--scanline) 0 1px, transparent 1px 3px);
         }
 
-        .container h1 {
-            font-size: clamp(6rem, 25vw, 10rem);
-            font-weight: 700;
-            /* The "404" text now uses the accent color */
-            color: var(--accent-color);
-            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: color 0.4s ease;
+        .nf-stage { max-width: 640px; }
+
+        .nf-kicker {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(0.72rem, 2.2vw, 0.85rem);
+            letter-spacing: 0.32em;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+        [data-theme="funky"] .nf-kicker {
+            color: var(--crt-red);
+            text-shadow: 0 0 8px rgba(255,41,84,0.55);
         }
 
-        .container p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
+        .nf-code {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            font-size: clamp(6.5rem, 22vw, 11rem);
+            line-height: 1;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .nf-code .zero { color: var(--accent); }
+        [data-theme="dark"] .nf-code {
+            text-shadow: 0 0 32px var(--accent-glow);
+        }
+        [data-theme="funky"] .nf-code {
+            color: var(--crt-red);
+            text-shadow: 0 0 20px var(--crt-red), 0 0 60px rgba(255,41,84,0.35);
+        }
+        [data-theme="funky"] .nf-code .zero { color: var(--crt-blue); text-shadow: 0 0 16px var(--crt-blue); }
+
+        .nf-message {
+            color: var(--text-secondary);
+            font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+            max-width: 46ch;
+            margin: 0 auto 2rem;
         }
 
-        /* Use the exact same button style as your main page */
-        .btn {
-            background-color: var(--secondary-color);
-            border: none;
-            color: var(--text-light);
-            padding: 0.75rem 1.5rem;
+        .nf-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .btn-solid {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: var(--text-on-accent);
+            padding: 0.7rem 1.6rem;
+            border: 1px solid var(--accent);
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.875rem;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            font-weight: 500;
+            transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
             text-decoration: none;
-            border-radius: 0.375rem; /* Standard bootstrap radius */
+            font-family: inherit;
+        }
+        .btn-solid:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--accent-glow);
+        }
+        .btn-line {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            padding: 0.7rem 1.6rem;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background 0.18s, border-color 0.18s, transform 0.18s;
+            text-decoration: none;
+            font-family: inherit;
+        }
+        .btn-line:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        [data-theme="funky"] .btn-solid,
+        [data-theme="funky"] .btn-line {
+            font-family: 'Share Tech Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
         }
 
-        .btn:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-3px);
-            color: var(--text-dark);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            font-weight: bold;
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>404</h1>
-        <p>Oops! The page you're looking for doesn't exist.</p>
-        <a href="index.html" class="btn">Go Back Home</a>
-    </div>
+    <main class="nf-stage">
+        <p class="nf-kicker">&gt; ERR_PAGE_NOT_FOUND_</p>
+        <h1 class="nf-code">4<span class="zero">0</span>4</h1>
+        <p class="nf-message">This page slipped out of the codex. The link may be broken,
+            or the page was moved somewhere else entirely.</p>
+        <div class="nf-actions">
+            <a href="index.html" class="btn-solid">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Home
+            </a>
+            <a href="sitemap.html" class="btn-line">
+                <i class="fas fa-sitemap" aria-hidden="true"></i> View sitemap
+            </a>
+        </div>
+    </main>
 
-    <!-- 3. JAVASCRIPT TO APPLY THE SAVED THEME ON PAGE LOAD -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check for the saved dark mode preference
-            if (localStorage.getItem('darkMode') === 'true') {
-                document.body.classList.add('dark-mode');
+        (function () {
+            var themes = ['light', 'dark', 'funky'];
+            var idx = parseInt(localStorage.getItem('ts-theme'), 10);
+            if (!(idx >= 0 && idx < themes.length)) {
+                idx = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 1 : 0;
             }
-
-            // Check for the saved accent theme preference
-            const savedAccentTheme = localStorage.getItem('accentTheme');
-            if (savedAccentTheme) {
-                document.body.dataset.accentTheme = savedAccentTheme;
-            }
-        });
+            document.body.dataset.theme = themes[idx];
+        })();
     </script>
 </body>
 </html>
