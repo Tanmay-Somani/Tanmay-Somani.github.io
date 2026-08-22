@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Light/Dark: Inter + Space Grotesk. Funky: Share Tech Mono (retro terminal) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <!-- Light/Dark: Inter + Space Grotesk + Fraunces/JetBrains Mono (book). Funky: Share Tech Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Share+Tech+Mono&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZDBY4P7B1"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TZDBY4P7B1');</script>
@@ -78,6 +78,12 @@
             /* graph-paper grid bg */
             --grid-line: rgba(13,148,136,0.07);
             --radius: 0px;
+            /* book (Project Codex) */
+            --ink:      #17140f;
+            --ink-soft: #5b5646;
+            --ribbon:   var(--accent);
+            --stamp:    #a16207;
+            --scanline: rgba(255,41,84,0);
         }
 
         /* ── DARK ── */
@@ -103,6 +109,14 @@
             --tag-text:  #22d3ee;
             --grid-line: rgba(34,211,238,0.05);
             --radius: 0px;
+            /* book — warm lamp-lit paper */
+            --paper:      #16140f;
+            --paper-deep: #100e0a;
+            --ink:        #f3efe2;
+            --ink-soft:   #a7a08c;
+            --ribbon:     var(--accent);
+            --stamp:      #fbbf24;
+            --scanline:   rgba(255,41,84,0);
         }
 
         /* ── FUNKY (retro CRT terminal) ── */
@@ -130,6 +144,14 @@
             --radius: 0px;
             --crt-red: #ff2954;
             --crt-blue: #2ee6ff;
+            /* book — wine-dark CRT paper */
+            --paper:      #1a0f13;
+            --paper-deep: #120a0d;
+            --ink:        #fdeff2;
+            --ink-soft:   #d9a9b6;
+            --ribbon:     var(--crt-red);
+            --stamp:      #ffff00;
+            --scanline:   rgba(255,41,84,.05);
         }
 
         /* Commented out extras:
@@ -948,6 +970,608 @@
         }
 
         /* ============================================================
+            FLIP BOOK — "Project Codex"
+            Scroll-snap spreads; the turning pages are synthesized in JS
+            (requestAnimationFrame reading scrollLeft), so the book runs
+            on every modern browser. The spread dim/undim is a CSS-only
+            progressive enhancement (animation-timeline: view(x)).
+            Below 640px the site keeps the drag-carousel fallback.
+           ============================================================ */
+
+        /* paper palettes — light defaults here; dark/funky papers live in the theme blocks */
+        :root               { --paper:#fffdf7; --paper-deep:#f5efdf; --edge-line:rgba(13,148,136,.30); }
+        [data-theme="dark"] { --edge-line:rgba(34,211,238,.28); }
+        [data-theme="funky"]{ --edge-line:rgba(255,41,84,.35); }
+
+        .book-scene {
+            --bw: min(880px, 92vw);
+            padding-top: 2.25rem;
+            padding-bottom: 1rem;
+            font-size: clamp(11px, 1.85vw, 16px);
+            display: flex; flex-direction: column; align-items: center;
+            position: relative;
+            container-type: inline-size; /* sheets size type off the book width */
+        }
+
+        .book-pages {
+            position: relative;
+            width: min(var(--bw), 100%);
+            aspect-ratio: 880 / 528;
+        }
+
+        /* ── z0 drawn base ─────────────────────────────── */
+        .book-base { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+        .cover-back {
+            position: absolute; inset: -11px -13px -13px -13px;
+            border-radius: 14px;
+            background: linear-gradient(160deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid var(--border-strong);
+            box-shadow: var(--shadow-lg);
+        }
+        [data-theme="funky"] .cover-back { box-shadow: 0 0 26px rgba(255,41,84,.18), var(--shadow-lg); }
+        .paper-half {
+            position: absolute; top: 0; bottom: 0; width: calc(50% - 1px);
+            background: linear-gradient(180deg, var(--paper) 55%, var(--paper-deep) 100%);
+            border: 1px solid var(--border);
+        }
+        .paper-left  { left: 0;  border-radius: 10px 2px 2px 10px; }
+        .paper-right { right: 0; border-radius: 2px 10px 10px 2px; }
+        .page-edges {
+            position: absolute; top: 6%; bottom: 6%; width: 9px; opacity: .7;
+            background-image: repeating-linear-gradient(90deg,
+                var(--edge-line) 0 1px, transparent 1px 3px);
+        }
+        /* progressive stack thickness — JS writes --read (0..1 scroll fraction);
+           read pages pile up on the left while the un-read stack thins out */
+        .edges-left  { left: -7px; transform-origin: left center;
+            transform: scaleX(calc(1 + var(--read, 0) * .6)); }
+        .edges-right { right: -7px; transform-origin: right center;
+            background-image: repeating-linear-gradient(270deg,
+                var(--edge-line) 0 1px, transparent 1px 3px);
+            transform: scaleX(calc(1 - var(--read, 0) * .45));
+            opacity: calc(.7 - var(--read, 0) * .25);
+        }
+
+        /* ── ribbon bookmark (z5 — sits over every layer) ── */
+        .ribbon {
+            position: absolute; top: -18px; left: 66%;
+            width: 32px; height: 64px; z-index: 5; pointer-events: none;
+            background: linear-gradient(115deg,
+                color-mix(in srgb, var(--ribbon) 100%, white 35%) 0%,
+                var(--ribbon) 38%,
+                color-mix(in srgb, var(--ribbon) 100%, black 35%) 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 74%, 0 100%);
+            box-shadow:
+                2px 4px 0 rgba(0,0,0,.22),
+                4px 10px 14px rgba(0,0,0,.30),
+                inset -3px 0 4px rgba(0,0,0,.25),
+                inset 2px 0 3px rgba(255,255,255,.35);
+            transform: perspective(200px) rotateX(4deg);
+            transform-origin: top center;
+        }
+        .ribbon::before { /* fold where it wraps over the gutter */
+            content: ""; position: absolute; left: 0; right: 0; top: 16px; height: 6px;
+            background: linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,0));
+            filter: blur(.5px);
+        }
+        .ribbon::after { /* cast shadow on the page under the tail */
+            content: ""; position: absolute; left: -4px; right: -4px; top: 100%; height: 10px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0,0,0,.28), transparent 70%);
+        }
+        [data-theme="funky"] .ribbon {
+            box-shadow: 2px 4px 0 rgba(0,0,0,.3), 0 0 18px rgba(255,41,84,.55),
+                inset -3px 0 4px rgba(0,0,0,.3), inset 2px 0 3px rgba(255,255,255,.3);
+        }
+        /* ribbon as a real bookmark button */
+        button.ribbon {
+            appearance: none; border: 0; padding: 0; margin: 0;
+            pointer-events: auto; cursor: pointer;
+            transition: transform .18s ease;
+        }
+        button.ribbon:hover,
+        button.ribbon:focus-visible { transform: perspective(200px) rotateX(4deg) translateY(-3px); }
+        button.ribbon:active { transform: perspective(200px) rotateX(4deg) translateY(-1px); }
+        button.ribbon:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 3px; }
+
+        /* ── centre crease (z2 — above the spreads) ── */
+        .spine-overlay {
+            position: absolute; top: 0; bottom: 0;
+            left: 50%; width: min(16%, 140px); transform: translateX(-50%);
+            z-index: 2; pointer-events: none;
+            background: linear-gradient(90deg,
+                transparent 0%, rgba(0,0,0,0) 5%,
+                rgba(0,0,0,.13) 45%, rgba(0,0,0,.22) 50%,
+                rgba(0,0,0,.13) 55%, rgba(0,0,0,0) 95%, transparent 100%);
+        }
+        [data-theme="dark"] .spine-overlay {
+            background: linear-gradient(90deg,
+                transparent 0%, rgba(34,211,238,.06) 20%, rgba(34,211,238,.28) 50%,
+                rgba(34,211,238,.06) 80%, transparent 100%);
+            box-shadow: 0 0 20px rgba(34,211,238,.15);
+        }
+        [data-theme="funky"] .spine-overlay {
+            background: linear-gradient(90deg,
+                transparent 0%, rgba(255,41,84,.10) 20%, rgba(255,41,84,.38) 50%,
+                rgba(255,41,84,.10) 80%, transparent 100%);
+            box-shadow: 0 0 20px rgba(255,41,84,.2);
+        }
+
+        /* ── z1 scrolling spreads ──────────────────────── */
+        .book-carousel {
+            position: absolute; inset: 0; z-index: 1;
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            overscroll-behavior-x: contain;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            border-radius: 10px;
+        }
+        .book-carousel::-webkit-scrollbar { display: none; }
+        .book-carousel:focus-visible {
+            outline: 2px solid var(--accent); outline-offset: -3px;
+        }
+
+        .spread {
+            flex: 0 0 100%;
+            scroll-snap-align: start; scroll-snap-stop: always;
+            display: grid; grid-template-columns: 1fr 1fr; height: 100%;
+            animation: sheet-dim linear both;
+            animation-timeline: view(x);
+        }
+        @keyframes sheet-dim {
+            0%   { opacity: .12; }
+            18%  { opacity: 1; }
+            82%  { opacity: 1; }
+            100% { opacity: .12; }
+        }
+        @supports not (animation-timeline: view(x)) {
+            .spread { animation: none; opacity: 1; }
+        }
+
+        /* ── sheets & page furniture ───────────────────── */
+        .sheet {
+            position: relative; min-width: 0; overflow: hidden;
+            display: flex; flex-direction: column;
+            padding: 2.3em 1.6em;
+            color: var(--ink-soft);
+            font-size: .78em; line-height: 1.5; /* fallback when cqi unsupported */
+        }
+        /* Type tracks the BOOK's own width (not the viewport): every sheet,
+           TOC row and plate scales with the paper, so nothing overflows the
+           fixed aspect-ratio pages at any window size. */
+        @supports (font-size: 1cqi) {
+            .sheet { font-size: clamp(8px, 1.42cqi, 12.6px); }
+        }
+        .left-sheet  { padding-left: 2.7em; padding-right: 1.3em; }
+        .right-sheet { padding-right: 2.7em; padding-left: 1.3em; }
+        /* Vertical centring that degrades gracefully: when content is shorter
+           than the page it floats to the middle; when it overflows, auto
+           margins collapse to zero and the top stays anchored (no clipping).
+           Media pages instead stretch their body so screenshots fill the page. */
+        .sheet-body {
+            display: flex; flex-direction: column;
+            min-width: 0; width: 100%;
+            flex: 0 1 auto;
+            margin: auto 0;
+        }
+        .right-sheet .sheet-body { flex: 1 1 auto; margin: 0; }
+
+        .kicker {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .68em; letter-spacing: .16em; text-transform: uppercase;
+            color: var(--accent); margin: 0 0 .8em;
+        }
+        [data-theme="funky"] .kicker { color: var(--crt-red); text-shadow: 0 0 8px var(--crt-red); }
+        .sheet h3 {
+            font-family: 'Fraunces', serif; font-weight: 600;
+            font-size: 1.9em; line-height: 1.08; letter-spacing: -.01em;
+            color: var(--ink); margin: 0 0 .45em;
+        }
+        .desc {
+            font-size: .98em; line-height: 1.55;
+            color: var(--ink-soft); margin: 0 0 1em;
+        }
+        .feat-list { list-style: none; margin: 0 0 1.1em; padding: 0; font-size: .88em; color: var(--ink); }
+        .feat-list li { position: relative; padding-left: 1.3em; margin-bottom: .42em; line-height: 1.4; }
+        .feat-list li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+
+        .tag-row { display: flex; flex-wrap: wrap; gap: .4em; margin-bottom: 1.2em; }
+        .tag-chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .66em; letter-spacing: .03em;
+            padding: .38em .7em; border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--tag-bg); color: var(--tag-text);
+        }
+
+        .btn-row { display: flex; flex-wrap: wrap; gap: .6em; margin-top: auto; padding-top: .6em; }
+        .btn-row .project-link-btn {
+            border-radius: 8px; font-weight: 600;
+            border-color: var(--border); color: var(--ink);
+        }
+        .btn-row .project-link-btn.primary {
+            background: var(--accent); border-color: var(--accent); color: var(--text-on-accent);
+        }
+        .btn-row .project-link-btn:hover {
+            background: var(--accent); border-color: var(--accent); color: var(--text-on-accent);
+        }
+
+        .wip-stamp {
+            position: absolute; top: 1.6em; right: 1.4em;
+            transform: rotate(-7deg);
+            font-family: 'JetBrains Mono', monospace; font-weight: 700;
+            font-size: .72em; letter-spacing: .1em; text-transform: uppercase;
+            color: var(--stamp); border: 2px solid var(--stamp); border-radius: 6px;
+            padding: .3em .6em; opacity: .9; pointer-events: none;
+        }
+        [data-theme="funky"] .wip-stamp {
+            text-shadow: 0 0 8px rgba(255,255,0,.6);
+            box-shadow: 0 0 10px rgba(255,255,0,.25);
+        }
+
+        .folio {
+            position: absolute; bottom: 1.1em;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .66em; letter-spacing: .05em; color: var(--ink-soft);
+        }
+        .left-sheet  .folio { left: 1.35em; }
+        .right-sheet .folio { right: 1.35em; }
+        [data-theme="funky"] .folio { color: var(--crt-red); text-shadow: 0 0 6px var(--crt-red); }
+
+        /* ── cover corners & embossed type ─────────────── */
+        .cover-corner {
+            position: absolute; width: 1.5em; height: 1.5em;
+            border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+            opacity: .55;
+        }
+        .cover-corner.tl { top: .9em; left: .9em; border-top: 2px solid; border-left: 2px solid; }
+        .cover-corner.tr { top: .9em; right: .9em; border-top: 2px solid; border-right: 2px solid; }
+        .cover-corner.bl { bottom: .9em; left: .9em; border-bottom: 2px solid; border-left: 2px solid; }
+        .cover-corner.br { bottom: .9em; right: .9em; border-bottom: 2px solid; border-right: 2px solid; }
+
+        .embossed {
+            color: color-mix(in srgb, var(--paper) 55%, var(--ink) 45%);
+            text-shadow:
+                0 1px 0 rgba(255,255,255,.55),
+                0 -1px 1px rgba(0,0,0,.35),
+                0 2px 3px rgba(0,0,0,.12);
+        }
+        [data-theme="dark"] .embossed,
+        [data-theme="funky"] .embossed {
+            text-shadow:
+                0 1px 0 rgba(255,255,255,.08),
+                0 -1px 1px rgba(0,0,0,.6),
+                0 0 14px color-mix(in srgb, var(--accent) 35%, transparent);
+        }
+        .embossed-label { text-shadow: 0 1px 0 rgba(255,255,255,.4), 0 -1px 0 rgba(0,0,0,.25); }
+        .embossed-num   { text-shadow: 0 1px 0 rgba(255,255,255,.4), 0 -1px 0 rgba(0,0,0,.25); }
+
+        /* ── title / table of contents spread ──────────── */
+        .toc-title { position: relative; }
+        .toc-title .cover-corner { opacity: .4; }
+        .toc-h1 { font-size: 3em; line-height: .98; margin: 0 0 .35em; }
+        .toc-sub { max-width: 20em; }
+        .toc-meta {
+            display: flex; gap: 1em; margin-top: 1.4em;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .68em; color: var(--ink-soft);
+            letter-spacing: .06em; text-transform: uppercase;
+        }
+        .toc-meta span:not(:last-child) { border-right: 1px solid var(--border); padding-right: 1em; }
+
+        .toc-list-sheet .sheet-body { gap: .4em; }
+        .toc-cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.6em; }
+        .toc-list { list-style: none; margin: 0; padding: 0; }
+        .toc-list li { margin: 0; padding: 0; }
+        .toc-row {
+            display: flex; align-items: baseline; gap: .5em;
+            width: 100%; padding: .32em .15em;
+            border: 0; border-bottom: 1px dashed var(--border);
+            background: none; font: inherit; color: inherit;
+            text-align: left; cursor: pointer; border-radius: 4px;
+            transition: transform .15s ease, opacity .15s ease;
+        }
+        .toc-row:hover { transform: translateX(.25em); opacity: .85; }
+        .toc-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
+        .toc-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .72em; color: var(--accent);
+            letter-spacing: .05em; flex: 0 0 auto;
+        }
+        .toc-entry { display: flex; flex-direction: column; flex: 0 1 auto; min-width: 0; }
+        .toc-name {
+            font-family: 'Fraunces', serif; font-weight: 600;
+            font-size: .98em; color: var(--ink);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .toc-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .56em; color: var(--ink-soft);
+            letter-spacing: .05em; text-transform: uppercase; margin-top: .15em;
+        }
+        .toc-dots { flex: 1 1 auto; border-bottom: 1px dotted var(--border); margin-bottom: .35em; min-width: .8em; }
+        .toc-page {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .72em; color: var(--ink-soft); flex: 0 0 auto;
+        }
+
+        /* ── back cover ────────────────────────────────── */
+        .cover-spread .sheet { padding: 0; }
+        .cover-face {
+            position: relative; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            color: var(--ink);
+            background:
+                radial-gradient(120% 140% at 30% 0%, rgba(255,255,255,.08), transparent 55%),
+                repeating-linear-gradient(115deg, rgba(0,0,0,.05) 0 2px, transparent 2px 5px),
+                linear-gradient(160deg,
+                    color-mix(in srgb, var(--accent) 22%, var(--bg-secondary)) 0%,
+                    var(--bg-card) 60%,
+                    color-mix(in srgb, var(--ink) 10%, var(--bg-card)) 100%);
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,.04),
+                inset 0 40px 70px -40px rgba(0,0,0,.5),
+                inset 0 -30px 60px -40px rgba(0,0,0,.4);
+        }
+        .cover-face-minor { background:
+                radial-gradient(120% 140% at 70% 0%, rgba(255,255,255,.05), transparent 55%),
+                repeating-linear-gradient(115deg, rgba(0,0,0,.06) 0 2px, transparent 2px 5px),
+                linear-gradient(200deg,
+                    color-mix(in srgb, var(--ink) 14%, var(--bg-card)) 0%,
+                    var(--bg-secondary) 100%);
+        }
+        .cover-frame {
+            text-align: center; padding: 2em 1.6em; max-width: 88%;
+            border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+            border-radius: 4px;
+        }
+        .minor-frame { padding: 2em 1em; opacity: .85; }
+        .back-frame  { padding: 2.4em 2.2em; }
+        .cover-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .72em; letter-spacing: .24em; text-transform: uppercase;
+            color: var(--accent); margin: 0 0 1em;
+        }
+        .cover-rule { width: 3.2em; height: 2px; margin: 1.1em auto; background: var(--accent); opacity: .7; }
+        .cover-byline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7em; letter-spacing: .1em; text-transform: uppercase;
+            color: var(--ink-soft); margin: 0;
+        }
+        .vertical-note {
+            writing-mode: vertical-rl; text-orientation: mixed;
+            display: inline-block; margin: 1.2em auto 0; letter-spacing: .22em;
+        }
+        .cover-colophon {
+            font-family: 'Fraunces', serif; font-style: italic;
+            font-size: 1.15em; color: var(--ink-soft); line-height: 1.6; margin: 0;
+        }
+
+        /* ── screenshots / empty state ─────────────────── */
+        .sheet-media {
+            position: relative; flex: 1; min-height: 0;
+            display: grid; place-items: center;
+        }
+        .sheet-media img {
+            grid-area: 1 / 1;
+            max-width: 100%; max-height: 100%;
+            object-fit: contain;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,.04), var(--shadow-md);
+            opacity: 0; transition: opacity .7s ease;
+            cursor: pointer;
+        }
+        .sheet-media img.is-live { opacity: 1; }
+        .sheet-media.is-portrait img { height: 100%; width: auto; }
+        [data-theme="dark"] .sheet-media img {
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,.04), 0 0 18px rgba(34,211,238,.20);
+        }
+        [data-theme="funky"] .sheet-media img {
+            filter: grayscale(25%) contrast(1.12) brightness(.94);
+        }
+        .media-count {
+            position: absolute; bottom: .6em; right: .6em; z-index: 1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .62em; letter-spacing: .05em;
+            color: #fff; background: rgba(10,12,20,.62);
+            padding: .25em .55em; border-radius: 5px;
+            pointer-events: none;
+        }
+        [data-theme="funky"] .media-count { color: #ffff00; background: rgba(20,4,10,.72); }
+
+        /* mock browser-window plate for projects without demo screenshots */
+        .mock-plate {
+            width: 100%; height: 100%;
+            border-radius: 8px; border: 1px solid var(--border);
+            background:
+                radial-gradient(130% 110% at 50% 0%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 60%),
+                linear-gradient(180deg,
+                    color-mix(in srgb, var(--paper-deep) 90%, var(--accent) 10%) 0%,
+                    var(--paper-deep) 55%);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), var(--shadow-md);
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .mock-chrome {
+            display: flex; align-items: center; gap: .45em;
+            padding: .5em .8em;
+            background: color-mix(in srgb, var(--ink) 6%, transparent);
+            border-bottom: 1px solid var(--border);
+        }
+        .mock-dot { width: .55em; height: .55em; border-radius: 50%;
+            background: var(--border-strong); opacity: .85; }
+        .mock-url {
+            flex: 1; min-width: 0;
+            font-family: 'JetBrains Mono', monospace; font-size: .56em;
+            letter-spacing: .04em; color: var(--ink-soft);
+            background: color-mix(in srgb, var(--paper) 70%, transparent);
+            border: 1px solid var(--border); border-radius: 999px;
+            padding: .3em .9em;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .mock-stage {
+            flex: 1; min-height: 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: .55em; text-align: center; padding: 1.2em;
+        }
+        .mock-stage i { font-size: 2.4em; color: var(--accent); opacity: .8; }
+        .mock-title { font-family: 'Fraunces', serif; font-weight: 600;
+            font-size: 1.02em; color: var(--ink); line-height: 1.2; }
+        .mock-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: .56em;
+            letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft);
+        }
+        .mock-note {
+            font-family: 'JetBrains Mono', monospace; font-size: .54em;
+            letter-spacing: .05em; color: var(--text-muted);
+            border-top: 1px dashed var(--border); padding-top: .7em; margin-top: .35em;
+        }
+        [data-theme="funky"] .mock-stage i { color: var(--crt-red); text-shadow: 0 0 18px rgba(255,41,84,.5); }
+        [data-theme="funky"] .mock-plate {
+            background:
+                radial-gradient(130% 110% at 50% 0%, rgba(255,41,84,.08), transparent 60%),
+                linear-gradient(180deg, #241018 0%, var(--paper-deep) 120%);
+            box-shadow: 0 0 16px rgba(255,41,84,.14), var(--shadow-md);
+        }
+
+        /* ── z3 turning pages (JS-synthesized) ─────────── */
+        .flip-layer {
+            position: absolute; inset: 0; z-index: 3;
+            pointer-events: none;
+            perspective: 2100px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .flip-page {
+            position: absolute; top: 0; left: 50%;
+            width: 50%; height: 100%;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            opacity: 0;
+            will-change: transform;
+        }
+        .fp-face {
+            position: absolute; inset: 0;
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+            overflow: hidden;
+        }
+        .fp-face--front {
+            background: linear-gradient(270deg, var(--paper) 0%, var(--paper-deep) 100%);
+            box-shadow: inset 12px 0 18px -14px rgba(0,0,0,.12);
+        }
+        .fp-face--back {
+            transform: rotateY(180deg);
+            background: linear-gradient(90deg, var(--paper) 0%, var(--paper-deep) 100%);
+            box-shadow: inset -12px 0 18px -14px rgba(0,0,0,.10);
+        }
+        .fp-face > .sheet { position: absolute; inset: 0; }
+
+        /* paper settle when a turn lands flat (JS toggles the class) */
+        @keyframes page-settle {
+            0%   { transform: scaleY(1); }
+            38%  { transform: scaleY(.985) translateY(1px); }
+            100% { transform: scaleY(1); }
+        }
+        .left-sheet.landed { animation: page-settle .24s ease-out; transform-origin: center; }
+
+        /* ── z4 CRT scanlines (funky only) ─────────────── */
+        .scan-overlay {
+            position: absolute; inset: -11px -13px -13px;
+            z-index: 4; pointer-events: none;
+            border-radius: 14px; opacity: 0;
+        }
+        [data-theme="funky"] .scan-overlay {
+            opacity: 1;
+            background-image: repeating-linear-gradient(0deg,
+                var(--scanline) 0 2px, transparent 2px 4px);
+            animation: crtFlicker 5s infinite;
+        }
+
+        /* ── controls ──────────────────────────────────── */
+        .corner-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            z-index: 6;
+            width: 3.4rem; height: 3.4rem; border-radius: 12px;
+            border: 1px solid var(--border-strong);
+            background: var(--bg-card); color: var(--text-primary);
+            font-size: 1.4rem; line-height: 1; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-lg);
+            transition: opacity .2s ease, border-color .2s ease, background .2s ease;
+        }
+        .corner-nav.prev { left: 0; }
+        .corner-nav.next { right: 0; }
+        .corner-nav:hover:not(:disabled) { border-color: var(--accent); transform: translateY(-50%) scale(1.06); }
+        .corner-nav:active:not(:disabled) { transform: translateY(-50%) scale(.96); }
+        .corner-nav:disabled { opacity: .25; cursor: default; }
+        .corner-nav:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+        .corner-nav.next.nudge {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: var(--accent);
+            animation: nudge-pulse 1.7s ease-in-out infinite;
+        }
+        @keyframes nudge-pulse {
+            0%, 100% { box-shadow: var(--shadow-lg), 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+            50%      { box-shadow: var(--shadow-lg), 0 0 0 8px color-mix(in srgb, var(--accent) 0%, transparent); }
+        }
+        @media (max-width: 900px) {
+            .corner-nav { width: 2.6rem; height: 2.6rem; font-size: 1.1rem; border-radius: 10px; }
+            .corner-nav.prev { left: -.4rem; }
+            .corner-nav.next { right: -.4rem; }
+        }
+
+        .controls-row {
+            width: min(var(--bw), 100%);
+            margin: 1.5rem auto 0;
+            display: flex; align-items: center; gap: 1rem;
+        }
+        .progress-track {
+            flex: 1; height: 4px; border-radius: 999px;
+            background: var(--border); position: relative; overflow: hidden;
+        }
+        .progress-fill {
+            position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
+            background: var(--accent); border-radius: 999px;
+            transition: width .25s ease;
+        }
+        .progress-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .72rem; color: var(--text-muted);
+            min-width: 3.4em; text-align: right;
+        }
+        .hint {
+            margin-top: .8rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .68rem; letter-spacing: .03em;
+            color: var(--text-muted); text-align: center;
+        }
+
+        @media (max-width: 767px) {
+            .sheet { padding: 1.7em 1.1em 2.1em; }
+            .left-sheet  { padding-left: 2em; padding-right: 1em; }
+            .right-sheet { padding-right: 2em; padding-left: 1em; }
+            .left-sheet  .folio { left: 2em; }
+            .right-sheet .folio { right: 2em; }
+            .controls-row { margin-top: .9rem; gap: .75rem; }
+            .toc-cols { column-gap: 1em; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .spread { animation: none !important; opacity: 1 !important; }
+            .flip-layer { display: none; }
+            .book-carousel { scroll-behavior: auto; }
+            .corner-nav.next.nudge { animation: none; }
+            .sheet-media img { transition: none; }
+            .progress-fill { transition: none; }
+            .left-sheet.landed { animation: none; }
+        }
+        @media print {
+            .book-scene { display: none !important; }
+        }
+
+        /* ============================================================
            SKILLS
            ============================================================ */
         .skills-grid {
@@ -1371,9 +1995,43 @@
             <div class="section-header fade-in">
                 <p class="section-label" aria-hidden="true">My Work</p>
                 <h2 id="portfolio-heading" class="section-title">Portfolio</h2>
-                <p class="section-subtitle">A selection of projects in ML, AI, and data engineering.</p>
+                <p class="section-subtitle">Flip through my projects — scroll, drag, or use the arrows to turn pages.</p>
             </div>
-            <div class="carousel-container" id="carousel-container">
+
+            <!-- ── FLIP BOOK ("Project Codex") — populated by JS ── -->
+            <div class="book-scene" id="flip-book" hidden>
+                <div class="book-pages">
+                    <div class="book-base" aria-hidden="true">
+                        <div class="cover-back"></div>
+                        <div class="paper-half paper-left"></div>
+                        <div class="paper-half paper-right"></div>
+                        <div class="page-edges edges-left"></div>
+                        <div class="page-edges edges-right"></div>
+                    </div>
+                    <button type="button" class="ribbon" id="book-ribbon"
+                            aria-label="Back to contents" title="Bookmark — jump to Contents"></button>
+                    <div class="book-carousel" id="book-carousel" tabindex="0"
+                         role="region" aria-label="Project flip-book — scroll, drag, or use the arrow keys to turn pages"></div>
+                    <div class="spine-overlay" aria-hidden="true"></div>
+                    <div class="flip-layer" id="flip-layer" aria-hidden="true"></div>
+                    <div class="scan-overlay" aria-hidden="true"></div>
+                </div>
+                <button class="corner-nav prev" id="book-prev" aria-label="Previous project">
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="corner-nav next nudge" id="book-next" aria-label="Next project">
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+                <div class="controls-row">
+                    <div class="progress-track" id="book-progress" role="progressbar"
+                         aria-label="Book reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="book-progress-fill"></div></div>
+                    <span class="progress-label" id="book-progress-label" aria-hidden="true">1 / 1</span>
+                </div>
+                <p class="hint">Scroll, drag, or use the arrows — turning the page is the scrollbar.</p>
+            </div>
+
+            <!-- ── FALLBACK CAROUSEL (small screens) ── -->
+            <div class="carousel-container" id="carousel-container" hidden>
                 <div class="carousel-track" id="carousel-track"></div>
                 <button class="carousel-nav carousel-nav--prev" id="carousel-prev" aria-label="Previous projects">
                     <i class="fas fa-chevron-left" aria-hidden="true"></i>
@@ -1520,33 +2178,111 @@
 <script>
 /* ── DATA ───────────────────────────────────────────── */
 const PROJECTS = [
-    { title:"Book Recommender System", icon:"fas fa-book",
-      description:"Personalized book recommendations by analysing user preferences and reading history. Curated lists and review surfacing to help users discover new reads.",
-      tags:["Python","Scikit-learn"], github:"https://github.com/WittyhacksCR004/WH020_Linktree", live:null, status:"done" },
-    { title:"Facial Recognition Attendance", icon:"fas fa-camera",
-      description:"ML-based attendance system using facial recognition with real-time image processing for accurate, hands-free management.",
-      tags:["Python","OpenCV","ML"], github:"https://github.com/Tanmay-Somani/Basic_Face_Detection_Model", live:null, status:"done" },
-    { title:"Weight Journal & Dashboard", icon:"fas fa-chart-line",
-      description:"Desktop Python app to log weight, visualise trends with Matplotlib, and set future health goals over time.",
-      tags:["Python","Matplotlib","Tkinter"], github:"https://github.com/Tanmay-Somani/Weight_ml", live:null, status:"done" },
-    { title:"Stock Sentiment Analysis", icon:"fas fa-newspaper",
-      description:"NLP pipeline that scrapes Finviz headlines, runs sentiment analysis, and visualises market mood to inform trading decisions.",
-      tags:["NLP","Pandas","APIs"], github:"https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization", live:null, status:"done" },
-    { title:"Snake Game AI Agent", icon:"fas fa-gamepad",
-      description:"Reinforcement-learning agent trained with Double Deep Q-Learning for optimal strategic gameplay in a classic Snake environment.",
-      tags:["PyTorch","Reinforcement Learning"], github:"https://github.com/Tanmay-Somani", live:null, status:"wip" },
-    { title:"FACT: AI Content Detector", icon:"fas fa-robot",
-      description:"Flask + TensorFlow web app that classifies text, images, and audio as AI-generated or human-created with high accuracy.",
-      tags:["Flask","TensorFlow","HTML/CSS"], github:null, live:"https://fact-wku3.onrender.com/", status:"done" },
-    { title:"Substack RSS Scraper", icon:"fas fa-rss",
-      description:"Python tool that extracts and parses Substack RSS feeds with BeautifulSoup. Supports XLS export and automation webhook integrations.",
-      tags:["Python","XLS","BeautifulSoup"], github:null, live:"https://rss-substack-production.up.railway.app/", status:"done" },
-    { title:"Growth Dashboard App", icon:"fas fa-seedling",
-      description:"Tkinter desktop app for tracking personal productivity, setting goals, and visualising progress over time with clean charts.",
-      tags:["Python","Tkinter","Matplotlib"], github:"https://github.com/Tanmay-Somani/Growth-Dashboard-DeskApp", live:null, status:"done" },
-    { title:"Native AI Browser", icon:"fas fa-globe",
-      description:"Electron browser with an embedded LLM for AI-powered search and RAG-based follow-up querying over page content.",
-      tags:["RAG","LLM","Electron"], github:"https://github.com/Tanmay-Somani", live:null, status:"wip" }
+    { title:"Aetherium", icon:"fas fa-feather-pointed", hue:265,
+      description:"A self-hosted collaborative writing suite where a Guild of local-first AI agents reads along with you — streaming suggestions, inline edits, summaries and reviews as you draft. Every manuscript keeps long-term memory in ChromaDB, so agent feedback stays consistent across chapters and sessions. TipTap + Y.js power true real-time co-editing over a FastAPI backend.",
+      features:["Real-time co-editing (TipTap + Y.js)","4 specialist agents over Groq / local LLMs","ChromaDB manuscript memory"],
+      tags:["FastAPI","Vite","ChromaDB","Groq"], imgs:["images/demo/aetherium-1.webp","images/demo/aetherium-2.webp","images/demo/aetherium-3.webp"],
+      github:"https://github.com/Tanmay-Somani/Aetherium-Colab-Agent", live:null, status:"done" },
+    { title:"LifeLog-AI", icon:"fas fa-clock-rotate-left", hue:190,
+      description:"A private digital memory that runs entirely on your machine: it passively logs app usage, context and screenshots, then analyses them with local Ollama models — phi for text, llava for vision — so nothing ever leaves your hardware. Natural-language questions hit a multimodal RAG pipeline that reconstructs what you were doing and when. BERTopic and HDBSCAN surface recurring themes and behavioural patterns automatically.",
+      features:["Keystroke / app / screenshot capture","Ollama phi + llava analysis & OCR","BERTopic topics, HDBSCAN patterns"],
+      tags:["LangChain","Ollama","ChromaDB","BERTopic"], imgs:["images/demo/lifelog-1.webp","images/demo/lifelog-2.webp","images/demo/lifelog-3.webp"],
+      github:"https://github.com/Tanmay-Somani/LifeLog-AI", live:null, status:"done" },
+    { title:"Context Manager", icon:"fas fa-compress", hue:45,
+      description:"A repository analysis tool that compresses an entire codebase into one LLM-optimized context file — capturing architecture, execution flow and per-function importance without the token bloat. Recursive multi-threaded scanning walks from entrypoints to map how code actually executes, then ranks functions by relevance so models read what matters first.",
+      features:["Recursive multi-threaded scanning","Entrypoint & execution-flow detection","Function importance scoring"],
+      tags:["Python","AST","CLI"], imgs:["images/demo/context-manager-1.webp","images/demo/context-manager-2.webp","images/demo/context-manager-3.webp"],
+      github:null, live:null, status:"done" },
+    { title:"TLDR Gmail Agent", icon:"fas fa-envelope-open-text", hue:150,
+      description:"Fetches TLDR newsletters straight from a Gmail inbox via the OAuth API, parses them into structured article records and indexes everything in FAISS with sentence-transformer embeddings. Hybrid semantic search returns precise matches, and a cross-encoder reranker pushes the most relevant hits to the top. Served through a lightweight Flask interface for daily reading triage.",
+      features:["Gmail API OAuth ingestion","FAISS + sentence-transformers index","Cross-encoder reranked search"],
+      tags:["Python","FAISS","Flask"], img:null,
+      github:null, live:null, status:"done" },
+    { title:"Algorithmic Backtesting Engine", icon:"fas fa-chart-line", hue:210,
+      description:"A trading strategy backtester built around pluggable strategies and technical indicators, so new ideas slot in without touching the core. It simulates portfolio evolution trade-by-trade and reports returns, drawdowns and win rates through a clean FastAPI interface. The financial math is kept honest by a pytest + Hypothesis property-tested suite.",
+      features:["Pluggable strategies & indicators","Portfolio + trade analytics","pytest + Hypothesis tested suite"],
+      tags:["Python","FastAPI","pytest"], imgs:["images/demo/backtesting-1.webp","images/demo/backtesting-2.webp","images/demo/backtesting-3.webp"],
+      github:null, live:null, status:"done" },
+    { title:"AQI Analysis & Forecast", icon:"fas fa-wind", hue:95,
+      description:"An end-to-end air-quality pipeline for Delhi: OpenAQ v3 ingestion, rigorous cleaning, XGBoost baselines validated with time-series cross-validation, and an LSTM that forecasts pollutant levels hours ahead. Everything surfaces in a Streamlit dashboard aligned with CPCB sub-index conventions, turning raw sensor feeds into decision-ready visuals.",
+      features:["OpenAQ v3 ingestion pipeline","XGBoost baselines w/ time-series CV","LSTM multi-hour forecast"],
+      tags:["TensorFlow","XGBoost","Streamlit"], imgs:["images/demo/aqi-1.webp","images/demo/aqi-2.webp","images/demo/aqi-3.webp"],
+      github:null, live:null, status:"done" },
+    { title:"Urban Heat Stress Router", icon:"fas fa-temperature-half", hue:25,
+      description:"A GIS + ML system that estimates street-level heat stress across a city and routes pedestrians along cooler paths. An OSMnx + Rasterio pipeline builds geospatial features — shade proxies, land cover, urban morphology — which gradient-boosted models turn into per-street heat scores. A weighted graph search then trades a few metres of distance for degrees of comfort.",
+      features:["OSMnx + Rasterio feature pipeline","XGBoost / LightGBM heat model","Cooler-route graph search"],
+      tags:["GeoPandas","OSMnx","LightGBM"], img:null,
+      github:null, live:null, status:"done" },
+    { title:"Image Colorizer", icon:"fas fa-palette", hue:320,
+      description:"A Streamlit app that colourises black-and-white photos with the Zhang et al. ECCV 2016 network, predicting the ab channels in Lab space and recombining them with the original luminance. Includes a before/after comparison slider, an optional sharpening post-pass and automatic CUDA detection so it uses the GPU whenever one is available.",
+      features:["Zhang ECCV'16 DNN colorization","Before/after compare slider","CUDA auto-detection"],
+      tags:["Streamlit","OpenCV","Deep Learning"], imgs:["images/demo/colorizer-1.webp","images/demo/colorizer-2.webp"],
+      github:"https://github.com/Tanmay-Somani/Image_Colorizer", live:null, status:"done" },
+    { title:"Gesture Game Hub", icon:"fas fa-hand", hue:175,
+      description:"Play games with nothing but your hand in frame: MediaPipe tracks 21 hand landmarks in real time from a webcam feed, turning your index finger into a cursor and a pinch into a click. Ships with tic-tac-toe against an unbeatable minimax AI, persistent score tracking and a gesture calibration screen — no controllers, no touchscreens.",
+      features:["Real-time MediaPipe hand tracking","Pinch-to-click gesture UI","Tic-Tac-Toe vs AI with scores"],
+      tags:["MediaPipe","OpenCV","Python"], imgs:["images/demo/gesture-1.webp","images/demo/gesture-2.webp","images/demo/gesture-3.webp"],
+      github:null, live:null, status:"done" },
+    { title:"FACT: AI Content Detector", icon:"fas fa-robot", hue:350,
+      description:"A web app that classifies text, images and audio as AI-generated or human-made. Text runs through TF-IDF feature scoring, audio through MFCC + Keras CNN detection and images through a trained CNN — all behind a drag-and-drop Django dashboard. Deployed live on Render, so anyone can test their content's provenance in the browser.",
+      features:["Text, image & voice detection","Keras CNN + MFCC models","Drag-and-drop Django dashboard"],
+      tags:["Django","TensorFlow","Librosa"], img:null,
+      github:null, live:"https://fact-wku3.onrender.com/", status:"done" },
+    { title:"Substack RSS Scraper", icon:"fas fa-rss", hue:55,
+      description:"Extracts Substack RSS feeds and parses them into clean, analysis-ready datasets with BeautifulSoup — normalising titles, bodies, links and metadata. One click exports to XLS, and webhook hooks let automation pipelines consume fresh issues the moment they publish. Deployed on Railway as a small always-on service.",
+      features:["RSS feed parser & cleaner","XLS export","Automation webhooks"],
+      tags:["Python","BeautifulSoup","Railway"], img:null,
+      github:null, live:"https://rss-substack-production.up.railway.app/", status:"done" },
+    { title:"LinkedIn Authority Engine", icon:"fab fa-linkedin", hue:220,
+      description:"A human-in-the-loop pipeline that turns research notes and technical builds into high-engagement LinkedIn posts. A SQLite idea bank feeds drafts to Gemini 1.5 Flash for synthesis, a hook optimiser stage rewrites openers for retention, and the LinkedIn API handles publishing — with approval gates so the human voice stays in charge.",
+      features:["SQLite idea bank","Gemini 1.5 Flash synthesiser","Hook optimiser stage"],
+      tags:["Gemini","Pydantic","LinkedIn API"], img:null,
+      github:"https://github.com/Tanmay-Somani/Linkedin_Automation_Engine", live:null, status:"done" },
+    { title:"Job Opportunity Dataset", icon:"fas fa-magnifying-glass-chart", hue:130,
+      description:"An AI internship scout that crawls company career pages, then uses Groq-served LLaMA 3 to extract structured role details — title, location, stack, seniority — from unstructured listings. Results compile into a tiered markdown report ranked by fit, replacing a dozen browser tabs with one briefing document.",
+      features:["Career-page crawler","Groq LLaMA 3 extraction","Tiered markdown reports"],
+      tags:["Groq","BeautifulSoup","pandas"], img:null,
+      github:null, live:null, status:"done" },
+    { title:"Book Recommender System", icon:"fas fa-book", hue:285,
+      description:"Personalised book recommendations built by analysing user preferences and reading history together, blending collaborative signals with content similarity. Curated lists arrive with representative reviews attached, so every suggestion explains itself instead of just scoring itself. Built in Python with scikit-learn.",
+      features:["Preference-aware ranking","Curated list generation","Review surfacing"],
+      tags:["Python","Scikit-learn"], img:null,
+      github:"https://github.com/WittyhacksCR004/WH020_Linktree", live:null, status:"done" },
+    { title:"Facial Recognition Attendance", icon:"fas fa-camera", hue:200,
+      description:"An ML attendance system that recognises faces from a live camera stream and marks people present hands-free. Real-time image processing handles detection and identity matching, while automated logs remove roll-calls and buddy-punching from the equation. Built with Python, OpenCV and classic ML pipelines.",
+      features:["Real-time face detection","Automated attendance logs","Hands-free check-in"],
+      tags:["Python","OpenCV","ML"], img:null,
+      github:"https://github.com/Tanmay-Somani/Basic_Face_Detection_Model", live:null, status:"done" },
+    { title:"Weight Journal", icon:"fas fa-weight-scale", hue:145,
+      description:"A goal-based weight tracker shipped as a ~19 MB native Windows executable. CustomTkinter UI over canvas-drawn interactive charts, direction-aware goal progress for losing or gaining, same-day weigh-in dedupe, and atomic autosave to %APPDATA% so even a crash never costs an entry.",
+      features:["Same-day weigh-in dedupe","Interactive hover chart","Atomic %APPDATA% autosave"],
+      tags:["CustomTkinter","PyInstaller"], imgs:["images/demo/weight-1.webp","images/demo/weight-2.webp"],
+      github:"https://github.com/Tanmay-Somani/Weight_ml", live:null, status:"done" },
+    { title:"Growth Dashboard DeskApp", icon:"fas fa-seedling", hue:110,
+      description:"A desktop productivity cockpit that gamifies getting things done: RPG-style stat tracking, todo lists, pomodoro cycles and proven prioritisation methods — the Eisenhower matrix, Ivy Lee's six tasks and the 3-3-3 rule — in one Tkinter dashboard. Matplotlib renders the visualisations and everything persists locally between sessions.",
+      features:["Eisenhower matrix + Ivy Lee","Pomodoro & 3-3-3 rule tools","RPG stat tracking"],
+      tags:["Tkinter","Matplotlib"], imgs:["images/demo/growth-1.webp","images/demo/growth-2.webp","images/demo/growth-3.webp","images/demo/growth-4.webp","images/demo/growth-5.webp","images/demo/growth-6.webp","images/demo/growth-7.webp","images/demo/growth-8.webp","images/demo/growth-9.webp"],
+      github:"https://github.com/Tanmay-Somani/Growth-Dashboard-DeskApp", live:null, status:"done" },
+    { title:"Stock Sentiment Analysis", icon:"fas fa-newspaper", hue:15,
+      description:"An NLP pipeline that scrapes Finviz headline tables, scores market sentiment per ticker and plots mood shifts over time to inform trading decisions. Pandas drives the aggregation, and the visualisations put crowd sentiment directly next to price action so divergences jump out.",
+      features:["Finviz headline scraper","Sentiment scoring pipeline","Market mood visualisation"],
+      tags:["NLP","Pandas","APIs"], img:null,
+      github:"https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization", live:null, status:"done" },
+    { title:"License Plate Detection", icon:"fas fa-car", hue:240,
+      description:"Real-time license plate detection from a plain webcam feed using Haar Cascade classification. Each detection triggers an instant capture of the cropped plate region for downstream OCR or logging — a compact OpenCV exercise in classical computer vision that still holds up at interactive frame rates.",
+      features:["Haar Cascade detector","Webcam realtime loop","Auto plate snapshots"],
+      tags:["Python","OpenCV"], img:null,
+      github:null, live:null, status:"done" },
+    { title:"Native AI Browser", icon:"fas fa-globe", hue:260,
+      description:"An Electron browser with a local LLM embedded directly in the address flow: search queries route to Ollama inference, and RAG follow-ups ground answers in the actual pages you've visited via ChromaDB semantic memory. A FastAPI service acts as the brain between shell and model — privacy-first browsing assistance with no cloud round-trip. In active development.",
+      features:["Electron shell + FastAPI brain","Ollama local inference","ChromaDB page memory"],
+      tags:["Electron","LangChain","Ollama"], imgs:["images/demo/native-browser-1.webp"],
+      github:"https://github.com/Tanmay-Somani/AI-native-broswer", live:null, status:"wip" },
+    { title:"Snake Game AI Agent", icon:"fas fa-gamepad", hue:0,
+      description:"A reinforcement-learning agent mastering classic Snake with Double Deep Q-Learning — careful state engineering with danger flags and food direction, reward shaping that discourages suicidal loops, and live matplotlib training plots so you can watch the policy improve episode by episode. Built in PyTorch; exploration schedules still being tuned.",
+      features:["Double DQN architecture","State & reward engineering","Live training plots"],
+      tags:["PyTorch","Reinforcement Learning"], img:null,
+      github:"https://github.com/Tanmay-Somani", live:null, status:"wip" }
 ];
 
 const SKILLS = [
@@ -1826,6 +2562,322 @@ function initCarousel() {
             e.preventDefault();
         }
     });
+}
+
+/* ── FLIP BOOK ENGINE ("Project Codex") ──────────── */
+// Page turns are synthesized in requestAnimationFrame from scrollLeft,
+// so the book runs on every modern browser — no scroll-timeline needed.
+// The CSS-only spread dim/undim stays a progressive enhancement.
+
+function buildBook() {
+    const scene = document.getElementById('flip-book');
+    const layer = document.getElementById('flip-layer');
+    const track = document.getElementById('book-carousel');
+    if (!scene || !layer || !track || scene.dataset.built) return;
+    scene.dataset.built = '1';
+
+    const linkBtn = (url, label, icon, cls) =>
+        `<a href="${url}" target="_blank" rel="noopener noreferrer" class="project-link-btn ${cls}" aria-label="${label}"><i class="${icon}" aria-hidden="true"></i> ${label}</a>`;
+
+    /* project spreads */
+    const spreadHTML = (p, i) => {
+        const stamp = p.status === 'wip' ? '<span class="wip-stamp">In Progress</span>' : '';
+        const feats = p.features && p.features.length
+            ? `<ul class="feat-list">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>` : '';
+        const tags = p.tags.map(t => `<span class="tag-chip">${t}</span>`).join('');
+        const gh = p.github ? linkBtn(p.github, 'Code', 'fab fa-github', 'ghost') : '';
+        const lv = p.live ? linkBtn(p.live, 'Live', 'fas fa-external-link-alt', 'primary') : '';
+        let rightPage;
+        if (p.imgs && p.imgs.length) {
+            const n = p.imgs.length;
+            const imgs = p.imgs.map((src, j) =>
+                `<img src="${src}" alt="${p.title} screenshot ${j + 1} of ${n}" loading="lazy"${j === 0 ? ' class="is-live"' : ''}>`).join('');
+            const count = n > 1 ? `<span class="media-count">1/${n}</span>` : '';
+            rightPage = `<div class="sheet-media" data-gallery="g${i}" data-shot-count="${n}">${imgs}${count}</div>`;
+        } else {
+            // styled mock browser-window plate — sells the book until real shots land
+            let url = 'book://preview';
+            try { if (p.live) url = new URL(p.live).hostname; } catch (e) {}
+            if (!p.live) url = 'book://' + p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            const note = p.live ? 'Live demo — click through on the Code / Live links' : 'Screenshots coming soon';
+            rightPage = `<div class="mock-plate" aria-hidden="true">
+                <div class="mock-chrome"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">${url}</span></div>
+                <div class="mock-stage">
+                    <i class="${p.icon}"></i>
+                    <span class="mock-title">${p.title}</span>
+                    <span class="mock-tag">${p.tags[0] || 'Project'}</span>
+                    <span class="mock-note">${note}</span>
+                </div></div>`;
+        }
+        return `
+        <article class="spread" role="group" aria-label="Project ${i + 1} of ${PROJECTS.length}: ${p.title}">
+            <div class="sheet left-sheet">
+                ${stamp}
+                <span class="folio" aria-hidden="true">p. ${String(i * 2 + 1).padStart(2, '0')}</span>
+                <div class="sheet-body">
+                    <p class="kicker">${String(i + 1).padStart(2, '0')} — ${p.tags[0] || 'Project'}</p>
+                    <h3>${p.title}</h3>
+                    <p class="desc">${p.description}</p>
+                    ${feats}
+                    <div class="tag-row" aria-label="Technologies">${tags}</div>
+                    <div class="btn-row">${gh}${lv}</div>
+                </div>
+            </div>
+            <div class="sheet right-sheet">
+                <span class="folio" aria-hidden="true">p. ${String(i * 2 + 2).padStart(2, '0')}</span>
+                <div class="sheet-body">${rightPage}</div>
+            </div>
+        </article>`;
+    };
+
+    /* title / table-of-contents spread */
+    const tocHTML = () => {
+        const half = Math.ceil(PROJECTS.length / 2);
+        const col = list => `<ol class="toc-list">${list.map(([p, i]) => `
+            <li><button type="button" class="toc-row" data-jump="${i + 1}"
+                        aria-label="Go to ${p.title}, page ${(i + 1) * 2}">
+                <span class="toc-num embossed-num">${String(i + 1).padStart(2, '0')}</span>
+                <span class="toc-entry">
+                    <span class="toc-name">${p.title}</span>
+                    <span class="toc-tag">${p.tags[0] || 'Project'}</span>
+                </span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">p.&nbsp;${String((i + 1) * 2).padStart(2, '0')}</span>
+            </button></li>`).join('')}</ol>`;
+        const entries = PROJECTS.map((p, i) => [p, i]);
+        return `
+        <article class="spread toc-spread" aria-label="Contents">
+            <div class="sheet left-sheet toc-title">
+                <span class="cover-corner tl" aria-hidden="true"></span>
+                <span class="cover-corner bl" aria-hidden="true"></span>
+                <div class="sheet-body">
+                    <p class="kicker embossed-label">Vol. I</p>
+                    <h3 class="toc-h1 embossed">Project<br>Codex</h3>
+                    <p class="desc toc-sub">A bound record of things built — every project on one shelf.</p>
+                    <div class="toc-meta">
+                        <span>Edition 2026</span>
+                        <span>${PROJECTS.length} entries</span>
+                        <span>Tanmay Somani</span>
+                    </div>
+                </div>
+                <span class="folio" aria-hidden="true">p. i</span>
+            </div>
+            <div class="sheet right-sheet toc-list-sheet">
+                <div class="sheet-body"><div class="toc-cols">${col(entries.slice(0, half))}${col(entries.slice(half))}</div></div>
+                <span class="folio" aria-hidden="true">p. ii</span>
+            </div>
+        </article>`;
+    };
+
+    /* back cover */
+    const backHTML = () => `
+        <article class="spread cover-spread back-cover" aria-label="End of portfolio">
+            <div class="sheet left-sheet cover-face">
+                <span class="cover-corner tl" aria-hidden="true"></span>
+                <span class="cover-corner bl" aria-hidden="true"></span>
+                <div class="cover-frame back-frame">
+                    <div class="cover-rule"></div>
+                    <p class="cover-colophon">Bound and set in Fraunces &amp; Space Grotesk.<br>${PROJECTS.length} entries, one shelf.</p>
+                    <div class="cover-rule"></div>
+                    <p class="cover-byline">Tanmay Somani — Edition 2026</p>
+                </div>
+            </div>
+            <div class="sheet right-sheet cover-face cover-face-minor">
+                <span class="cover-corner tr" aria-hidden="true"></span>
+                <span class="cover-corner br" aria-hidden="true"></span>
+                <div class="cover-frame minor-frame">
+                    <p class="cover-eyebrow">Fin</p>
+                    <div class="cover-rule"></div>
+                    <p class="cover-byline vertical-note">Spine</p>
+                </div>
+            </div>
+        </article>`;
+
+    track.innerHTML = tocHTML() + PROJECTS.map(spreadHTML).join('') + backHTML();
+    const spreads = Array.from(track.children);
+    const N = spreads.length;
+
+    /* controls */
+    const prevBtn = document.getElementById('book-prev');
+    const nextBtn = document.getElementById('book-next');
+    const fill    = document.getElementById('book-progress-fill');
+    const plabel  = document.getElementById('book-progress-label');
+    const pbar    = document.getElementById('book-progress');
+    const ribbon  = document.getElementById('book-ribbon');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const widthOf = () => track.clientWidth;
+
+    let current = 0;
+    const clearNudge = () => nextBtn.classList.remove('nudge');
+
+    /* unified turn tween — arrows, keys and TOC jumps all ride the same eased
+       motion. Native smooth-scroll is UA-owned (its easing varies per browser
+       and reads as a slide); driving scrollLeft here keeps the flip synthesis
+       identical everywhere. */
+    let tweenRAF = null;
+    const stopTween = () => { if (tweenRAF) cancelAnimationFrame(tweenRAF); tweenRAF = null; };
+    function landFX(idx) {
+        if (reduced || idx < 1) return;
+        const sheet = spreads[idx].querySelector('.left-sheet');
+        if (!sheet) return;
+        sheet.classList.remove('landed');
+        void sheet.offsetWidth; // restart if re-entering quickly
+        sheet.addEventListener('animationend', () => sheet.classList.remove('landed'), { once: true });
+        sheet.classList.add('landed');
+    }
+    function goTo(i) {
+        clearNudge();
+        current = Math.max(0, Math.min(N - 1, i));
+        const dest = current * widthOf();
+        stopTween();
+        if (reduced) { track.scrollLeft = dest; return; }
+        const start = track.scrollLeft;
+        const dist = dest - start;
+        if (!dist) { landFX(current); return; }
+        const t0 = performance.now();
+        const DUR = Math.min(820, 380 + Math.abs(dist / widthOf()) * 190);
+        const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        const step = now => {
+            const k = Math.min(1, (now - t0) / DUR);
+            track.scrollLeft = start + dist * ease(k);
+            if (k < 1) tweenRAF = requestAnimationFrame(step);
+            else { tweenRAF = null; landFX(current); }
+        };
+        tweenRAF = requestAnimationFrame(step);
+    }
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+    // any direct input cancels a running tween and clears the first-visit nudge
+    track.addEventListener('pointerdown', () => { stopTween(); clearNudge(); }, { passive: true });
+    track.addEventListener('wheel', () => { stopTween(); clearNudge(); }, { passive: true });
+
+    function updateUI() {
+        const max = track.scrollWidth - track.clientWidth;
+        const frac = max > 0 ? track.scrollLeft / max : 0;
+        fill.style.width = (frac * 100) + '%';
+        scene.style.setProperty('--read', frac.toFixed(4)); // drives page-edge stack thickness
+        if (pbar) pbar.setAttribute('aria-valuenow', String(Math.round(frac * 100)));
+        current = Math.max(0, Math.min(N - 1, Math.round(track.scrollLeft / Math.max(widthOf(), 1))));
+        plabel.textContent = `${current + 1} / ${N}`;
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === N - 1;
+    }
+
+    track.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft')      { goTo(current - 1); e.preventDefault(); }
+        else if (e.key === 'ArrowRight'){ goTo(current + 1); e.preventDefault(); }
+        else if (e.key === 'Home')      { goTo(0);     e.preventDefault(); }
+        else if (e.key === 'End')       { goTo(N - 1); e.preventDefault(); }
+    });
+
+    // table of contents — click an entry to jump to its spread
+    track.addEventListener('click', e => {
+        const row = e.target.closest('[data-jump]');
+        if (row) goTo(parseInt(row.dataset.jump, 10));
+    });
+    // the ribbon bookmark returns you to the contents
+    if (ribbon) ribbon.addEventListener('click', () => goTo(0));
+
+    /* manual flip synthesis — one reusable turning page */
+    let flipEl = null, rafPending = false;
+    function buildFace(spread, side) {
+        const clone = spread.querySelector(side === 'front' ? '.right-sheet' : '.left-sheet').cloneNode(true);
+        clone.querySelectorAll('img').forEach(img => { img.loading = 'eager'; });
+        clone.querySelectorAll('a').forEach(a => a.setAttribute('tabindex', '-1'));
+        const face = document.createElement('div');
+        face.className = 'fp-face fp-face--' + side;
+        face.appendChild(clone);
+        return face;
+    }
+    function ensureFlip(segIdx) {
+        if (segIdx < 0 || segIdx >= N - 1) return null;
+        const outgoing = spreads[segIdx], incoming = spreads[segIdx + 1];
+        if (!outgoing || !incoming) return null;
+        if (flipEl) flipEl.remove();
+        flipEl = document.createElement('div');
+        flipEl.className = 'flip-page';
+        flipEl.append(buildFace(outgoing, 'front'), buildFace(incoming, 'back'));
+        flipEl.dataset.seg = segIdx;
+        layer.appendChild(flipEl);
+        return flipEl;
+    }
+    function frame() {
+        rafPending = false;
+        updateUI();
+        const w = Math.max(widthOf(), 1);
+        const pos = track.scrollLeft / w;
+        const segIdx = Math.floor(pos), t = pos - segIdx;
+        if (!reduced && t > 0.01 && t < 0.99 && segIdx >= 0 && segIdx < N - 1) {
+            if (!flipEl || +flipEl.dataset.seg !== segIdx) ensureFlip(segIdx);
+            if (flipEl) {
+                flipEl.style.opacity = (t > 0.03 && t < 0.97) ? '1' : '0';
+                flipEl.style.transform = 'rotateY(' + (-180 * t) + 'deg)';
+            }
+        } else if (flipEl) {
+            flipEl.remove();
+            flipEl = null;
+        }
+    }
+    track.addEventListener('scroll', () => {
+        if (rafPending) return;
+        rafPending = true;
+        requestAnimationFrame(frame);
+    }, { passive: true });
+    window.addEventListener('resize', updateUI);
+    updateUI();
+
+    // tall screenshots letterbox at full height instead of shrinking to fit width
+    document.querySelectorAll('#flip-book .sheet-media img').forEach(img => {
+        const mark = () => {
+            if (img.naturalWidth && img.naturalHeight / img.naturalWidth > 1.15)
+                img.parentElement.classList.add('is-portrait');
+        };
+        img.complete ? mark() : img.addEventListener('load', mark);
+    });
+
+    initSheetSlideshows(track);
+}
+
+/* ── SHEET SLIDESHOWS (multi-screenshot projects) ── */
+// One driver per gallery syncs every copy of the media block — the real
+// spread plus any clones living on the turning pages stay in step.
+function initSheetSlideshows(root) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    root.querySelectorAll('.sheet-media[data-shot-count]').forEach(box => {
+        const g = box.dataset.gallery;
+        if (!g || +box.dataset.shotCount < 2) return;
+        if (document.querySelector('.slide-host[data-gallery="' + g + '"]')) return;
+        box.classList.add('slide-host');
+        const n = +box.dataset.shotCount;
+        let idx = 0, timer = null;
+        const paint = next => {
+            idx = ((next % n) + n) % n;
+            document.querySelectorAll('.sheet-media[data-gallery="' + g + '"]').forEach(b => {
+                b.querySelectorAll('img').forEach((im, j) => im.classList.toggle('is-live', j === idx));
+                const label = b.querySelector('.media-count');
+                if (label) label.textContent = (idx + 1) + '/' + n;
+            });
+        };
+        const stop  = () => { if (timer !== null) { clearInterval(timer); timer = null; } };
+        const start = () => { if (timer === null && !reduced) timer = setInterval(() => paint(idx + 1), 2200); };
+        // click a screenshot to advance manually; restarts the auto-cycle
+        box.addEventListener('click', () => { paint(idx + 1); stop(); start(); });
+        new IntersectionObserver(entries => entries.forEach(e => {
+            if (e.isIntersecting) start();
+            else stop();
+        }), { threshold: 0.35 }).observe(box);
+    });
+}
+
+let bookBuilt = false;
+function updatePortfolioMode() {
+    const useBook = window.innerWidth >= 640; // flips are JS-driven — no browser gate needed
+    const scene = document.getElementById('flip-book');
+    const fallback = document.getElementById('carousel-container');
+    if (!scene || !fallback) return;
+    scene.hidden = !useBook;
+    fallback.hidden = useBook;
+    if (useBook && !bookBuilt) { buildBook(); bookBuilt = true; }
 }
 
 /* ── RENDER SKILLS ───────────────────────────────── */
@@ -2220,6 +3272,12 @@ function initHeroNetwork() {
 /* ── INIT ────────────────────────────────────────── */
 initTheme();
 renderProjects();
+updatePortfolioMode();
+let bookResizeTO = null;
+window.addEventListener('resize', () => {
+    clearTimeout(bookResizeTO);
+    bookResizeTO = setTimeout(updatePortfolioMode, 150);
+});
 renderSkills();
 fetchPosts();
 observeFadeIns();
