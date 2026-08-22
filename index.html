@@ -539,14 +539,6 @@
             font-family: 'Share Tech Mono', monospace;
             text-shadow: 0 0 12px var(--crt-red);
         }
-        .stat-infinity { animation: statPulse 2.6s ease-in-out infinite; }
-        @keyframes statPulse {
-            0%, 100% { opacity: 1; text-shadow: 0 0 0 transparent; }
-            50%      { opacity: 0.75; text-shadow: 0 0 16px var(--accent-glow); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .stat-infinity { animation: none; }
-        }
         .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.08em; }
 
         /* ============================================================
@@ -566,6 +558,50 @@
             transform: translateY(-2px); box-shadow: var(--shadow-md);
         }
         .btn-primary-custom:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+        /* Resume split button (About section): 80% current resume / 20% archive caret */
+        .resume-split { display: inline-flex; align-items: stretch; max-width: 100%; }
+        .resume-main { flex: 1 1 auto; justify-content: center; white-space: nowrap; }
+        .resume-wrap { position: relative; display: flex; flex: 0 0 20%; min-width: 3.2rem; }
+        .resume-caret {
+            width: 100%;
+            border-left: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+        .resume-caret i { transition: transform 0.18s; }
+        .resume-caret[aria-expanded="true"] i { transform: rotate(180deg); }
+        .resume-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            min-width: 15.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            box-shadow: var(--shadow-lg);
+            list-style: none;
+            padding: 0.3rem;
+            z-index: 70;
+        }
+        .resume-menu li + li { margin-top: 2px; }
+        .resume-menu a {
+            display: block;
+            padding: 0.5rem 0.7rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .resume-menu a:hover { background: var(--accent-soft); color: var(--accent-hover); }
+        [data-theme="funky"] .resume-main,
+        [data-theme="funky"] .resume-caret,
+        [data-theme="funky"] .resume-menu a {
+            font-family: 'Share Tech Mono', monospace;
+        }
+
 
         [data-theme="funky"] .btn-primary-custom {
             background: transparent; color: var(--crt-red);
@@ -1939,16 +1975,16 @@
             </div>
             <div class="hero-stats fade-in" aria-label="Quick stats">
                 <div class="stat-item">
-                    <span class="stat-num" data-target="9" data-suffix="+">0+</span>
+                    <span class="stat-num" data-target="30" data-suffix="+">0+</span>
                     <span class="stat-label">Projects Shipped</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-num" data-target="12" data-suffix="+">0+</span>
+                    <span class="stat-num" data-target="15" data-suffix="+">0+</span>
                     <span class="stat-label">Technologies</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-num stat-infinity">∞</span>
-                    <span class="stat-label">Models to Train</span>
+                    <span class="stat-num" data-target="40" data-suffix="/∞">0/∞</span>
+                    <span class="stat-label">Models Trained &amp; Counting</span>
                 </div>
             </div>
         </div>
@@ -1979,10 +2015,23 @@
                         <span class="badge-pill">Computer Vision</span>
                     </div>
                     <div style="margin-top:1.5rem;" class="fade-in">
-                        <a href="assets/Tanmay_Somani_Resume.pdf" class="btn-ghost" download
-                           aria-label="Download resume PDF">
-                            <i class="fas fa-download" aria-hidden="true"></i> Download Resume
-                        </a>
+                        <div class="resume-split">
+                            <a href="assets/Tanmay_Somani_Resume.pdf" class="btn-ghost resume-main" download
+                               aria-label="Download current resume PDF">
+                                <i class="fas fa-download" aria-hidden="true"></i> Download Resume
+                            </a>
+                            <div class="resume-wrap">
+                                <button type="button" class="btn-ghost resume-caret" aria-haspopup="true"
+                                        aria-expanded="false" aria-label="Browse older resumes">
+                                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                                </button>
+                                <ul class="resume-menu" hidden>
+                                    <li><a href="assets/resume-archive/Archived3.pdf" download>Archived resume &middot; Dec 2025</a></li>
+                                    <li><a href="assets/resume-archive/Archived2.pdf" download>Archived resume &middot; Aug 2025</a></li>
+                                    <li><a href="assets/resume-archive/Archived1.pdf" download>Archived resume &middot; Jan 2025</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3270,6 +3319,27 @@ function initHeroNetwork() {
 }
 
 /* ── INIT ────────────────────────────────────────── */
+/* ============================================================
+   RESUME SPLIT DROPDOWN (About section)
+   ============================================================ */
+function initResumeSplit() {
+    document.querySelectorAll('.resume-split').forEach(split => {
+        const btn = split.querySelector('.resume-caret');
+        const menu = split.querySelector('.resume-menu');
+        if (!btn || !menu || btn.dataset.bound) return;
+        btn.dataset.bound = '1';
+        const close = () => { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
+        btn.addEventListener('click', e => {
+            e.stopPropagation();
+            const willOpen = menu.hidden;
+            menu.hidden = !willOpen;
+            btn.setAttribute('aria-expanded', String(willOpen));
+        });
+        document.addEventListener('click', e => { if (!split.contains(e.target)) close(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    });
+}
+
 initTheme();
 renderProjects();
 updatePortfolioMode();
@@ -3282,6 +3352,7 @@ renderSkills();
 fetchPosts();
 observeFadeIns();
 initStatCounters();
+initResumeSplit();
 initHeroNetwork();
 </script>
 
