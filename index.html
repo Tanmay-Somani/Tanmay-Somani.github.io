@@ -1011,11 +1011,11 @@
         }
 
         /* ============================================================
-            FLIP BOOK — "Project Codex"
+            FLIP BOOK - "Project Codex"
             Scroll-snap spreads; the turning pages are synthesized in JS
             (requestAnimationFrame reading scrollLeft), so the book runs
-            on every modern browser. The spread dim/undim is a CSS-only
-            progressive enhancement (animation-timeline: view(x)).
+            on every modern browser. Pages travel as bare paper; each
+            page's ink fades in .33s after it settles.
             Below 640px the site keeps the drag-carousel fallback.
            ============================================================ */
 
@@ -1159,17 +1159,6 @@
             flex: 0 0 100%;
             scroll-snap-align: start; scroll-snap-stop: always;
             display: grid; grid-template-columns: 1fr 1fr; height: 100%;
-            animation: sheet-dim linear both;
-            animation-timeline: view(x);
-        }
-        @keyframes sheet-dim {
-            0%   { opacity: .12; }
-            18%  { opacity: 1; }
-            82%  { opacity: 1; }
-            100% { opacity: .12; }
-        }
-        @supports not (animation-timeline: view(x)) {
-            .spread { animation: none; opacity: 1; }
         }
 
         /* ── sheets & page furniture ───────────────────── */
@@ -1209,13 +1198,15 @@
         .right-sheet .sheet-body { flex: 1 1 auto; margin: 0; }
         .toc-title .sheet-body { flex: 0 1 auto; margin: auto 0; }
 
-        /* Ink veil: on first mount the codex shows bare paper for one second,
-           then all page contents fade in together. Reduced-motion users never
-           get the pending class, so nothing transitions for them. */
-        .sheet-body, .cover-frame, .folio { transition: opacity 0.55s ease; }
-        #flip-book.ink-pending .sheet-body,
-        #flip-book.ink-pending .cover-frame,
-        #flip-book.ink-pending .folio { opacity: 0; }
+        /* Ink reveal choreography: while a page moves it is bare paper; its
+           ink fades in over .33s once the page settles. The class is applied
+           to a whole spread OR to a cloned turning face - both work, since
+           only their contents are targeted. */
+        .sheet-body, .cover-frame, .folio { transition: opacity 0.33s ease; }
+        .ink-pending :is(.sheet-body, .cover-frame, .folio) {
+            opacity: 0;
+            transition-duration: 0s; /* snap hidden instantly; removing it fades IN */
+        }
 
         .kicker {
             display: block;
@@ -1528,14 +1519,6 @@
         }
         .fp-face > .sheet { position: absolute; inset: 0; }
 
-        /* paper settle when a turn lands flat (JS toggles the class) */
-        @keyframes page-settle {
-            0%   { transform: scaleY(1); }
-            38%  { transform: scaleY(.985) translateY(1px); }
-            100% { transform: scaleY(1); }
-        }
-        .left-sheet.landed { animation: page-settle .24s ease-out; transform-origin: center; }
-
         /* ── z4 CRT scanlines (funky only) ─────────────── */
         .scan-overlay {
             position: absolute; inset: -11px -13px -13px;
@@ -1619,13 +1602,11 @@
             .toc-cols { column-gap: 1em; }
         }
         @media (prefers-reduced-motion: reduce) {
-            .spread { animation: none !important; opacity: 1 !important; }
             .flip-layer { display: none; }
             .book-carousel { scroll-behavior: auto; }
             .corner-nav.next.nudge { animation: none; }
             .sheet-media img { transition: none; }
             .progress-fill { transition: none; }
-            .left-sheet.landed { animation: none; }
         }
         @media print {
             .book-scene { display: none !important; }
@@ -2793,14 +2774,15 @@ function buildBook() {
        identical everywhere. */
     let tweenRAF = null;
     const stopTween = () => { if (tweenRAF) cancelAnimationFrame(tweenRAF); tweenRAF = null; };
-    function landFX(idx) {
-        if (reduced || idx < 1) return;
-        const sheet = spreads[idx].querySelector('.left-sheet');
-        if (!sheet) return;
-        sheet.classList.remove('landed');
-        void sheet.offsetWidth; // restart if re-entering quickly
-        sheet.addEventListener('animationend', () => sheet.classList.remove('landed'), { once: true });
-        sheet.classList.add('landed');
+    /* Ink choreography: a page travels as bare paper; once it settles, its
+       contents fade in over .33s (CSS owns the fade via .ink-pending). */
+    function veilInk(sp) {
+        if (reduced || !sp) return;
+        sp.classList.add('ink-pending');
+    }
+    function revealInk(sp) {
+        if (!sp) return;
+        requestAnimationFrame(() => sp.classList.remove('ink-pending'));
     }
     function goTo(i) {
         clearNudge();
@@ -2810,7 +2792,9 @@ function buildBook() {
         if (reduced) { track.scrollLeft = dest; return; }
         const start = track.scrollLeft;
         const dist = dest - start;
-        if (!dist) { landFX(current); return; }
+        if (!dist) { revealInk(spreads[current]); return; }
+        turnDir = dist > 0 ? 1 : -1;
+        veilInk(spreads[current]); // target page rides veiled until it lands
         const t0 = performance.now();
         const DUR = Math.min(820, 380 + Math.abs(dist / widthOf()) * 190);
         const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -2818,7 +2802,7 @@ function buildBook() {
             const k = Math.min(1, (now - t0) / DUR);
             track.scrollLeft = start + dist * ease(k);
             if (k < 1) tweenRAF = requestAnimationFrame(step);
-            else { tweenRAF = null; landFX(current); }
+            else { tweenRAF = null; revealInk(spreads[current]); }
         };
         tweenRAF = requestAnimationFrame(step);
     }
@@ -2856,9 +2840,14 @@ function buildBook() {
     if (ribbon) ribbon.addEventListener('click', () => goTo(0));
 
     /* manual flip synthesis — one reusable turning page */
-    let flipEl = null, rafPending = false;
+    let flipEl = null, rafPending = false, turnDir = 1; // 1 = forward, -1 = backward
     function buildFace(spread, side) {
         const clone = spread.querySelector(side === 'front' ? '.right-sheet' : '.left-sheet').cloneNode(true);
+        // the face facing the reader when a segment ends is the incoming
+        // page: it turns as bare paper. Forward turns reveal the back face
+        // last; backward turns the front face.
+        const isIncoming = turnDir < 0 ? side === 'front' : side === 'back';
+        if (!reduced && isIncoming) clone.classList.add('ink-pending');
         clone.querySelectorAll('img').forEach(img => { img.loading = 'eager'; });
         clone.querySelectorAll('a').forEach(a => a.setAttribute('tabindex', '-1'));
         const face = document.createElement('div');
@@ -2914,14 +2903,11 @@ function buildBook() {
 
     initSheetSlideshows(track);
 
-    /* Ink veil: hold page contents invisible for ~1s after the codex mounts,
-       so first paint shows finished paper instead of half-set type; then the
-       ink fades in as one piece. */
-    const sceneEl = document.getElementById('flip-book');
-    if (sceneEl && !prefersReducedMotionGlobal) {
-        sceneEl.classList.add('ink-pending');
-        setTimeout(() => sceneEl.classList.remove('ink-pending'), 1000);
-    }
+    /* Ink choreography on mount: the first spread starts as bare paper and
+       its contents arrive ~1s later; every turn after that reveals ink only
+       once the page has settled (see goTo/revealInk). */
+    veilInk(spreads[0]);
+    setTimeout(() => revealInk(spreads[0]), 1000);
 }
 
 /* ── SHEET SLIDESHOWS (multi-screenshot projects) ── */
