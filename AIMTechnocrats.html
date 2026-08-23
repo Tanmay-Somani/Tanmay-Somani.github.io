@@ -3,14 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AIM Technocrats - Professional Business & Data Solutions">
-    <meta name="keywords" content="AIM Technocrats, Business Consulting, Data Science, Professional Services, Innovation Strategy">
-    <meta name="author" content="AIM Technocrats">
     <title>AIM Technocrats</title>
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- Apply saved theme BEFORE first paint to avoid a light-mode flash -->
+    <script>
+    (function () {
+        try {
+            if (localStorage.getItem('aim-theme') === 'dark' ||
+               (!localStorage.getItem('aim-theme') &&
+                window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        } catch (e) {}
+    })();
+    </script>
+    <meta name="description" content="AIM Technocrats - Professional Business & Data Solutions">
+    <meta name="author" content="AIM Technocrats">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tanmay-somani.github.io/AIMTechnocrats.html">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#1a237e">
+    <meta property="og:title" content="AIM Technocrats — Data-Driven Business Solutions">
+    <meta property="og:description" content="Blending business insights with data science to drive innovation.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tanmay-somani.github.io/AIMTechnocrats.html">
+    <link rel="icon" href="assets/images/favicon.ico" sizes="48x48">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #1a237e; /* Deep Indigo */
@@ -33,6 +56,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
+        .dark-mode body,
         body.dark-mode {
             background-color: var(--background-dark);
             color: var(--text-light);
@@ -69,7 +93,7 @@
             background-color: var(--section-bg-light);
         }
 
-        body.dark-mode .section {
+        .dark-mode .section {
             background-color: var(--background-dark);
         }
 
@@ -80,6 +104,7 @@
             margin-bottom: 2rem;
             text-align: center;
             border: 1px solid var(--border-light);
+            height: 100%;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
@@ -88,18 +113,18 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        body.dark-mode .services-card {
+        .dark-mode .services-card {
             background-color: var(--card-background-dark);
             border-color: var(--border-dark);
         }
 
-        body.dark-mode .form-control {
+        .dark-mode .form-control {
             background-color: var(--card-background-dark);
             color: var(--text-light);
             border-color: var(--border-dark);
         }
 
-        body.dark-mode .form-control::placeholder {
+        .dark-mode .form-control::placeholder {
             color: #aaa;
         }
 
@@ -127,14 +152,63 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
+        #theme-toggle:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 3px;
+        }
+
+        /* Accessibility helpers */
+        .skip-link {
+            position: absolute;
+            top: -48px;
+            left: 1rem;
+            z-index: 1100;
+            background: #ffc107;
+            color: #212121;
+            padding: 0.55rem 1rem;
+            font-weight: 600;
+            border-radius: 0 0 4px 4px;
+            transition: top 0.2s ease;
+        }
+        .skip-link:focus { top: 0; }
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb-bar {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0.65rem 1rem;
+            font-size: 0.85rem;
+        }
+        .breadcrumb-bar ol {
+            list-style: none;
+            display: flex;
+            gap: 0.5rem;
+            margin: 0;
+            padding: 0;
+        }
+        .breadcrumb-bar a { color: var(--accent-color); text-decoration: none; }
+        .breadcrumb-bar a:hover { text-decoration: underline; }
+        .breadcrumb-bar [aria-current] { color: inherit; opacity: 0.75; }
+
+        .form-label { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.25rem; }
+        .form-note { font-size: 0.8rem; opacity: 0.7; margin-top: 0.5rem; }
     </style>
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand text-light" href="#">AIM Technocrats</a>
+        <a class="navbar-brand text-light" href="#main-content">AIM Technocrats</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -143,11 +217,25 @@
                 <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                <li class="nav-item"><button id="theme-toggle"><i class="fas fa-moon"></i></button></li>
+                <li class="nav-item">
+                    <button id="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false">
+                        <i class="fas fa-moon" aria-hidden="true"></i>
+                    </button>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<!-- Breadcrumb -->
+<nav class="breadcrumb-bar" aria-label="Breadcrumb">
+    <ol>
+        <li><a href="index.html">Home</a></li>
+        <li aria-current="page">AIM Technocrats</li>
+    </ol>
+</nav>
+
+<main id="main-content">
 
 <!-- Hero Section -->
 <section class="hero-section">
@@ -182,7 +270,7 @@
                     <p>Streamlining processes to help businesses become more efficient and productive.</p>
                 </div>
             </div>
-            <div class.col-md-4">
+            <div class="col-md-4">
                 <div class="services-card">
                     <h3>Innovation Strategy</h3>
                     <p>Tailored strategies to help businesses stay ahead with cutting-edge innovations.</p>
@@ -196,31 +284,71 @@
 <section id="contact" class="section">
     <div class="container">
         <h2 class="text-center mb-4">Contact Us</h2>
-        <form style="max-width: 600px; margin: auto;">
-            <div class="mb-3"><input type="text" class="form-control" placeholder="Your Name" required></div>
-            <div class="mb-3"><input type="email" class="form-control" placeholder="Your Email" required></div>
-            <div class="mb-3"><textarea class="form-control" rows="4" placeholder="Your Message" required></textarea></div>
+        <form style="max-width: 600px; margin: auto;" aria-label="Contact form"
+              action="https://formspree.io/f/xeoqjbpk" method="POST">
+            <!-- honeypot: bots fill this, humans never see it -->
+            <input type="text" name="_gotcha" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="mb-3">
+                <label for="aim-name" class="form-label">Your Name</label>
+                <input type="text" id="aim-name" name="name" class="form-control" placeholder="Your Name" required autocomplete="name">
+            </div>
+            <div class="mb-3">
+                <label for="aim-email" class="form-label">Your Email</label>
+                <input type="email" id="aim-email" name="_replyto" class="form-control" placeholder="Your Email" required autocomplete="email">
+            </div>
+            <div class="mb-3">
+                <label for="aim-message" class="form-label">Your Message</label>
+                <textarea id="aim-message" name="message" class="form-control" rows="4" placeholder="Your Message" required></textarea>
+            </div>
             <button type="submit" class="btn btn-primary w-100">Send Message</button>
+            <p class="form-note text-center">We reply within two business days.</p>
         </form>
     </div>
 </section>
 
+</main>
+
 <!-- Footer -->
 <footer>
     <div class="footer-links">
-        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+        <a href="index.html">Portfolio</a> | <a href="sitemap.html">Sitemap</a>
     </div>
-    <p class="mt-2">&copy; 2023 AIM Technocrats. All Rights Reserved.</p>
+    <p class="mt-2">&copy; <span id="aim-year">2026</span> AIM Technocrats. All Rights Reserved.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.getElementById('theme-toggle').addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const icon = document.querySelector('#theme-toggle i');
-        icon.classList.toggle('fa-moon');
-        icon.classList.toggle('fa-sun');
+    // Dynamic copyright year
+    document.getElementById('aim-year').textContent = new Date().getFullYear();
+
+    // Dark mode with persistence (class lives on <html>; pre-paint script mirrors it)
+    const rootEl = document.documentElement;
+    const themeBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeBtn.querySelector('i');
+
+    function syncThemeUI() {
+        const dark = rootEl.classList.contains('dark-mode');
+        themeIcon.classList.toggle('fa-sun', dark);
+        themeIcon.classList.toggle('fa-moon', !dark);
+        themeBtn.setAttribute('aria-pressed', String(dark));
+    }
+    syncThemeUI();
+
+    themeBtn.addEventListener('click', () => {
+        rootEl.classList.toggle('dark-mode');
+        localStorage.setItem('aim-theme', rootEl.classList.contains('dark-mode') ? 'dark' : 'light');
+        syncThemeUI();
     });
+</script>
+<script type="application/ld+json">
+{
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Tanmay Somani — Portfolio","item":"https://tanmay-somani.github.io/"},
+        {"@type":"ListItem","position":2,"name":"AIM Technocrats","item":"https://tanmay-somani.github.io/AIMTechnocrats.html"}
+    ]
+}
 </script>
 </body>
 </html>

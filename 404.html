@@ -4,21 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Not Found | Tanmay Somani</title>
+    <!-- Apply saved theme BEFORE first paint (matches index.html behaviour) -->
+    <script>
+    (function () {
+        try {
+            var t = ['light', 'dark', 'funky'];
+            var i = parseInt(localStorage.getItem('ts-theme'), 10);
+            if (!(i >= 0 && i < t.length)) {
+                i = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 1 : 0;
+            }
+            document.documentElement.dataset.theme = t[i];
+        } catch (e) {}
+    })();
+    </script>
     <meta name="robots" content="noindex, nofollow">
     <meta name="description" content="Page not found. Head back to Tanmay Somani's portfolio.">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" href="assets/images/favicon.ico" sizes="48x48">
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Share+Tech+Mono&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700&family=Share+Tech+Mono&family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
+            color-scheme: light;
             --bg-primary:    #f7f8fc;
             --bg-secondary:  #eef0f7;
             --bg-card:       #ffffff;
             --bg-nav:        rgba(247,248,252,0.92);
             --text-primary:  #0b0f1a;
             --text-secondary:#3a4160;
-            --text-muted:    #6b7399;
+            --text-muted:    #565e85;
             --text-on-accent:#ffffff;
             --accent:        #0d9488;
             --accent-hover:  #0f766e;
@@ -36,13 +54,14 @@
             --scanline: rgba(255,41,84,0);
         }
         [data-theme="dark"] {
+            color-scheme: dark;
             --bg-primary:    #0a0f1e;
             --bg-secondary:  #0f1628;
             --bg-card:       #141c30;
             --bg-nav:        rgba(10,15,30,0.88);
             --text-primary:  #e8f0fe;
             --text-secondary:#94a3c4;
-            --text-muted:    #4a5a80;
+            --text-muted:    #7183ab;
             --text-on-accent:#0a0f1e;
             --accent:        #22d3ee;
             --accent-hover:  #06b6d4;
@@ -60,13 +79,14 @@
             --scanline:   rgba(255,41,84,0);
         }
         [data-theme="funky"] {
+            color-scheme: dark;
             --bg-primary:    #060512;
             --bg-secondary:  #0a0818;
             --bg-card:       #0d0a1f;
             --bg-nav:        rgba(6,5,18,0.96);
             --text-primary:  #ff2954;
             --text-secondary:#ff6b8a;
-            --text-muted:    #b23a54;
+            --text-muted:    #cf5973;
             --text-on-accent:#060512;
             --accent:        #ff2954;
             --accent-hover:  #ff5c7a;
@@ -232,16 +252,5 @@
             </a>
         </div>
     </main>
-
-    <script>
-        (function () {
-            var themes = ['light', 'dark', 'funky'];
-            var idx = parseInt(localStorage.getItem('ts-theme'), 10);
-            if (!(idx >= 0 && idx < themes.length)) {
-                idx = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 1 : 0;
-            }
-            document.body.dataset.theme = themes[idx];
-        })();
-    </script>
 </body>
 </html>
