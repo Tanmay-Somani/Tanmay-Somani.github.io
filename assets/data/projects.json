@@ -1,0 +1,461 @@
+[
+  {
+    "title": "Aetherium",
+    "icon": "fas fa-feather-pointed",
+    "hue": 265,
+    "description": "A self-hosted collaborative writing suite where a Guild of local-first AI agents reads along with you — streaming suggestions, inline edits, summaries and reviews as you draft. Every manuscript keeps long-term memory in ChromaDB, so agent feedback stays consistent across chapters and sessions. TipTap + Y.js power true real-time co-editing over a FastAPI backend.",
+    "features": [
+      "Real-time co-editing (TipTap + Y.js)",
+      "4 specialist agents over Groq / local LLMs",
+      "ChromaDB manuscript memory"
+    ],
+    "tags": [
+      "FastAPI",
+      "Vite",
+      "ChromaDB",
+      "Groq"
+    ],
+    "imgs": [
+      "assets/images/demo/aetherium-1.webp",
+      "assets/images/demo/aetherium-2.webp",
+      "assets/images/demo/aetherium-3.webp"
+    ],
+    "github": "https://github.com/Tanmay-Somani/Aetherium-Colab-Agent",
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "LifeLog-AI",
+    "icon": "fas fa-clock-rotate-left",
+    "hue": 190,
+    "description": "A private digital memory that runs entirely on your machine: it passively logs app usage, context and screenshots, then analyses them with local Ollama models — phi for text, llava for vision — so nothing ever leaves your hardware. Natural-language questions hit a multimodal RAG pipeline that reconstructs what you were doing and when. BERTopic and HDBSCAN surface recurring themes and behavioural patterns automatically.",
+    "features": [
+      "Keystroke / app / screenshot capture",
+      "Ollama phi + llava analysis & OCR",
+      "BERTopic topics, HDBSCAN patterns"
+    ],
+    "tags": [
+      "LangChain",
+      "Ollama",
+      "ChromaDB",
+      "BERTopic"
+    ],
+    "imgs": [
+      "assets/images/demo/lifelog-1.webp",
+      "assets/images/demo/lifelog-2.webp",
+      "assets/images/demo/lifelog-3.webp"
+    ],
+    "github": "https://github.com/Tanmay-Somani/LifeLog-AI",
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Context Manager",
+    "icon": "fas fa-compress",
+    "hue": 45,
+    "description": "A repository analysis tool that compresses an entire codebase into one LLM-optimized context file — capturing architecture, execution flow and per-function importance without the token bloat. Recursive multi-threaded scanning walks from entrypoints to map how code actually executes, then ranks functions by relevance so models read what matters first.",
+    "features": [
+      "Recursive multi-threaded scanning",
+      "Entrypoint & execution-flow detection",
+      "Function importance scoring"
+    ],
+    "tags": [
+      "Python",
+      "AST",
+      "CLI"
+    ],
+    "imgs": [
+      "assets/images/demo/context-manager-1.webp",
+      "assets/images/demo/context-manager-2.webp",
+      "assets/images/demo/context-manager-3.webp"
+    ],
+    "github": null,
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "TLDR Gmail Agent",
+    "icon": "fas fa-envelope-open-text",
+    "hue": 150,
+    "description": "Fetches TLDR newsletters straight from a Gmail inbox via the OAuth API, parses them into structured article records and indexes everything in FAISS with sentence-transformer embeddings. Hybrid semantic search returns precise matches, and a cross-encoder reranker pushes the most relevant hits to the top. Served through a lightweight Flask interface for daily reading triage.",
+    "features": [
+      "Gmail API OAuth ingestion",
+      "FAISS + sentence-transformers index",
+      "Cross-encoder reranked search"
+    ],
+    "tags": [
+      "Python",
+      "FAISS",
+      "Flask"
+    ],
+    "img": null,
+    "github": null,
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Algorithmic Backtesting Engine",
+    "icon": "fas fa-chart-line",
+    "hue": 210,
+    "description": "A trading strategy backtester built around pluggable strategies and technical indicators, so new ideas slot in without touching the core. It simulates portfolio evolution trade-by-trade and reports returns, drawdowns and win rates through a clean FastAPI interface. The financial math is kept honest by a pytest + Hypothesis property-tested suite.",
+    "features": [
+      "Pluggable strategies & indicators",
+      "Portfolio + trade analytics",
+      "pytest + Hypothesis tested suite"
+    ],
+    "tags": [
+      "Python",
+      "FastAPI",
+      "pytest"
+    ],
+    "imgs": [
+      "assets/images/demo/backtesting-1.webp",
+      "assets/images/demo/backtesting-2.webp",
+      "assets/images/demo/backtesting-3.webp"
+    ],
+    "github": null,
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "AQI Analysis & Forecast",
+    "icon": "fas fa-wind",
+    "hue": 95,
+    "description": "An end-to-end air-quality pipeline for Delhi: OpenAQ v3 ingestion, rigorous cleaning, XGBoost baselines validated with time-series cross-validation, and an LSTM that forecasts pollutant levels hours ahead. Everything surfaces in a Streamlit dashboard aligned with CPCB sub-index conventions, turning raw sensor feeds into decision-ready visuals.",
+    "features": [
+      "OpenAQ v3 ingestion pipeline",
+      "XGBoost baselines w/ time-series CV",
+      "LSTM multi-hour forecast"
+    ],
+    "tags": [
+      "TensorFlow",
+      "XGBoost",
+      "Streamlit"
+    ],
+    "imgs": [
+      "assets/images/demo/aqi-1.webp",
+      "assets/images/demo/aqi-2.webp",
+      "assets/images/demo/aqi-3.webp"
+    ],
+    "github": null,
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Urban Heat Stress Router",
+    "icon": "fas fa-temperature-half",
+    "hue": 25,
+    "description": "A GIS + ML system that estimates street-level heat stress across a city and routes pedestrians along cooler paths. An OSMnx + Rasterio pipeline builds geospatial features — shade proxies, land cover, urban morphology — which gradient-boosted models turn into per-street heat scores. A weighted graph search then trades a few metres of distance for degrees of comfort.",
+    "features": [
+      "OSMnx + Rasterio feature pipeline",
+      "XGBoost / LightGBM heat model",
+      "Cooler-route graph search"
+    ],
+    "tags": [
+      "GeoPandas",
+      "OSMnx",
+      "LightGBM"
+    ],
+    "img": null,
+    "github": null,
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Image Colorizer",
+    "icon": "fas fa-palette",
+    "hue": 320,
+    "description": "A Streamlit app that colourises black-and-white photos with the Zhang et al. ECCV 2016 network, predicting the ab channels in Lab space and recombining them with the original luminance. Includes a before/after comparison slider, an optional sharpening post-pass and automatic CUDA detection so it uses the GPU whenever one is available.",
+    "features": [
+      "Zhang ECCV'16 DNN colorization",
+      "Before/after compare slider",
+      "CUDA auto-detection"
+    ],
+    "tags": [
+      "Streamlit",
+      "OpenCV",
+      "Deep Learning"
+    ],
+    "imgs": [
+      "assets/images/demo/colorizer-1.webp",
+      "assets/images/demo/colorizer-2.webp"
+    ],
+    "github": "https://github.com/Tanmay-Somani/Image_Colorizer",
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Gesture Game Hub",
+    "icon": "fas fa-hand",
+    "hue": 175,
+    "description": "Play games with nothing but your hand in frame: MediaPipe tracks 21 hand landmarks in real time from a webcam feed, turning your index finger into a cursor and a pinch into a click. Ships with tic-tac-toe against an unbeatable minimax AI, persistent score tracking and a gesture calibration screen — no controllers, no touchscreens.",
+    "features": [
+      "Real-time MediaPipe hand tracking",
+      "Pinch-to-click gesture UI",
+      "Tic-Tac-Toe vs AI with scores"
+    ],
+    "tags": [
+      "MediaPipe",
+      "OpenCV",
+      "Python"
+    ],
+    "imgs": [
+      "assets/images/demo/gesture-1.webp",
+      "assets/images/demo/gesture-2.webp",
+      "assets/images/demo/gesture-3.webp"
+    ],
+    "github": null,
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "FACT: AI Content Detector",
+    "icon": "fas fa-robot",
+    "hue": 350,
+    "description": "A web app that classifies text, images and audio as AI-generated or human-made. Text runs through TF-IDF feature scoring, audio through MFCC + Keras CNN detection and images through a trained CNN — all behind a drag-and-drop Django dashboard. Deployed live on Render, so anyone can test their content's provenance in the browser.",
+    "features": [
+      "Text, image & voice detection",
+      "Keras CNN + MFCC models",
+      "Drag-and-drop Django dashboard"
+    ],
+    "tags": [
+      "Django",
+      "TensorFlow",
+      "Librosa"
+    ],
+    "img": null,
+    "github": null,
+    "live": "https://fact-wku3.onrender.com/",
+    "status": "done"
+  },
+  {
+    "title": "Substack RSS Scraper",
+    "icon": "fas fa-rss",
+    "hue": 55,
+    "description": "Extracts Substack RSS feeds and parses them into clean, analysis-ready datasets with BeautifulSoup — normalising titles, bodies, links and metadata. One click exports to XLS, and webhook hooks let automation pipelines consume fresh issues the moment they publish. Deployed on Railway as a small always-on service.",
+    "features": [
+      "RSS feed parser & cleaner",
+      "XLS export",
+      "Automation webhooks"
+    ],
+    "tags": [
+      "Python",
+      "BeautifulSoup",
+      "Railway"
+    ],
+    "img": null,
+    "github": null,
+    "live": "https://rss-substack-production.up.railway.app/",
+    "status": "done"
+  },
+  {
+    "title": "LinkedIn Authority Engine",
+    "icon": "fab fa-linkedin",
+    "hue": 220,
+    "description": "A human-in-the-loop pipeline that turns research notes and technical builds into high-engagement LinkedIn posts. A SQLite idea bank feeds drafts to Gemini 1.5 Flash for synthesis, a hook optimiser stage rewrites openers for retention, and the LinkedIn API handles publishing — with approval gates so the human voice stays in charge.",
+    "features": [
+      "SQLite idea bank",
+      "Gemini 1.5 Flash synthesiser",
+      "Hook optimiser stage"
+    ],
+    "tags": [
+      "Gemini",
+      "Pydantic",
+      "LinkedIn API"
+    ],
+    "img": null,
+    "github": "https://github.com/Tanmay-Somani/Linkedin_Automation_Engine",
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Job Opportunity Dataset",
+    "icon": "fas fa-magnifying-glass-chart",
+    "hue": 130,
+    "description": "An AI internship scout that crawls company career pages, then uses Groq-served LLaMA 3 to extract structured role details — title, location, stack, seniority — from unstructured listings. Results compile into a tiered markdown report ranked by fit, replacing a dozen browser tabs with one briefing document.",
+    "features": [
+      "Career-page crawler",
+      "Groq LLaMA 3 extraction",
+      "Tiered markdown reports"
+    ],
+    "tags": [
+      "Groq",
+      "BeautifulSoup",
+      "pandas"
+    ],
+    "img": null,
+    "github": null,
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Book Recommender System",
+    "icon": "fas fa-book",
+    "hue": 285,
+    "description": "Personalised book recommendations built by analysing user preferences and reading history together, blending collaborative signals with content similarity. Curated lists arrive with representative reviews attached, so every suggestion explains itself instead of just scoring itself. Built in Python with scikit-learn.",
+    "features": [
+      "Preference-aware ranking",
+      "Curated list generation",
+      "Review surfacing"
+    ],
+    "tags": [
+      "Python",
+      "Scikit-learn"
+    ],
+    "img": null,
+    "github": "https://github.com/WittyhacksCR004/WH020_Linktree",
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Facial Recognition Attendance",
+    "icon": "fas fa-camera",
+    "hue": 200,
+    "description": "An ML attendance system that recognises faces from a live camera stream and marks people present hands-free. Real-time image processing handles detection and identity matching, while automated logs remove roll-calls and buddy-punching from the equation. Built with Python, OpenCV and classic ML pipelines.",
+    "features": [
+      "Real-time face detection",
+      "Automated attendance logs",
+      "Hands-free check-in"
+    ],
+    "tags": [
+      "Python",
+      "OpenCV",
+      "ML"
+    ],
+    "img": null,
+    "github": "https://github.com/Tanmay-Somani/Basic_Face_Detection_Model",
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Weight Journal",
+    "icon": "fas fa-weight-scale",
+    "hue": 145,
+    "description": "A goal-based weight tracker shipped as a ~19 MB native Windows executable. CustomTkinter UI over canvas-drawn interactive charts, direction-aware goal progress for losing or gaining, same-day weigh-in dedupe, and atomic autosave to %APPDATA% so even a crash never costs an entry.",
+    "features": [
+      "Same-day weigh-in dedupe",
+      "Interactive hover chart",
+      "Atomic %APPDATA% autosave"
+    ],
+    "tags": [
+      "CustomTkinter",
+      "PyInstaller"
+    ],
+    "imgs": [
+      "assets/images/demo/weight-1.webp",
+      "assets/images/demo/weight-2.webp"
+    ],
+    "github": "https://github.com/Tanmay-Somani/Weight_ml",
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Growth Dashboard DeskApp",
+    "icon": "fas fa-seedling",
+    "hue": 110,
+    "description": "A desktop productivity cockpit that gamifies getting things done: RPG-style stat tracking, todo lists, pomodoro cycles and proven prioritisation methods — the Eisenhower matrix, Ivy Lee's six tasks and the 3-3-3 rule — in one Tkinter dashboard. Matplotlib renders the visualisations and everything persists locally between sessions.",
+    "features": [
+      "Eisenhower matrix + Ivy Lee",
+      "Pomodoro & 3-3-3 rule tools",
+      "RPG stat tracking"
+    ],
+    "tags": [
+      "Tkinter",
+      "Matplotlib"
+    ],
+    "imgs": [
+      "assets/images/demo/growth-1.webp",
+      "assets/images/demo/growth-2.webp",
+      "assets/images/demo/growth-3.webp",
+      "assets/images/demo/growth-4.webp",
+      "assets/images/demo/growth-5.webp",
+      "assets/images/demo/growth-6.webp",
+      "assets/images/demo/growth-7.webp",
+      "assets/images/demo/growth-8.webp",
+      "assets/images/demo/growth-9.webp"
+    ],
+    "github": "https://github.com/Tanmay-Somani/Growth-Dashboard-DeskApp",
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Stock Sentiment Analysis",
+    "icon": "fas fa-newspaper",
+    "hue": 15,
+    "description": "An NLP pipeline that scrapes Finviz headline tables, scores market sentiment per ticker and plots mood shifts over time to inform trading decisions. Pandas drives the aggregation, and the visualisations put crowd sentiment directly next to price action so divergences jump out.",
+    "features": [
+      "Finviz headline scraper",
+      "Sentiment scoring pipeline",
+      "Market mood visualisation"
+    ],
+    "tags": [
+      "NLP",
+      "Pandas",
+      "APIs"
+    ],
+    "img": null,
+    "github": "https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization",
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "License Plate Detection",
+    "icon": "fas fa-car",
+    "hue": 240,
+    "description": "Real-time license plate detection from a plain webcam feed using Haar Cascade classification. Each detection triggers an instant capture of the cropped plate region for downstream OCR or logging — a compact OpenCV exercise in classical computer vision that still holds up at interactive frame rates.",
+    "features": [
+      "Haar Cascade detector",
+      "Webcam realtime loop",
+      "Auto plate snapshots"
+    ],
+    "tags": [
+      "Python",
+      "OpenCV"
+    ],
+    "img": null,
+    "github": null,
+    "live": null,
+    "status": "done"
+  },
+  {
+    "title": "Native AI Browser",
+    "icon": "fas fa-globe",
+    "hue": 260,
+    "description": "An Electron browser with a local LLM embedded directly in the address flow: search queries route to Ollama inference, and RAG follow-ups ground answers in the actual pages you've visited via ChromaDB semantic memory. A FastAPI service acts as the brain between shell and model — privacy-first browsing assistance with no cloud round-trip. In active development.",
+    "features": [
+      "Electron shell + FastAPI brain",
+      "Ollama local inference",
+      "ChromaDB page memory"
+    ],
+    "tags": [
+      "Electron",
+      "LangChain",
+      "Ollama"
+    ],
+    "imgs": [
+      "assets/images/demo/native-browser-1.webp"
+    ],
+    "github": "https://github.com/Tanmay-Somani/AI-native-broswer",
+    "live": null,
+    "status": "wip"
+  },
+  {
+    "title": "Snake Game AI Agent",
+    "icon": "fas fa-gamepad",
+    "hue": 0,
+    "description": "A reinforcement-learning agent mastering classic Snake with Double Deep Q-Learning — careful state engineering with danger flags and food direction, reward shaping that discourages suicidal loops, and live matplotlib training plots so you can watch the policy improve episode by episode. Built in PyTorch; exploration schedules still being tuned.",
+    "features": [
+      "Double DQN architecture",
+      "State & reward engineering",
+      "Live training plots"
+    ],
+    "tags": [
+      "PyTorch",
+      "Reinforcement Learning"
+    ],
+    "img": null,
+    "github": "https://github.com/Tanmay-Somani",
+    "live": null,
+    "status": "wip"
+  }
+]

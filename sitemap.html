@@ -22,25 +22,31 @@
     <meta name="color-scheme" content="light dark">
     <link rel="icon" href="assets/images/favicon.ico" sizes="48x48">
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.webmanifest">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700&family=Share+Tech+Mono&family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZDBY4P7B1"></script>
+    <link rel="preload" href="assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+    <!-- Analytics + Clarity load ONLY after explicit consent (banner on index.html).
+         Same-origin localStorage means consent given on the homepage covers this page. -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-TZDBY4P7B1');
-    </script>
-    <script>
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "t1v2afgs9r");
+        try {
+            if (localStorage.getItem('ts-cookie') === '1') {
+                var ga = document.createElement('script');
+                ga.async = true;
+                ga.src = "https://www.googletagmanager.com/gtag/js?id=G-TZDBY4P7B1";
+                document.head.appendChild(ga);
+                gtag('js', new Date());
+                gtag('config', 'G-TZDBY4P7B1');
+                (function(c,l,a,r,i,t,y){
+                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                })(window, document, "clarity", "script", "t1v2afgs9r");
+            }
+        } catch (e) { }
     </script>
     <style>
         :root {
@@ -242,6 +248,11 @@
         .sm-page-desc { color: var(--text-muted); font-size: 0.8rem; line-height: 1.5; }
         [data-theme="funky"] .sm-card { font-family: 'Share Tech Mono', monospace; }
 
+        /* No-JS / fetch-failure fallback list */
+        #sm-projects-fallback ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
+        #sm-projects-fallback li { margin: 0.25rem 0; font-size: 0.85rem; color: var(--text-muted); }
+        #sm-projects-fallback a { color: var(--text-secondary); }
+
         .sm-card-top {
             display: flex;
             align-items: center;
@@ -367,87 +378,35 @@
                 </a>
             </div>
 
-            <h2 class="sm-section-label">Projects &middot; 21</h2>
-            <div class="sm-grid">
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Aetherium</h3><span class="sm-chip">FastAPI</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Aetherium-Colab-Agent" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">LifeLog-AI</h3><span class="sm-chip">LangChain</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/LifeLog-AI" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Context Manager</h3><span class="sm-chip">Python</span></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">TLDR Gmail Agent</h3><span class="sm-chip">Python</span></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Algorithmic Backtesting Engine</h3><span class="sm-chip">Python</span></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">AQI Analysis &amp; Forecast</h3><span class="sm-chip">TensorFlow</span></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Urban Heat Stress Router</h3><span class="sm-chip">GeoPandas</span></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Image Colorizer</h3><span class="sm-chip">Streamlit</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Image_Colorizer" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Gesture Game Hub</h3><span class="sm-chip">MediaPipe</span></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">FACT: AI Content Detector</h3><span class="sm-chip">Django</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://fact-wku3.onrender.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Substack RSS Scraper</h3><span class="sm-chip">Python</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://rss-substack-production.up.railway.app/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">LinkedIn Authority Engine</h3><span class="sm-chip">Gemini</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Linkedin_Automation_Engine" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Job Opportunity Dataset</h3><span class="sm-chip">Groq</span></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Book Recommender System</h3><span class="sm-chip">Python</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/WittyhacksCR004/WH020_Linktree" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Facial Recognition Attendance</h3><span class="sm-chip">Python</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Basic_Face_Detection_Model" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Weight Journal</h3><span class="sm-chip">CustomTkinter</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Weight_ml" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Growth Dashboard DeskApp</h3><span class="sm-chip">Tkinter</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Growth-Dashboard-DeskApp" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Stock Sentiment Analysis</h3><span class="sm-chip">NLP</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">License Plate Detection</h3><span class="sm-chip">Python</span></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Native AI Browser</h3><span class="sm-chip">Electron</span><span class="sm-wip"><i class="fas fa-pen-nib" aria-hidden="true"></i> In Progress</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani/AI-native-broswer" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
-                <article class="sm-card">
-                    <div class="sm-card-top"><h3 class="sm-proj-title">Snake Game AI Agent</h3><span class="sm-chip">PyTorch</span><span class="sm-wip"><i class="fas fa-pen-nib" aria-hidden="true"></i> In Progress</span></div>
-                    <div class="sm-links"><a class="sm-link" href="https://github.com/Tanmay-Somani" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
-                </article>
+                        <h2 class="sm-section-label">Projects &middot; <span id="sm-proj-count">?</span></h2>
+            <div class="sm-grid" id="sm-projects-grid"><!-- rendered from assets/data/projects.json --></div>
+            <div id="sm-projects-fallback" hidden>
+                <ul>
+            <li><a href="https://github.com/Tanmay-Somani/Aetherium-Colab-Agent">Aetherium</a></li>
+            <li><a href="https://github.com/Tanmay-Somani/LifeLog-AI">LifeLog-AI</a></li>
+            <li>Context Manager</li>
+            <li>TLDR Gmail Agent</li>
+            <li>Algorithmic Backtesting Engine</li>
+            <li>AQI Analysis &amp; Forecast</li>
+            <li>Urban Heat Stress Router</li>
+            <li><a href="https://github.com/Tanmay-Somani/Image_Colorizer">Image Colorizer</a></li>
+            <li>Gesture Game Hub</li>
+            <li><a href="https://fact-wku3.onrender.com/">FACT: AI Content Detector</a></li>
+            <li><a href="https://rss-substack-production.up.railway.app/">Substack RSS Scraper</a></li>
+            <li><a href="https://github.com/Tanmay-Somani/Linkedin_Automation_Engine">LinkedIn Authority Engine</a></li>
+            <li>Job Opportunity Dataset</li>
+            <li><a href="https://github.com/WittyhacksCR004/WH020_Linktree">Book Recommender System</a></li>
+            <li><a href="https://github.com/Tanmay-Somani/Basic_Face_Detection_Model">Facial Recognition Attendance</a></li>
+            <li><a href="https://github.com/Tanmay-Somani/Weight_ml">Weight Journal</a></li>
+            <li><a href="https://github.com/Tanmay-Somani/Growth-Dashboard-DeskApp">Growth Dashboard DeskApp</a></li>
+            <li><a href="https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization">Stock Sentiment Analysis</a></li>
+            <li>License Plate Detection</li>
+            <li><a href="https://github.com/Tanmay-Somani/AI-native-broswer">Native AI Browser</a></li>
+            <li><a href="https://github.com/Tanmay-Somani">Snake Game AI Agent</a></li>
+                </ul>
             </div>
 
-            <h2 class="sm-section-label">Socials</h2>
+<h2 class="sm-section-label">Socials</h2>
             <div class="sm-grid">
                 <a class="sm-card" href="https://github.com/Tanmay-Somani" target="_blank" rel="noopener noreferrer">
                     <span class="sm-page-link"><i class="fab fa-github" aria-hidden="true"></i> GitHub</span>
@@ -500,5 +459,43 @@
         ]
     }
     </script>
+
+<script>
+// Projects render from the same source of truth as the homepage.
+(function () {
+    fetch('assets/data/projects.json')
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(projects => {
+            document.getElementById('sm-proj-count').textContent = projects.length;
+            document.getElementById('sm-projects-grid').innerHTML = projects.map(p => {
+                const wip = p.status === 'wip'
+                    ? '<span class="sm-wip"><i class="fas fa-pen-nib" aria-hidden="true"></i> In Progress</span>'
+                    : '';
+                let links = '';
+                if (p.github) links += `<a class="sm-link" href="${esc(p.github)}" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> Code</a>`;
+                if (p.live) links += `<a class="sm-link" href="${esc(p.live)}" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a>`;
+                return `<article class="sm-card">`
+                    + `<div class="sm-card-top"><h3 class="sm-proj-title">${esc(p.title)}</h3><span class="sm-chip">${esc(p.tags[0])}</span>${wip}</div>`
+                    + (links ? `<div class="sm-links">${links}</div>` : '')
+                    + `</article>`;
+            }).join('');
+        })
+        .catch(err => {
+            console.warn('Project data failed to load:', err);
+            const fb = document.getElementById('sm-projects-fallback');
+            if (fb) fb.hidden = false;
+        });
+    function esc(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+})();
+</script>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/sw.js').catch(function () { });
+        });
+    }
+</script>
 </body>
 </html>

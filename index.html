@@ -35,18 +35,40 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://tanmay-somani.github.io/assets/images/portfolio-thumbnail.png">
 
+    <!-- RSS autodiscovery: lets readers subscribe from the browser bar -->
+    <link rel="alternate" type="application/rss+xml" title="Tanmay Somani on Medium" href="https://medium.com/feed/@tanmaysomani2003">
+    <link rel="alternate" type="application/rss+xml" title="Tanmay Somani's Newsletter (Substack)" href="https://tanmaysomani2k3.substack.com/feed">
+
     <link rel="icon" href="assets/images/favicon.ico" sizes="48x48">
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+    <!-- Fonts self-hosted (assets/fonts/fonts.css) — no third-party font origin.
+         Preload the two faces needed for the hero's first paint. -->
+    <link rel="preload" href="assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
     <!-- Light/Dark: Inter + Space Grotesk + Fraunces/JetBrains Mono (book). Funky: Share Tech Mono.
-         Only the weights actually used are loaded (trimmed for payload). -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700&family=Share+Tech+Mono&family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+         Self-hosted in assets/fonts/ — only the weights actually used are shipped. -->
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZDBY4P7B1"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TZDBY4P7B1');</script>
+    <!-- Analytics: Google Analytics is injected ONLY after explicit consent
+         (cookie banner on this page). The gtag stub always exists so track()
+         calls queue harmlessly when consent is declined or scripts are blocked. -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.loadAnalytics = function () {
+            if (document.getElementById('ga-script')) return;
+            var s = document.createElement('script');
+            s.id = 'ga-script';
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-TZDBY4P7B1';
+            document.head.appendChild(s);
+            gtag('js', new Date());
+            gtag('config', 'G-TZDBY4P7B1');
+        };
+        try { if (localStorage.getItem('ts-cookie') === '1') window.loadAnalytics(); } catch (e) { }
+    </script>
 
     <style>
         /* The hidden attribute MUST always win: author display rules
@@ -1457,8 +1479,9 @@
             font-size: .62em; letter-spacing: .05em;
             color: #fff; background: rgba(10,12,20,.62);
             padding: .25em .55em; border-radius: 5px;
-            pointer-events: none;
+            border: none; cursor: pointer;
         }
+        .media-count:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
         [data-theme="funky"] .media-count { color: #ffff00; background: rgba(20,4,10,.72); }
 
         /* mock browser-window plate for projects without demo screenshots */
@@ -1895,6 +1918,22 @@
         }
         #cookie-banner.visible { transform: translateY(0); }
         #cookie-banner p { font-size: 0.82rem; color: var(--text-secondary); margin: 0; }
+        .cookie-banner-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+        .cookie-btn { padding: 0.45rem 1.1rem; font-size: 0.78rem; }
+        #cookie-decline {
+            padding: 0.45rem 1.1rem; font-size: 0.78rem;
+            background: transparent; color: var(--text-secondary);
+            border: 1px solid var(--border-strong); border-radius: var(--radius);
+            font-family: inherit; cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease;
+        }
+        #cookie-decline:hover { border-color: var(--accent); color: var(--text-primary); }
+
+        .footer-settings-link {
+            background: none; border: none; padding: 0; margin: 0;
+            font: inherit; font-size: inherit; color: inherit; cursor: pointer;
+            text-decoration: underline; text-underline-offset: 2px;
+        }
+        .footer-settings-link:hover { color: var(--accent); }
 
         /* ============================================================
            FADE-IN ANIMATION
@@ -2196,7 +2235,7 @@
 
                 <form class="contact-form fade-in" id="contact-form"
                       action="https://formspree.io/f/xeoqjbpk" method="POST"
-                      novalidate aria-label="Contact form">
+                      aria-label="Contact form">
                     <!-- honeypot: bots fill this, humans never see it -->
                     <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
                     <div class="form-field">
@@ -2249,7 +2288,8 @@
         </nav>
         <p class="footer-copyright">
             &copy; <span id="footer-year"></span> Tanmay Somani &middot;
-            <a href="https://github.com/Tanmay-Somani/Tanmay-Somani.github.io" target="_blank" rel="noopener noreferrer">Source on GitHub</a>
+            <a href="https://github.com/Tanmay-Somani/Tanmay-Somani.github.io" target="_blank" rel="noopener noreferrer">Source on GitHub</a> &middot;
+            <button type="button" id="cookie-settings" class="footer-settings-link">Cookie settings</button>
         </p>
     </div>
 </footer>
@@ -2264,122 +2304,25 @@
     <i class="fas fa-calendar-check" aria-hidden="true"></i> Book a Call
 </a>
 
-<div id="cookie-banner" role="region" aria-label="Cookie notice">
-    <p>This site saves your theme preference in local storage. No tracking cookies.</p>
-    <button class="btn-primary-custom" id="cookie-accept" style="padding:0.45rem 1.1rem;font-size:0.78rem;">Got it</button>
+<div id="cookie-banner" role="region" aria-label="Analytics consent">
+    <p>I'd love to know which projects people explore &mdash; OK to enable privacy-friendly analytics (Google Analytics)? Nothing is sold or shared. Theme preference always stays in local storage.</p>
+    <div class="cookie-banner-actions">
+        <button type="button" class="btn-primary-custom cookie-btn" id="cookie-accept">Allow analytics</button>
+        <button type="button" id="cookie-decline">No thanks</button>
+    </div>
 </div>
 
 <!-- ── SCRIPTS ────────────────────────────────────── -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.16/typed.umd.js"></script>
 <script>
 /* ── DATA ───────────────────────────────────────────── */
-const PROJECTS = [
-    { title:"Aetherium", icon:"fas fa-feather-pointed", hue:265,
-      description:"A self-hosted collaborative writing suite where a Guild of local-first AI agents reads along with you — streaming suggestions, inline edits, summaries and reviews as you draft. Every manuscript keeps long-term memory in ChromaDB, so agent feedback stays consistent across chapters and sessions. TipTap + Y.js power true real-time co-editing over a FastAPI backend.",
-      features:["Real-time co-editing (TipTap + Y.js)","4 specialist agents over Groq / local LLMs","ChromaDB manuscript memory"],
-      tags:["FastAPI","Vite","ChromaDB","Groq"], imgs:["assets/images/demo/aetherium-1.webp","assets/images/demo/aetherium-2.webp","assets/images/demo/aetherium-3.webp"],
-      github:"https://github.com/Tanmay-Somani/Aetherium-Colab-Agent", live:null, status:"done" },
-    { title:"LifeLog-AI", icon:"fas fa-clock-rotate-left", hue:190,
-      description:"A private digital memory that runs entirely on your machine: it passively logs app usage, context and screenshots, then analyses them with local Ollama models — phi for text, llava for vision — so nothing ever leaves your hardware. Natural-language questions hit a multimodal RAG pipeline that reconstructs what you were doing and when. BERTopic and HDBSCAN surface recurring themes and behavioural patterns automatically.",
-      features:["Keystroke / app / screenshot capture","Ollama phi + llava analysis & OCR","BERTopic topics, HDBSCAN patterns"],
-      tags:["LangChain","Ollama","ChromaDB","BERTopic"], imgs:["assets/images/demo/lifelog-1.webp","assets/images/demo/lifelog-2.webp","assets/images/demo/lifelog-3.webp"],
-      github:"https://github.com/Tanmay-Somani/LifeLog-AI", live:null, status:"done" },
-    { title:"Context Manager", icon:"fas fa-compress", hue:45,
-      description:"A repository analysis tool that compresses an entire codebase into one LLM-optimized context file — capturing architecture, execution flow and per-function importance without the token bloat. Recursive multi-threaded scanning walks from entrypoints to map how code actually executes, then ranks functions by relevance so models read what matters first.",
-      features:["Recursive multi-threaded scanning","Entrypoint & execution-flow detection","Function importance scoring"],
-      tags:["Python","AST","CLI"], imgs:["assets/images/demo/context-manager-1.webp","assets/images/demo/context-manager-2.webp","assets/images/demo/context-manager-3.webp"],
-      github:null, live:null, status:"done" },
-    { title:"TLDR Gmail Agent", icon:"fas fa-envelope-open-text", hue:150,
-      description:"Fetches TLDR newsletters straight from a Gmail inbox via the OAuth API, parses them into structured article records and indexes everything in FAISS with sentence-transformer embeddings. Hybrid semantic search returns precise matches, and a cross-encoder reranker pushes the most relevant hits to the top. Served through a lightweight Flask interface for daily reading triage.",
-      features:["Gmail API OAuth ingestion","FAISS + sentence-transformers index","Cross-encoder reranked search"],
-      tags:["Python","FAISS","Flask"], img:null,
-      github:null, live:null, status:"done" },
-    { title:"Algorithmic Backtesting Engine", icon:"fas fa-chart-line", hue:210,
-      description:"A trading strategy backtester built around pluggable strategies and technical indicators, so new ideas slot in without touching the core. It simulates portfolio evolution trade-by-trade and reports returns, drawdowns and win rates through a clean FastAPI interface. The financial math is kept honest by a pytest + Hypothesis property-tested suite.",
-      features:["Pluggable strategies & indicators","Portfolio + trade analytics","pytest + Hypothesis tested suite"],
-      tags:["Python","FastAPI","pytest"], imgs:["assets/images/demo/backtesting-1.webp","assets/images/demo/backtesting-2.webp","assets/images/demo/backtesting-3.webp"],
-      github:null, live:null, status:"done" },
-    { title:"AQI Analysis & Forecast", icon:"fas fa-wind", hue:95,
-      description:"An end-to-end air-quality pipeline for Delhi: OpenAQ v3 ingestion, rigorous cleaning, XGBoost baselines validated with time-series cross-validation, and an LSTM that forecasts pollutant levels hours ahead. Everything surfaces in a Streamlit dashboard aligned with CPCB sub-index conventions, turning raw sensor feeds into decision-ready visuals.",
-      features:["OpenAQ v3 ingestion pipeline","XGBoost baselines w/ time-series CV","LSTM multi-hour forecast"],
-      tags:["TensorFlow","XGBoost","Streamlit"], imgs:["assets/images/demo/aqi-1.webp","assets/images/demo/aqi-2.webp","assets/images/demo/aqi-3.webp"],
-      github:null, live:null, status:"done" },
-    { title:"Urban Heat Stress Router", icon:"fas fa-temperature-half", hue:25,
-      description:"A GIS + ML system that estimates street-level heat stress across a city and routes pedestrians along cooler paths. An OSMnx + Rasterio pipeline builds geospatial features — shade proxies, land cover, urban morphology — which gradient-boosted models turn into per-street heat scores. A weighted graph search then trades a few metres of distance for degrees of comfort.",
-      features:["OSMnx + Rasterio feature pipeline","XGBoost / LightGBM heat model","Cooler-route graph search"],
-      tags:["GeoPandas","OSMnx","LightGBM"], img:null,
-      github:null, live:null, status:"done" },
-    { title:"Image Colorizer", icon:"fas fa-palette", hue:320,
-      description:"A Streamlit app that colourises black-and-white photos with the Zhang et al. ECCV 2016 network, predicting the ab channels in Lab space and recombining them with the original luminance. Includes a before/after comparison slider, an optional sharpening post-pass and automatic CUDA detection so it uses the GPU whenever one is available.",
-      features:["Zhang ECCV'16 DNN colorization","Before/after compare slider","CUDA auto-detection"],
-      tags:["Streamlit","OpenCV","Deep Learning"], imgs:["assets/images/demo/colorizer-1.webp","assets/images/demo/colorizer-2.webp"],
-      github:"https://github.com/Tanmay-Somani/Image_Colorizer", live:null, status:"done" },
-    { title:"Gesture Game Hub", icon:"fas fa-hand", hue:175,
-      description:"Play games with nothing but your hand in frame: MediaPipe tracks 21 hand landmarks in real time from a webcam feed, turning your index finger into a cursor and a pinch into a click. Ships with tic-tac-toe against an unbeatable minimax AI, persistent score tracking and a gesture calibration screen — no controllers, no touchscreens.",
-      features:["Real-time MediaPipe hand tracking","Pinch-to-click gesture UI","Tic-Tac-Toe vs AI with scores"],
-      tags:["MediaPipe","OpenCV","Python"], imgs:["assets/images/demo/gesture-1.webp","assets/images/demo/gesture-2.webp","assets/images/demo/gesture-3.webp"],
-      github:null, live:null, status:"done" },
-    { title:"FACT: AI Content Detector", icon:"fas fa-robot", hue:350,
-      description:"A web app that classifies text, images and audio as AI-generated or human-made. Text runs through TF-IDF feature scoring, audio through MFCC + Keras CNN detection and images through a trained CNN — all behind a drag-and-drop Django dashboard. Deployed live on Render, so anyone can test their content's provenance in the browser.",
-      features:["Text, image & voice detection","Keras CNN + MFCC models","Drag-and-drop Django dashboard"],
-      tags:["Django","TensorFlow","Librosa"], img:null,
-      github:null, live:"https://fact-wku3.onrender.com/", status:"done" },
-    { title:"Substack RSS Scraper", icon:"fas fa-rss", hue:55,
-      description:"Extracts Substack RSS feeds and parses them into clean, analysis-ready datasets with BeautifulSoup — normalising titles, bodies, links and metadata. One click exports to XLS, and webhook hooks let automation pipelines consume fresh issues the moment they publish. Deployed on Railway as a small always-on service.",
-      features:["RSS feed parser & cleaner","XLS export","Automation webhooks"],
-      tags:["Python","BeautifulSoup","Railway"], img:null,
-      github:null, live:"https://rss-substack-production.up.railway.app/", status:"done" },
-    { title:"LinkedIn Authority Engine", icon:"fab fa-linkedin", hue:220,
-      description:"A human-in-the-loop pipeline that turns research notes and technical builds into high-engagement LinkedIn posts. A SQLite idea bank feeds drafts to Gemini 1.5 Flash for synthesis, a hook optimiser stage rewrites openers for retention, and the LinkedIn API handles publishing — with approval gates so the human voice stays in charge.",
-      features:["SQLite idea bank","Gemini 1.5 Flash synthesiser","Hook optimiser stage"],
-      tags:["Gemini","Pydantic","LinkedIn API"], img:null,
-      github:"https://github.com/Tanmay-Somani/Linkedin_Automation_Engine", live:null, status:"done" },
-    { title:"Job Opportunity Dataset", icon:"fas fa-magnifying-glass-chart", hue:130,
-      description:"An AI internship scout that crawls company career pages, then uses Groq-served LLaMA 3 to extract structured role details — title, location, stack, seniority — from unstructured listings. Results compile into a tiered markdown report ranked by fit, replacing a dozen browser tabs with one briefing document.",
-      features:["Career-page crawler","Groq LLaMA 3 extraction","Tiered markdown reports"],
-      tags:["Groq","BeautifulSoup","pandas"], img:null,
-      github:null, live:null, status:"done" },
-    { title:"Book Recommender System", icon:"fas fa-book", hue:285,
-      description:"Personalised book recommendations built by analysing user preferences and reading history together, blending collaborative signals with content similarity. Curated lists arrive with representative reviews attached, so every suggestion explains itself instead of just scoring itself. Built in Python with scikit-learn.",
-      features:["Preference-aware ranking","Curated list generation","Review surfacing"],
-      tags:["Python","Scikit-learn"], img:null,
-      github:"https://github.com/WittyhacksCR004/WH020_Linktree", live:null, status:"done" },
-    { title:"Facial Recognition Attendance", icon:"fas fa-camera", hue:200,
-      description:"An ML attendance system that recognises faces from a live camera stream and marks people present hands-free. Real-time image processing handles detection and identity matching, while automated logs remove roll-calls and buddy-punching from the equation. Built with Python, OpenCV and classic ML pipelines.",
-      features:["Real-time face detection","Automated attendance logs","Hands-free check-in"],
-      tags:["Python","OpenCV","ML"], img:null,
-      github:"https://github.com/Tanmay-Somani/Basic_Face_Detection_Model", live:null, status:"done" },
-    { title:"Weight Journal", icon:"fas fa-weight-scale", hue:145,
-      description:"A goal-based weight tracker shipped as a ~19 MB native Windows executable. CustomTkinter UI over canvas-drawn interactive charts, direction-aware goal progress for losing or gaining, same-day weigh-in dedupe, and atomic autosave to %APPDATA% so even a crash never costs an entry.",
-      features:["Same-day weigh-in dedupe","Interactive hover chart","Atomic %APPDATA% autosave"],
-      tags:["CustomTkinter","PyInstaller"], imgs:["assets/images/demo/weight-1.webp","assets/images/demo/weight-2.webp"],
-      github:"https://github.com/Tanmay-Somani/Weight_ml", live:null, status:"done" },
-    { title:"Growth Dashboard DeskApp", icon:"fas fa-seedling", hue:110,
-      description:"A desktop productivity cockpit that gamifies getting things done: RPG-style stat tracking, todo lists, pomodoro cycles and proven prioritisation methods — the Eisenhower matrix, Ivy Lee's six tasks and the 3-3-3 rule — in one Tkinter dashboard. Matplotlib renders the visualisations and everything persists locally between sessions.",
-      features:["Eisenhower matrix + Ivy Lee","Pomodoro & 3-3-3 rule tools","RPG stat tracking"],
-      tags:["Tkinter","Matplotlib"], imgs:["assets/images/demo/growth-1.webp","assets/images/demo/growth-2.webp","assets/images/demo/growth-3.webp","assets/images/demo/growth-4.webp","assets/images/demo/growth-5.webp","assets/images/demo/growth-6.webp","assets/images/demo/growth-7.webp","assets/images/demo/growth-8.webp","assets/images/demo/growth-9.webp"],
-      github:"https://github.com/Tanmay-Somani/Growth-Dashboard-DeskApp", live:null, status:"done" },
-    { title:"Stock Sentiment Analysis", icon:"fas fa-newspaper", hue:15,
-      description:"An NLP pipeline that scrapes Finviz headline tables, scores market sentiment per ticker and plots mood shifts over time to inform trading decisions. Pandas drives the aggregation, and the visualisations put crowd sentiment directly next to price action so divergences jump out.",
-      features:["Finviz headline scraper","Sentiment scoring pipeline","Market mood visualisation"],
-      tags:["NLP","Pandas","APIs"], img:null,
-      github:"https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization", live:null, status:"done" },
-    { title:"License Plate Detection", icon:"fas fa-car", hue:240,
-      description:"Real-time license plate detection from a plain webcam feed using Haar Cascade classification. Each detection triggers an instant capture of the cropped plate region for downstream OCR or logging — a compact OpenCV exercise in classical computer vision that still holds up at interactive frame rates.",
-      features:["Haar Cascade detector","Webcam realtime loop","Auto plate snapshots"],
-      tags:["Python","OpenCV"], img:null,
-      github:null, live:null, status:"done" },
-    { title:"Native AI Browser", icon:"fas fa-globe", hue:260,
-      description:"An Electron browser with a local LLM embedded directly in the address flow: search queries route to Ollama inference, and RAG follow-ups ground answers in the actual pages you've visited via ChromaDB semantic memory. A FastAPI service acts as the brain between shell and model — privacy-first browsing assistance with no cloud round-trip. In active development.",
-      features:["Electron shell + FastAPI brain","Ollama local inference","ChromaDB page memory"],
-      tags:["Electron","LangChain","Ollama"], imgs:["assets/images/demo/native-browser-1.webp"],
-      github:"https://github.com/Tanmay-Somani/AI-native-broswer", live:null, status:"wip" },
-    { title:"Snake Game AI Agent", icon:"fas fa-gamepad", hue:0,
-      description:"A reinforcement-learning agent mastering classic Snake with Double Deep Q-Learning — careful state engineering with danger flags and food direction, reward shaping that discourages suicidal loops, and live matplotlib training plots so you can watch the policy improve episode by episode. Built in PyTorch; exploration schedules still being tuned.",
-      features:["Double DQN architecture","State & reward engineering","Live training plots"],
-      tags:["PyTorch","Reinforcement Learning"], img:null,
-      github:"https://github.com/Tanmay-Somani", live:null, status:"wip" }
-];
+let PROJECTS = [];
+// Single source of truth: assets/data/projects.json (sitemap.html renders
+// its project cards from the same file). Rendering waits on this promise.
+const projectsReady = fetch('assets/data/projects.json')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(data => { PROJECTS = data; })
+    .catch(err => console.warn('Project data failed to load:', err));
 
 const SKILLS = [
     {name:"Python",     icon:"fab fa-python",    level:95},
@@ -2670,6 +2613,7 @@ function buildBook() {
     const layer = document.getElementById('flip-layer');
     const track = document.getElementById('book-carousel');
     if (!scene || !layer || !track || scene.dataset.built) return;
+    if (!PROJECTS.length) return;
     scene.dataset.built = '1';
 
     const linkBtn = (url, label, icon, cls) =>
@@ -2687,8 +2631,8 @@ function buildBook() {
         if (p.imgs && p.imgs.length) {
             const n = p.imgs.length;
             const imgs = p.imgs.map((src, j) =>
-                `<img src="${src}" alt="${p.title} screenshot ${j + 1} of ${n}" loading="lazy"${j === 0 ? ' class="is-live"' : ''}>`).join('');
-            const count = n > 1 ? `<span class="media-count">1/${n}</span>` : '';
+                `<img src="${src}" alt="${p.title} screenshot ${j + 1} of ${n}" loading="lazy" decoding="async"${j === 0 ? ' class="is-live"' : ''}>`).join('');
+            const count = n > 1 ? `<button type="button" class="media-count" aria-label="Next screenshot (1 of ${n})">1/${n}</button>` : '';
             rightPage = `<div class="sheet-media" data-gallery="g${i}" data-shot-count="${n}">${imgs}${count}</div>`;
         } else {
             // styled mock browser-window plate — sells the book until real shots land
@@ -2959,22 +2903,36 @@ function initSheetSlideshows(root) {
         if (document.querySelector('.slide-host[data-gallery="' + g + '"]')) return;
         box.classList.add('slide-host');
         const n = +box.dataset.shotCount;
-        let idx = 0, timer = null;
+        let idx = 0, timer = null, inView = false, hovered = false, focused = false;
         const paint = next => {
             idx = ((next % n) + n) % n;
             document.querySelectorAll('.sheet-media[data-gallery="' + g + '"]').forEach(b => {
                 b.querySelectorAll('img').forEach((im, j) => im.classList.toggle('is-live', j === idx));
                 const label = b.querySelector('.media-count');
-                if (label) label.textContent = (idx + 1) + '/' + n;
+                if (label) {
+                    label.textContent = (idx + 1) + '/' + n;
+                    label.setAttribute('aria-label', `Next screenshot (${idx + 1} of ${n})`);
+                }
             });
         };
         const stop  = () => { if (timer !== null) { clearInterval(timer); timer = null; } };
-        const start = () => { if (timer === null && !reduced) timer = setInterval(() => paint(idx + 1), 2200); };
-        // click a screenshot to advance manually; restarts the auto-cycle
-        box.addEventListener('click', () => { paint(idx + 1); stop(); start(); });
+        // WCAG 2.2.2: auto-advancing content pauses on hover and keyboard focus
+        const sync = () => {
+            if (inView && !reduced && !hovered && !focused) {
+                if (timer === null) timer = setInterval(() => paint(idx + 1), 2200);
+            } else stop();
+        };
+        box.addEventListener('mouseenter', () => { hovered = true;  sync(); });
+        box.addEventListener('mouseleave', () => { hovered = false; sync(); });
+        box.addEventListener('focusin',    () => { focused = true;  sync(); });
+        box.addEventListener('focusout',   () => { focused = false; sync(); });
+        // The counter is a real button: click / Enter / Space advance a shot
+        document.querySelectorAll('.sheet-media[data-gallery="' + g + '"] .media-count').forEach(btn => {
+            btn.addEventListener('click', ev => { ev.stopPropagation(); paint(idx + 1); });
+        });
         new IntersectionObserver(entries => entries.forEach(e => {
-            if (e.isIntersecting) start();
-            else stop();
+            inView = e.isIntersecting;
+            sync();
         }), { threshold: 0.35 }).observe(box);
     });
 }
@@ -2990,7 +2948,9 @@ function updatePortfolioMode() {
     if (!scene || !fallback) return;
     scene.hidden = !useBook;
     fallback.hidden = useBook;
-    if (useBook && !bookBuilt) { buildBook(); bookBuilt = true; }
+    // Book build needs the JSON data; updatePortfolioMode may fire from a
+    // resize event before projectsReady resolves.
+    if (useBook && !bookBuilt && PROJECTS.length) { buildBook(); bookBuilt = true; }
 }
 
 /* ── RENDER SKILLS ───────────────────────────────── */
@@ -3089,10 +3049,42 @@ async function fetchPosts() {
 }
 
 /* ── ANALYTICS HELPER ────────────────────────────── */
-// Safe no-op if the gtag script is blocked (ad-blockers, offline).
+// Safe no-op if the gtag script is blocked (ad-blockers, consent declined, offline).
 function track(name, params) {
     if (typeof gtag === 'function') gtag('event', name, params || {});
 }
+
+/* ── CORE WEB VITALS ─────────────────────────────── */
+// Dependency-free LCP + CLS via PerformanceObserver; flushed to GA when the
+// tab is hidden. track() queues into the dormant dataLayer until consent loads GA.
+(function initVitals() {
+    if (!('PerformanceObserver' in window)) return;
+    const sent = {};
+    function send(metric, value) {
+        if (!value || sent[metric]) return;
+        sent[metric] = true;
+        track('web_vitals', { metric_name: metric, value: Math.round(value), non_interaction: true });
+    }
+    try {
+        let lcp = 0;
+        new PerformanceObserver(list => {
+            const entries = list.getEntries();
+            if (entries.length) lcp = entries[entries.length - 1].startTime;
+        }).observe({ type: 'largest-contentful-paint', buffered: true });
+        let cls = 0;
+        new PerformanceObserver(list => {
+            for (const entry of list.getEntries()) {
+                if (!entry.hadRecentInput) cls += entry.value;
+            }
+        }).observe({ type: 'layout-shift', buffered: true });
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                send('LCP', lcp);
+                send('CLS', Math.round(cls * 1000) / 1000);
+            }
+        });
+    } catch (e) { /* older browsers */ }
+})();
 
 /* ── THEME CYCLING ───────────────────────────────── */
 const THEMES = [
@@ -3109,6 +3101,7 @@ function applyTheme(i) {
     document.getElementById('theme-label').textContent = t.label;
     document.getElementById('theme-icon').className = `fas ${t.icon}`;
     localStorage.setItem('ts-theme', i);
+    window.dispatchEvent(new CustomEvent('themechange', { detail: t.key }));
 }
 function initTheme() {
     // The head FOUC script already applied the saved/OS theme to <html>;
@@ -3312,6 +3305,28 @@ const formStatus = document.getElementById('form-status');
 contactForm.addEventListener('input', () => {
     if (formStatus.style.display === 'block') formStatus.style.display = 'none';
 });
+// Native validation is back (novalidate removed). The browser blocks bad
+// submissions itself; this mirrors its bubbles into the #form-status region
+// so screen reader users also hear what went wrong.
+contactForm.addEventListener('invalid', (e) => {
+    e.target.setAttribute('aria-invalid', 'true');
+    // Deferred so every invalid event has fired before we summarize.
+    setTimeout(() => {
+        const bad = contactForm.querySelectorAll(':invalid');
+        const first = bad[0];
+        if (!first) return;
+        const label = first.labels && first.labels[0]
+            ? first.labels[0].textContent.trim()
+            : (first.name || 'this field');
+        formStatus.className = 'error';
+        formStatus.textContent = `Please complete the highlighted field${bad.length > 1 ? 's' : ''} — starting with "${label}".`;
+        formStatus.style.display = 'block';
+    }, 0);
+}, true);
+// Clear the flag as soon as a field becomes valid again.
+contactForm.addEventListener('input', (e) => {
+    if (!e.target.matches(':invalid')) e.target.removeAttribute('aria-invalid');
+});
 contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     // honeypot tripped: silently "succeed" so bots don't retry
@@ -3344,19 +3359,27 @@ contactForm.addEventListener('submit', async function(e) {
     btn.innerHTML = 'Send Message <i class="fas fa-paper-plane" aria-hidden="true"></i>';
 });
 
-/* ── COOKIE BANNER ───────────────────────────────── */
+/* ── ANALYTICS CONSENT ───────────────────────────── */
 const cookieBanner = document.getElementById('cookie-banner');
 if (!localStorage.getItem('ts-cookie')) {
     setTimeout(() => cookieBanner.classList.add('visible'), 1200);
 }
-function acceptCookies() {
-    localStorage.setItem('ts-cookie', '1');
+// Consent drives whether Google Analytics is ever injected (see the head loader).
+function acceptCookies(granted) {
+    try { localStorage.setItem('ts-cookie', granted ? '1' : '0'); } catch (e) { }
     cookieBanner.classList.remove('visible');
+    if (granted && typeof window.loadAnalytics === 'function') window.loadAnalytics();
 }
-document.getElementById('cookie-accept').addEventListener('click', acceptCookies);
-// QOL 10: Escape dismisses the cookie banner too, same as clicking the accept button.
+document.getElementById('cookie-accept').addEventListener('click', () => acceptCookies(true));
+document.getElementById('cookie-decline').addEventListener('click', () => acceptCookies(false));
+// Escape counts as a decline: silence must never equal consent.
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && cookieBanner.classList.contains('visible')) acceptCookies();
+    if (e.key === 'Escape' && cookieBanner.classList.contains('visible')) acceptCookies(false);
+});
+// Footer "Cookie settings" reopens the prompt so visitors can change their mind.
+document.getElementById('cookie-settings').addEventListener('click', () => {
+    try { localStorage.removeItem('ts-cookie'); } catch (e) { }
+    cookieBanner.classList.add('visible');
 });
 
 /* ── TYPED.JS ────────────────────────────────────── */
@@ -3400,6 +3423,9 @@ function initHeroNetwork() {
         if (hex.length === 4) return m.map(c => parseInt(c+c,16));
         return m.map(c => parseInt(c,16));
     }
+    // Cache the parsed accent: getComputedStyle() every frame is wasteful.
+    let accentRGB = hexToRgb(accentColor());
+    window.addEventListener('themechange', () => { accentRGB = hexToRgb(accentColor()); });
 
     function resize() {
         w = hero.clientWidth; h = hero.clientHeight;
@@ -3419,7 +3445,7 @@ function initHeroNetwork() {
 
     function drawFrame(animate) {
         ctx.clearRect(0, 0, w, h);
-        const [r, g, b] = hexToRgb(accentColor());
+        const [r, g, b] = accentRGB;
         const linkDist = Math.min(150, w / 6);
 
         if (animate) {
@@ -3523,8 +3549,12 @@ function initResumeSplit() {
 }
 
 initTheme();
-renderProjects();
-updatePortfolioMode();
+renderSkills();
+// Project rendering (carousel + book) waits for the shared JSON fetch.
+projectsReady.then(() => {
+    renderProjects();
+    updatePortfolioMode();
+});
 let bookResizeTO = null;
 window.addEventListener('resize', () => {
     clearTimeout(bookResizeTO);
@@ -3605,6 +3635,13 @@ setTimeout(dismissPreloader, 4000);
         }
     ]
 }
+</script>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/sw.js').catch(function () { });
+        });
+    }
 </script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+{
+    "name": "Tanmay Somani — Data Science Portfolio",
+    "short_name": "Tanmay Somani",
+    "description": "Data science and AI/ML portfolio: projects, writing and contact.",
+    "start_url": "/index.html",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#0a0f1e",
+    "theme_color": "#0a0f1e",
+    "icons": [
+        {
+            "src": "/assets/images/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/images/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        }
+    ]
+}
