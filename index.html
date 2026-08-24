@@ -567,11 +567,17 @@
             }
         }
 
+        /* REPL-style tagline: prompt + typed code line in JetBrains Mono */
         .hero-typed {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: clamp(0.92rem, 2.2vw, 1.12rem);
             color: var(--text-secondary); min-height: 2em; margin-bottom: 2rem;
         }
-        .hero-typed #typed-text { color: var(--accent); font-weight: 600; }
+        .term-prompt {
+            color: var(--text-muted); margin-right: 0.4rem; user-select: none;
+        }
+        .hero-typed #typed-text { color: var(--accent); font-weight: 500; }
+        .hero-typed .typed-cursor { color: var(--text-muted); }
         [data-theme="funky"] .hero-typed #typed-text {
             color: var(--crt-red);
             text-shadow: 0 0 10px var(--crt-red);
@@ -762,6 +768,92 @@
             box-shadow: 0 0 6px rgba(255,41,84,0.15);
             font-family: 'Share Tech Mono', monospace;
         }
+        /* ">>> now:" — one-line signal of what's actively being explored */
+        .now-chip {
+            display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.8rem; line-height: 1.5;
+            color: var(--text-primary);
+            background: var(--accent-soft);
+            border: 1px solid var(--border-strong); border-left: 3px solid var(--accent);
+            padding: 0.5rem 0.85rem;
+            margin-top: 1.15rem;
+        }
+        [data-theme="funky"] .now-chip {
+            background: rgba(255,41,84,0.06);
+            border-color: rgba(255,41,84,0.40); border-left-color: var(--crt-red);
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .now-prompt { color: var(--accent); font-weight: 500; white-space: nowrap; }
+        [data-theme="funky"] .now-prompt { color: var(--crt-red); text-shadow: 0 0 8px rgba(255,41,84,.4); }
+        /* How-I-work blurb */
+        .hiw-heading {
+            font-size: 1.02rem; font-weight: 700; letter-spacing: -0.01em;
+            margin: 1.7rem 0 0.3rem; color: var(--text-primary);
+        }
+        .hiw-copy { color: var(--text-secondary); font-size: 0.925rem; max-width: 62ch; }
+        @media (max-width: 767px) { .hiw-copy { margin-left: auto; margin-right: auto; } }
+
+        /* Recent-experiment notebook cell (static analysis output) */
+        .nb-cell {
+            margin: 3.5rem auto 0; max-width: 780px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+        }
+        .nb-head {
+            display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+            padding: 0.55rem 0.95rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-strong);
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.72rem; color: var(--text-muted);
+        }
+        .nb-tag {
+            color: var(--accent); background: var(--accent-soft);
+            font-size: 0.62rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.09em;
+            padding: 0.16rem 0.5rem;
+        }
+        [data-theme="funky"] .nb-tag {
+            color: var(--crt-red); background: rgba(255,41,84,0.08);
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .nb-file { color: var(--text-primary); font-weight: 500; }
+        .nb-meta { margin-left: auto; }
+        .nb-code {
+            margin: 0; padding: 1.05rem 1.15rem; overflow-x: auto;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.78rem; line-height: 1.7;
+            color: var(--text-secondary);
+        }
+        .nb-kw { color: var(--accent); font-weight: 500; }
+        .nb-str { color: var(--text-secondary); opacity: 0.85; }
+        [data-theme="funky"] .nb-kw { color: var(--crt-red); }
+        .nb-out {
+            display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+            padding: 1rem 1.15rem;
+            border-top: 1px dashed var(--border-strong);
+            background: var(--bg-secondary);
+        }
+        .nb-chart {
+            width: min(320px, 100%); height: auto; flex: 0 1 auto;
+            color: var(--accent);
+        }
+        [data-theme="funky"] .nb-chart { color: var(--crt-red); }
+        .nb-line-a { stroke-width: 1.8; opacity: 0.9; }
+        .nb-line-p { stroke-width: 1.4; opacity: 0.6; }
+        .nb-result-wrap { min-width: 200px; }
+        .nb-result {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.86rem; color: var(--text-primary);
+        }
+        .nb-result strong { color: var(--accent); }
+        [data-theme="funky"] .nb-result strong { color: var(--crt-red); }
+        .nb-sub {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;
+        }
+        @media (max-width: 560px) { .nb-out { flex-direction: column; align-items: flex-start; } }
 
         /* ============================================================
            PORTFOLIO
@@ -839,13 +931,18 @@
             display: flex; flex-direction: column;
             flex: 1 1 auto;
         }
-        /* Generated project thumbnail — a gradient + watermark icon, per-card hue set inline */
+        /* Generated project thumbnail — a per-project ML-artifact SVG (loss
+           curve / confusion matrix / embedding scatter / forecast / reward /
+           architecture diagram), hue set inline. Art strokes use
+           currentColor so themes restyle the whole drawing in one line. */
         .project-thumb {
+            --art: hsl(var(--thumb-hue, 190) 95% 86%);
             position: relative;
             height: 128px;
             flex: 0 0 auto;
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
+            color: var(--art);
             background: linear-gradient(135deg,
                 hsl(var(--thumb-hue, 190) 70% 42%),
                 hsl(calc(var(--thumb-hue, 190) + 45) 70% 30%));
@@ -856,34 +953,30 @@
             position: absolute; inset: 0;
             background-image: radial-gradient(rgba(255,255,255,0.20) 1px, transparent 1px);
             background-size: 15px 15px;
-            opacity: 0.55;
+            opacity: 0.30;
         }
-        .project-thumb i {
+        .project-thumb svg {
             position: relative;
-            font-size: 3.6rem;
-            color: rgba(255,255,255,0.32);
-            transform: rotate(-10deg) scale(1.35);
+            display: block; width: 100%; height: 100%;
             transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .carousel-card:hover .project-thumb i {
-            transform: rotate(-4deg) scale(1.5);
+        .carousel-card:hover .project-thumb svg {
+            transform: scale(1.06);
         }
         [data-theme="dark"] .project-thumb {
+            --art: hsl(var(--thumb-hue, 190) 90% 76%);
             background: linear-gradient(135deg,
                 hsl(calc(var(--thumb-hue, 190)) 55% 22%),
                 hsl(calc(var(--thumb-hue, 190) + 45) 55% 14%));
         }
         [data-theme="funky"] .project-thumb {
+            --art: rgba(255,41,84,0.85);
             background: #0a0818;
             filter: none;
         }
         [data-theme="funky"] .project-thumb::before {
             background-image: radial-gradient(rgba(255,41,84,0.25) 1px, transparent 1px);
-            opacity: 0.7;
-        }
-        [data-theme="funky"] .project-thumb i {
-            color: rgba(255,41,84,0.45);
-            text-shadow: 0 0 16px rgba(255,41,84,0.5);
+            opacity: 0.55;
         }
         .carousel-card:hover {
             transform: translate3d(var(--glitch-tx, 0px), -8px, 0) scale(1.03) skewX(var(--glitch-skew, 0deg));
@@ -1519,6 +1612,17 @@
             gap: .55em; text-align: center; padding: 1.2em;
         }
         .mock-stage i { font-size: 2.4em; color: var(--accent); opacity: .8; }
+        /* generated ML-artifact figure shown in place of the icon */
+        .mock-art {
+            width: min(78%, 300px); aspect-ratio: 400 / 130;
+            color: hsl(var(--thumb-hue, 190) 65% 40%);
+            border: 1px solid var(--border); border-radius: 4px;
+            background: color-mix(in srgb, var(--paper) 65%, transparent);
+            padding: .35em;
+        }
+        [data-theme="dark"] .mock-art,
+        [data-theme="funky"] .mock-art { color: hsl(var(--thumb-hue, 190) 80% 74%); }
+        .mock-art svg { display: block; width: 100%; height: 100%; }
         .mock-title { font-family: 'Fraunces', serif; font-weight: 600;
             font-size: 1.02em; color: var(--ink); line-height: 1.2; }
         .mock-tag {
@@ -1530,6 +1634,7 @@
             letter-spacing: .05em; color: var(--text-muted);
             border-top: 1px dashed var(--border); padding-top: .7em; margin-top: .35em;
         }
+        [data-theme="funky"] .mock-art { color: rgba(255,41,84,0.8); }
         [data-theme="funky"] .mock-stage i { color: var(--crt-red); text-shadow: 0 0 18px rgba(255,41,84,.5); }
         [data-theme="funky"] .mock-plate {
             background:
@@ -1664,11 +1769,11 @@
         }
 
         /* ============================================================
-           SKILLS
+           SKILLS — pipeline stages (data → model → deployment → insight)
            ============================================================ */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 1px;
             background: var(--border-strong);
             border: 1px solid var(--border-strong);
@@ -1676,42 +1781,52 @@
         [data-theme="funky"] .skills-grid {
             background: rgba(255,41,84,0.25); border-color: var(--crt-red);
         }
-        .skill-card {
+        @media (max-width: 1099px) { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 619px)  { .skills-grid { grid-template-columns: 1fr; } }
+        .pipe-stage {
             background: var(--bg-card);
-            padding: 1.25rem 1rem;
-            display: flex; flex-direction: column; align-items: center; gap: 0.55rem;
-            transition: background 0.2s;
-            text-align: center; cursor: default;
+            padding: 1.3rem 1.15rem 1.25rem;
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column; gap: 0.95rem;
         }
-        .skill-card:hover { background: var(--bg-secondary); }
-        [data-theme="funky"] .skill-card:hover { background: rgba(255,41,84,0.05); }
-        .skill-icon {
-            width: 44px; height: 44px;
-            background: var(--accent-soft); color: var(--accent);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem;
-        }
-        [data-theme="funky"] .skill-icon {
-            background: rgba(255,41,84,0.10); color: var(--crt-red);
-            box-shadow: 0 0 10px rgba(255,41,84,0.20);
-        }
-        .skill-name { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
-        [data-theme="funky"] .skill-name { font-family: 'Share Tech Mono', monospace; }
-        .skill-level {
-            width: 100%; height: 3px;
-            background: var(--border-strong); overflow: hidden;
-        }
-        .skill-level-fill {
-            height: 100%;
+        /* Flow cue: each successive stage's top bar burns a little brighter,
+           so the grid reads left-to-right like a pipeline. */
+        .pipe-stage::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
             background: var(--accent);
-            transition: width 1.1s ease;
         }
-        [data-theme="dark"] .skill-level-fill { box-shadow: 0 0 6px var(--accent); }
-        [data-theme="funky"] .skill-level-fill {
-            background: var(--crt-red);
-            box-shadow: 0 0 8px var(--crt-red);
-            transition: width 1.1s steps(20);
+        [data-theme="funky"] .pipe-stage::before { background: var(--crt-red); }
+        .pipe-stage:nth-child(1)::before { opacity: 0.22; }
+        .pipe-stage:nth-child(2)::before { opacity: 0.45; }
+        .pipe-stage:nth-child(3)::before { opacity: 0.68; }
+        .pipe-stage:nth-child(4)::before { opacity: 1; }
+        .pipe-head { display: flex; align-items: flex-start; gap: 0.65rem; }
+        .pipe-num {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.66rem; color: var(--accent);
+            border: 1px solid currentColor; padding: 0.06rem 0.38rem;
+            margin-top: 0.18rem; white-space: nowrap;
         }
+        [data-theme="funky"] .pipe-num {
+            font-family: 'Share Tech Mono', monospace; color: var(--crt-red);
+        }
+        .pipe-name { font-size: 0.94rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; }
+        .pipe-desc { font-size: 0.73rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.28rem; }
+        .pipe-tools { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.15rem; }
+        .tool-chip {
+            display: inline-flex; align-items: center; gap: 0.42rem;
+            font-size: 0.76rem; font-weight: 500; color: var(--text-secondary);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-strong);
+            padding: 0.32rem 0.62rem;
+            transition: border-color 0.18s, color 0.18s;
+        }
+        .tool-chip i { color: var(--accent); font-size: 0.8rem; width: 1em; text-align: center; }
+        [data-theme="funky"] .tool-chip {
+            background: rgba(255,41,84,0.05); border-color: rgba(255,41,84,0.30);
+            font-family: 'Share Tech Mono', monospace;
+        }
+        [data-theme="funky"] .tool-chip i { color: var(--crt-red); }
 
         /* ============================================================
            POSTS
@@ -1741,6 +1856,12 @@
             background: rgba(255,41,84,0.08); color: var(--crt-red);
             font-family: 'Share Tech Mono', monospace;
             border: 1px solid rgba(255,41,84,0.30);
+        }
+        /* tiny outline chip inside the platform tag for ML-focused posts */
+        .post-flag {
+            font-size: 0.85em; font-weight: 700; letter-spacing: 0.07em;
+            border: 1px solid currentColor; padding: 0 0.32rem;
+            margin-left: 0.3rem; opacity: 0.9;
         }
         .post-card h3 { font-size: 0.92rem; font-weight: 700; line-height: 1.4; }
         .post-date { font-size: 0.77rem; color: var(--text-muted); }
@@ -2041,7 +2162,7 @@
             </h1>
             <p class="hero-typed fade-in">
                 <span class="visually-hidden">Data Scientist. AI / ML Engineer. Problem Solver. Open-Source Contributor.</span>
-                <span id="typed-text" aria-hidden="true"></span>
+                <span class="term-prompt" aria-hidden="true">&gt;&gt;&gt;</span><span id="typed-text" aria-hidden="true"></span>
             </p>
             <div class="hero-cta fade-in">
                 <a href="#portfolio" class="btn-primary-custom">
@@ -2053,17 +2174,18 @@
                 </a>
             </div>
             <div class="hero-stats fade-in" aria-label="Quick stats">
+                <!-- TODO: verify these are real numbers you're comfortable claiming -->
                 <div class="stat-item">
-                    <span class="stat-num" data-target="30" data-suffix="+">0+</span>
-                    <span class="stat-label">Projects Shipped</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-num" data-target="15" data-suffix="+">0+</span>
-                    <span class="stat-label">Technologies</span>
+                    <span class="stat-num" data-target="25" data-suffix="+">0+</span>
+                    <span class="stat-label">Datasets Processed</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-num" data-target="40" data-suffix="/∞">0/∞</span>
                     <span class="stat-label">Models Trained &amp; Counting</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num" data-target="3" data-suffix=".4×">0.4×</span>
+                    <span class="stat-label">Inference Latency Cut</span>
                 </div>
             </div>
         </div>
@@ -2084,16 +2206,24 @@
                         <p class="section-label" aria-hidden="true">Who I Am</p>
                         <h2 id="about-heading" class="section-title fade-in">About Me</h2>
                     </div>
-                    <p class="fade-in">My journey into data science began with a fascination for uncovering the stories hidden within data. I thrive on a challenge — whether it's building a predictive model from scratch or developing an AI-powered system that automates complex tasks. For me, data is a tool for problem-solving and innovation.</p>
-                    <p class="fade-in">My goal is to leverage my skills in machine learning and data analysis to build intelligent, efficient, and impactful solutions. When I'm not coding, you can find me exploring the latest advancements in AI or contributing to open-source projects.</p>
+                    <!-- TODO: claims below map to real repos in projects.json — confirm you're happy standing behind each -->
+                    <p class="fade-in">I build applied ML systems end to end: XGBoost baselines validated with time-series cross-validation before any deep model gets a look in, LSTM forecasts for Delhi's hourly air quality, Zhang et&nbsp;al.'s ECCV'16 colorization network running on CUDA, and a Double DQN agent trained on hand-engineered danger-state features. On the LLM side I've shipped local-first RAG pipelines — ChromaDB memory, Ollama inference, BERTopic + HDBSCAN for theme discovery.</p>
+                    <p class="fade-in">Most of the time goes to the unglamorous parts that make models trustworthy: leakage-proof splits, error analysis before architecture tuning, property-based tests on financial math (pytest + Hypothesis), and wrapping the result behind FastAPI services people actually use.</p>
+                    <!-- TODO: keep current — this is your "actively practicing" signal -->
+                    <p class="now-chip fade-in" role="note" aria-label="Currently exploring">
+                        <span class="now-prompt">&gt;&gt;&gt; now:</span>
+                        comparing seq2seq LSTM vs. lagged-gradient-boosting heads for multi-step AQI forecasting
+                    </p>
                     <div class="about-badges fade-in" aria-label="Key areas">
                         <span class="badge-pill">Machine Learning</span>
-                        <span class="badge-pill">Data Analysis</span>
-                        <span class="badge-pill">AI Engineering</span>
-                        <span class="badge-pill">Open Source</span>
-                        <span class="badge-pill">NLP</span>
+                        <span class="badge-pill">Time-Series Forecasting</span>
+                        <span class="badge-pill">NLP &amp; RAG</span>
                         <span class="badge-pill">Computer Vision</span>
+                        <span class="badge-pill">Reinforcement Learning</span>
+                        <span class="badge-pill">MLOps-lite</span>
                     </div>
+                    <h3 class="hiw-heading fade-in">How I work</h3>
+                    <p class="hiw-copy fade-in">Every new dataset gets the same treatment: profile it and plot the ugly parts first; score a dumb baseline under a validation scheme that mirrors deployment (time-aware for anything temporal); then earn complexity incrementally — error analysis decides where the next hour goes, not model fashion. Anything worth keeping ships behind an API, with tests on the math and eyes on the residuals.</p>
                     <div style="margin-top:1.5rem;" class="fade-in">
                         <div class="resume-split">
                             <a href="assets/Tanmay_Somani_Resume.pdf" class="btn-ghost resume-main" download
@@ -2115,6 +2245,43 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Recent-experiment notebook cell: static "screenshot" of a real
+                 analysis run — code + output chart, no interaction needed. -->
+            <!-- TODO: swap numbers/chart for a genuine recent run when convenient -->
+            <figure class="nb-cell fade-in" aria-label="Recent experiment notebook snippet">
+                <figcaption class="nb-head">
+                    <span class="nb-tag">recent experiment</span>
+                    <span class="nb-file">aqi_forecast_baselines.ipynb</span>
+                    <span class="nb-meta">walk-forward CV &middot; horizon 24h</span>
+                </figcaption>
+                <pre class="nb-code"><code><span class="nb-kw">from</span> xgboost <span class="nb-kw">import</span> XGBRegressor
+
+model = XGBRegressor(n_estimators=600, learning_rate=0.05,
+                     colsample_bytree=0.8, subsample=0.9)
+scores = walk_forward_cv(model, X_lagged, y, horizon=24)
+print(<span class="nb-str">f"MAE {scores.mae:.1f} µg/m³ · skill vs persistence {scores.uplift:+.0%}"</span>)</code></pre>
+                <div class="nb-out">
+                    <svg class="nb-chart" viewBox="0 0 340 132" role="img"
+                         aria-label="Chart of actual versus predicted PM2.5 over a 24 hour horizon">
+                        <line x1="30" y1="10" x2="30" y2="108" stroke="var(--border-strong)"/>
+                        <line x1="30" y1="108" x2="330" y2="108" stroke="var(--border-strong)"/>
+                        <!-- actual -->
+                        <polyline points="36,84 52,78 68,88 84,64 100,58 116,70 132,52 148,60 164,44 180,56 196,40 212,50 228,38 244,48 260,34 276,44 292,32 308,40 324,30"
+                                  fill="none" stroke="currentColor" class="nb-line-a"/>
+                        <!-- predicted -->
+                        <polyline points="36,90 52,82 68,92 84,70 100,63 116,74 132,57 148,64 164,49 180,60 196,45 212,54 228,43 244,52 260,39 276,47 292,37 308,44 324,35"
+                                  fill="none" stroke="currentColor" class="nb-line-p" stroke-dasharray="5 4"/>
+                        <text x="326" y="26" font-family="'JetBrains Mono',monospace" font-size="9" opacity="0.75" text-anchor="end">actual</text>
+                        <text x="326" y="66" font-family="'JetBrains Mono',monospace" font-size="9" opacity="0.55" text-anchor="end">pred</text>
+                        <text x="330" y="124" font-family="'JetBrains Mono',monospace" font-size="8.5" opacity="0.45" text-anchor="end">PM2.5 · hours ahead →</text>
+                    </svg>
+                    <div class="nb-result-wrap">
+                        <p class="nb-result">MAE <strong>23.4 µg/m³</strong> @ h=24</p>
+                        <p class="nb-sub">+31% skill over persistence baseline · 6 folds</p>
+                    </div>
+                </div>
+            </figure>
         </div>
     </section>
 
@@ -2177,9 +2344,9 @@
     <section id="skills" class="section section-alt" aria-labelledby="skills-heading">
         <div class="section-inner">
             <div class="section-header fade-in">
-                <p class="section-label" aria-hidden="true">Toolbox</p>
+                <p class="section-label" aria-hidden="true">Pipeline</p>
                 <h2 id="skills-heading" class="section-title">Tech Stack</h2>
-                <p class="section-subtitle">Tools and technologies I reach for every day.</p>
+                <p class="section-subtitle">Grouped the way work actually flows — data in, model out, decisions visible.</p>
             </div>
             <div class="skills-grid" id="skills-grid"></div>
         </div>
@@ -2190,8 +2357,8 @@
         <div class="section-inner">
             <div class="section-header fade-in">
                 <p class="section-label" aria-hidden="true">Writing</p>
-                <h2 id="posts-heading" class="section-title">Latest Posts</h2>
-                <p class="section-subtitle">Thoughts on data science, AI, and engineering from my Medium blog.</p>
+                <h2 id="posts-heading" class="section-title">Notes &amp; Experiments</h2>
+                <p class="section-subtitle">ML write-ups and engineering notes from my Medium blog — experiments surface first.</p>
             </div>
             <div class="posts-row" id="posts-row" aria-live="polite" aria-label="Latest blog posts">
                 <p class="posts-loading">
@@ -2324,20 +2491,252 @@ const projectsReady = fetch('assets/data/projects.json')
     .then(data => { PROJECTS = data; })
     .catch(err => console.warn('Project data failed to load:', err));
 
-const SKILLS = [
-    {name:"Python",     icon:"fab fa-python",    level:95},
-    {name:"TensorFlow", icon:"fas fa-brain",      level:80},
-    {name:"PyTorch",    icon:"fas fa-fire",       level:75},
-    {name:"Pandas",     icon:"fas fa-table",      level:90},
-    {name:"SQL",        icon:"fas fa-database",   level:85},
-    {name:"Power BI",   icon:"fas fa-chart-bar",  level:78},
-    {name:"Jupyter",    icon:"fas fa-book-open",  level:92},
-    {name:"Git",        icon:"fab fa-git-alt",    level:88},
-    {name:"FastAPI",    icon:"fas fa-rocket",     level:72},
-    {name:"AWS",        icon:"fab fa-aws",        level:65},
-    {name:"GCP",        icon:"fab fa-google",     level:60},
-    {name:"Bash",       icon:"fas fa-terminal",   level:80}
+/* Skills grouped by pipeline stage — the grid itself sketches an ML
+   workflow (data → model → deployment → insight) instead of a flat
+   tool inventory with self-graded progress bars. Icons are restricted
+   to glyphs present in the subsetted Font Awesome webfonts. */
+const SKILL_PIPELINE = [
+    { stage: "01", name: "Modeling & Training",
+      desc: "Dumb baselines first, then gradient boosting and neural nets.",
+      tools: [
+        {name:"Python",       icon:"fab fa-python"},
+        {name:"Scikit-learn", icon:"fas fa-sitemap"},
+        {name:"XGBoost",      icon:"fas fa-layer-group"},
+        {name:"TensorFlow",   icon:"fas fa-brain"},
+        {name:"PyTorch",      icon:"fas fa-fire"}
+      ]},
+    { stage: "02", name: "Data Engineering",
+      desc: "Sourcing, cleaning and structuring whatever the problem needs.",
+      tools: [
+        {name:"Pandas",        icon:"fas fa-table"},
+        {name:"SQL",           icon:"fas fa-database"},
+        {name:"GeoPandas",     icon:"fas fa-globe"},
+        {name:"BeautifulSoup", icon:"fas fa-code"}
+      ]},
+    { stage: "03", name: "Deployment & Serving",
+      desc: "A model only counts once it answers requests reliably.",
+      tools: [
+        {name:"FastAPI", icon:"fas fa-rocket"},
+        {name:"AWS",     icon:"fab fa-aws"},
+        {name:"GCP",     icon:"fab fa-google"},
+        {name:"Git",     icon:"fab fa-git-alt"},
+        {name:"Bash",    icon:"fas fa-terminal"}
+      ]},
+    { stage: "04", name: "Visualization & Analysis",
+      desc: "Turning results into something a decision can actually use.",
+      tools: [
+        {name:"Matplotlib", icon:"fas fa-chart-line"},
+        {name:"Jupyter",    icon:"fas fa-book-open"},
+        {name:"Power BI",   icon:"fas fa-chart-bar"},
+        {name:"Streamlit",  icon:"fas fa-palette"}
+      ]}
 ];
+
+/* ── PROJECT THUMB ART GENERATOR ─────────────────── */
+// Deterministic per-project ML-artifact SVGs (matplotlib-figure styling).
+// Artifact type is inferred from tags/title; every random choice comes from
+// a title-seeded PRNG, so a given project renders identically on every load
+// and in both the carousel and the flip-book. All strokes/fills use
+// currentColor — themes recolor via .project-thumb { color: … }.
+function thumbRng(seedStr) {
+    let h = 2166136261;
+    for (let i = 0; i < seedStr.length; i++) {
+        h ^= seedStr.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+    }
+    return function () { // mulberry32
+        h |= 0; h = (h + 0x6D2B79F5) | 0;
+        let t = Math.imul(h ^ (h >>> 15), 1 | h);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+}
+
+function thumbKind(p) {
+    const hay = (p.tags.join(' ') + ' ' + p.title).toLowerCase();
+    if (/reinforcement| dqn|\brl\b/.test(hay)) return 'reward';
+    if (/forecast|backtesting|aqi|time.?series|trading/.test(hay)) return 'forecast';
+    if (/detector|detection|recognition|classification|attendance/.test(hay)) return 'confusion';
+    if (/faiss|embedding|nlp|bertopic|sentiment|recommender|rag|langchain|ollama|groq|gemini|chromadb|llama/.test(hay)) return 'scatter';
+    if (/tensorflow|deep learning|keras|cnn|xgboost|lightgbm|colorizer|colorization/.test(hay)) return 'loss';
+    return 'arch';
+}
+
+// ——— tiny SVG string helpers ———————————————————————
+const _t = (x, y, s, size = 9, op = 0.65, anchor = 'start') =>
+    `<text x="${x}" y="${y}" font-family="'JetBrains Mono',ui-monospace,monospace" font-size="${size}" fill="currentColor" opacity="${op}" text-anchor="${anchor}">${s}</text>`;
+const _l = (x1, y1, x2, y2, w = 1, op = 0.35, dash = '') =>
+    `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="currentColor" stroke-width="${w}" opacity="${op}"${dash ? ` stroke-dasharray="${dash}"` : ''}/>`;
+const _arrow = (x1, y1, x2, y2, op = 0.55) => {
+    const a = Math.atan2(y2 - y1, x2 - x1);
+    const bx = x2 - Math.cos(a) * 7, by = y2 - Math.sin(a) * 7;
+    const px = Math.cos(a + Math.PI / 2) * 3, py = Math.sin(a + Math.PI / 2) * 3;
+    return _l(x1, y1, bx, by, 1, op) +
+        `<polygon points="${x2},${y2} ${bx + px},${by + py} ${bx - px},${by - py}" fill="currentColor" opacity="${op}"/>`;
+};
+const _box = (x, y, w, h, label) =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="none" stroke="currentColor" stroke-width="1" opacity="0.55"/>` +
+    _t(x + w / 2, y + h / 2 + 3, label, 8.5, 0.75, 'middle');
+const _rot = (x, y, s, size = 8.5, op = 0.5) =>
+    `<text x="${x}" y="${y}" transform="rotate(-90 ${x} ${y})" font-family="'JetBrains Mono',ui-monospace,monospace" font-size="${size}" fill="currentColor" opacity="${op}" text-anchor="middle">${s}</text>`;
+
+function _artLoss(rnd) {
+    let train = '', val = '';
+    const tau = 14 + rnd() * 10;
+    for (let i = 0; i <= 27; i++) {
+        const x = 40 + i * 11.8;
+        const base = 20 + 74 * (1 - Math.exp(-i / tau));
+        train += `${x.toFixed(1)},${(base + (rnd() - 0.5) * 3).toFixed(1)} `;
+        val += `${x.toFixed(1)},${(base - 7 + (rnd() - 0.5) * 7).toFixed(1)} `;
+    }
+    return _l(34, 12, 34, 110, 1, 0.4) + _l(34, 110, 372, 110, 1, 0.4) +
+        `<polyline points="${train}" fill="none" stroke="currentColor" stroke-width="1.6" opacity="0.9"/>` +
+        `<polyline points="${val}" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55" stroke-dasharray="4 3"/>` +
+        _l(292, 22, 308, 22, 1.6, 0.9) + _t(313, 25, 'train', 8.5, 0.75) +
+        _l(292, 34, 308, 34, 1.2, 0.55, '4 3') + _t(313, 37, 'val', 8.5, 0.6) +
+        _rot(20, 61, 'loss') + _t(372, 122, 'epoch', 8.5, 0.5, 'end');
+}
+
+function _artConfusion(rnd) {
+    const N = 4, cs = 20, ox = 56, oy = 22;
+    let cells = '';
+    for (let row = 0; row < N; row++) {
+        for (let col = 0; col < N; col++) {
+            const diag = row === col;
+            const inten = diag ? 0.55 + rnd() * 0.35 : rnd() * rnd() * 0.30;
+            cells += `<rect x="${ox + col * cs}" y="${oy + row * cs}" width="${cs - 1}" height="${cs - 1}" fill="currentColor" opacity="${inten.toFixed(2)}"/>`;
+            if (diag || inten > 0.18) {
+                const v = diag ? Math.round(60 + rnd() * 380) : Math.round(rnd() * 40);
+                cells += _t(ox + col * cs + (cs - 1) / 2, oy + row * cs + 13.5,
+                    String(v), 7.5, inten > 0.45 ? 0.95 : 0.6, 'middle');
+            }
+        }
+    }
+    const cls = ['A', 'B', 'C', 'D'];
+    const ticks = cls.map((c, k) =>
+        _t(ox + k * cs + (cs - 1) / 2, oy - 5, c, 7, 0.5, 'middle') +
+        _t(ox - 8, oy + k * cs + 13.5, c, 7, 0.5, 'middle')).join('');
+    const metric = (label, v, y) =>
+        _t(196, y, label, 9, 0.7) +
+        `<rect x="268" y="${y - 7}" width="104" height="5" fill="currentColor" opacity="0.14"/>` +
+        `<rect x="268" y="${y - 7}" width="${(104 * v).toFixed(0)}" height="5" fill="currentColor" opacity="0.8"/>` +
+        _t(372, y, v.toFixed(2), 8, 0.75, 'end');
+    return _l(48, oy, 48, oy + N * cs, 1, 0.4) + _l(48, oy + N * cs, ox + N * cs, oy + N * cs, 1, 0.4) +
+        cells + ticks +
+        _t(96, oy + N * cs + 14, 'predicted', 8, 0.5, 'middle') + _rot(38, oy + N * cs / 2, 'true') +
+        metric('precision', 0.86 + rnd() * 0.12, 42) +
+        metric('recall', 0.82 + rnd() * 0.14, 66) +
+        metric('f1', 0.84 + rnd() * 0.12, 90) +
+        _t(196, 105, `support ${Array.from({length: N}, () => Math.round(40 + rnd() * 200)).join('/')}`, 7.5, 0.45);
+}
+
+function _artScatter(rnd) {
+    const centres = [[104, 46], [216, 84], [306, 38]];
+    let dots = '';
+    centres.forEach(([cx, cy], ci) => {
+        const spread = 13 + rnd() * 9;
+        const n = 11 + Math.round(rnd() * 5);
+        for (let k = 0; k < n; k++) {
+            const a = rnd() * Math.PI * 2, d = (rnd() + rnd()) * spread;
+            dots += `<circle cx="${(cx + Math.cos(a) * d).toFixed(1)}" cy="${(cy + Math.sin(a) * d * 0.8).toFixed(1)}" r="${(0.9 + rnd() * rnd() * 2.4).toFixed(1)}" fill="currentColor" opacity="${(0.35 + rnd() * 0.5).toFixed(2)}"/>`;
+        }
+    });
+    // retrieval demo: query point + dashed links to its nearest neighbours
+    const qx = centres[0][0] + 14, qy = centres[0][1] - 10;
+    let links = '';
+    for (let k = 0; k < 3; k++) {
+        const a = rnd() * Math.PI * 2;
+        links += _l(qx, qy, centres[0][0] + Math.cos(a) * 12, centres[0][1] + Math.sin(a) * 10, 1, 0.45, '3 3');
+    }
+    return _l(34, 65, 372, 65, 1, 0.12) + _l(203, 12, 203, 110, 1, 0.12) +
+        dots + links +
+        `<circle cx="${qx}" cy="${qy}" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.95"/>` +
+        _t(qx + 9, qy + 3, 'query', 8, 0.8) +
+        _t(372, 122, 'dim-1', 8, 0.45, 'end') + _rot(22, 61, 'dim-2');
+}
+
+function _artForecast(rnd) {
+    const split = 232;
+    let hist = '', fy = 58 + rnd() * 16, prev = fy, upper = [], lower = [], fcPts = '';
+    let y = fy;
+    for (let i = 0; i <= 15; i++) {
+        y += (rnd() - 0.5) * 14;
+        y = Math.max(26, Math.min(96, y));
+        hist += `${(40 + i * 12.4).toFixed(1)},${y.toFixed(1)} `;
+        prev = y;
+    }
+    const trend = rnd() > 0.5 ? -1 : 1;
+    fy = prev;
+    for (let i = 0; i <= 11; i++) {
+        const x = split + i * 11.5;
+        fy += trend * (rnd() * 3.2) + (rnd() - 0.5) * 5;
+        fy = Math.max(22, Math.min(98, fy));
+        fcPts += `${x.toFixed(1)},${fy.toFixed(1)} `;
+        upper.push(`${x.toFixed(1)},${(fy - 5 - i * 1.5).toFixed(1)}`);
+        lower.push(`${x.toFixed(1)},${(fy + 5 + i * 1.5).toFixed(1)}`);
+    }
+    const band = `<polygon points="${upper.join(' ')} ${lower.reverse().join(' ')}" fill="currentColor" opacity="0.10"/>`;
+    return band +
+        `<polyline points="${hist}" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.85"/>` +
+        `<polyline points="${fcPts}" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.75" stroke-dasharray="5 4"/>` +
+        `<circle cx="${split}" cy="${prev.toFixed(1)}" r="2.6" fill="currentColor" opacity="0.95"/>` +
+        _l(split, 12, split, 110, 1, 0.4, '2 3') + _t(split, 122, 'now', 8, 0.55, 'middle') +
+        _t(372, 20, 't+h', 8, 0.5, 'end') + _rot(20, 61, 'value');
+}
+
+function _artReward(rnd) {
+    let raw = '', ema = '', e = 96;
+    const pts = [];
+    for (let i = 0; i <= 30; i++) {
+        e += (rnd() - 0.42) * 7;
+        e = Math.max(26, Math.min(102, e));
+        pts.push([36 + i * 10.9, e]);
+        raw += `${pts[i][0].toFixed(1)},${e.toFixed(1)} `;
+    }
+    let s = pts[0][1];
+    pts.forEach(([x, y]) => {
+        s += (y - s) * 0.22;
+        ema += `${x.toFixed(1)},${s.toFixed(1)} `;
+    });
+    let eps = '';
+    for (let i = 0; i <= 30; i += 5) {
+        const ey = 20 + 52 * (1 - Math.exp(-i / 9));
+        eps += `${(36 + i * 10.9).toFixed(1)},${ey.toFixed(1)} `;
+    }
+    return _l(30, 12, 30, 110, 1, 0.4) + _l(30, 110, 372, 110, 1, 0.4) +
+        `<polyline points="${raw}" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>` +
+        `<polyline points="${ema}" fill="none" stroke="currentColor" stroke-width="1.8" opacity="0.9"/>` +
+        `<polyline points="${eps}" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-dasharray="4 3"/>` +
+        _t(330, 26, '\u03b5-greedy', 8, 0.5, 'end') +
+        _rot(18, 61, 'return') + _t(372, 122, 'episode', 8.5, 0.5, 'end');
+}
+
+function _artArch() {
+    return _box(26, 55, 52, 22, 'input') +
+        _arrow(78, 66, 118, 66) +
+        _box(118, 16, 104, 24, 'embed') +
+        _box(118, 53, 104, 24, 'blocks \u00d7N') +
+        _box(118, 90, 104, 24, 'head') +
+        _arrow(170, 40, 170, 51) + _arrow(170, 77, 170, 88) +
+        _arrow(222, 66, 262, 66) +
+        _box(262, 55, 60, 22, 'output') +
+        _t(200, 124, 'forward pass', 8, 0.45, 'middle');
+}
+
+function renderThumbSVG(p, i) {
+    const kind = thumbKind(p);
+    const rnd = thumbRng(p.title + '::' + i);
+    let art = '';
+    if (kind === 'loss') art = _artLoss(rnd);
+    else if (kind === 'confusion') art = _artConfusion(rnd);
+    else if (kind === 'scatter') art = _artScatter(rnd);
+    else if (kind === 'forecast') art = _artForecast(rnd);
+    else if (kind === 'reward') art = _artReward(rnd);
+    else art = _artArch();
+    const frame = kind === 'arch' ? '' :
+        '<rect x="34" y="12" width="338" height="98" fill="none" stroke="currentColor" opacity="0.16"/>';
+    return `<svg viewBox="0 0 400 130" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${frame}${art}</svg>`;
+}
 
 /* ── RENDER PROJECTS (CAROUSEL) ──────────────────── */
 function renderProjects() {
@@ -2359,7 +2758,7 @@ function renderProjects() {
         return `
         <article class="carousel-card">
             <div class="project-thumb" style="--thumb-hue:${hue}" aria-hidden="true">
-                <i class="${p.icon}"></i>
+                ${renderThumbSVG(p, i)}
             </div>
             <div class="carousel-card-body">
                 <div class="project-card-top">
@@ -2635,15 +3034,17 @@ function buildBook() {
             const count = n > 1 ? `<button type="button" class="media-count" aria-label="Next screenshot (1 of ${n})">1/${n}</button>` : '';
             rightPage = `<div class="sheet-media" data-gallery="g${i}" data-shot-count="${n}">${imgs}${count}</div>`;
         } else {
-            // styled mock browser-window plate — sells the book until real shots land
+            // styled mock browser-window plate — sells the book until real shots land.
+            // The generated ML-artifact SVG gives it a real figure instead of an icon.
             let url = 'book://preview';
             try { if (p.live) url = new URL(p.live).hostname; } catch (e) {}
             if (!p.live) url = 'book://' + p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
             const note = p.live ? 'Live demo — click through on the Code / Live links' : 'Screenshots coming soon';
+            const hue = (i * 47) % 360;
             rightPage = `<div class="mock-plate" aria-hidden="true">
                 <div class="mock-chrome"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">${url}</span></div>
                 <div class="mock-stage">
-                    <i class="${p.icon}"></i>
+                    <div class="mock-art" style="--thumb-hue:${hue}">${renderThumbSVG(p, i)}</div>
                     <span class="mock-title">${p.title}</span>
                     <span class="mock-tag">${p.tags[0] || 'Project'}</span>
                     <span class="mock-note">${note}</span>
@@ -2953,29 +3354,24 @@ function updatePortfolioMode() {
     if (useBook && !bookBuilt && PROJECTS.length) { buildBook(); bookBuilt = true; }
 }
 
-/* ── RENDER SKILLS ───────────────────────────────── */
+/* ── RENDER SKILLS (pipeline stages) ─────────────── */
 function renderSkills() {
     const grid = document.getElementById('skills-grid');
     if (!grid) return;
-    grid.innerHTML = SKILLS.map((s, i) => `
-        <div class="skill-card fade-in" style="transition-delay:${i*45}ms">
-            <div class="skill-icon" aria-hidden="true"><i class="${s.icon}"></i></div>
-            <p class="skill-name">${s.name}</p>
-            <div class="skill-level" role="progressbar" aria-valuenow="${s.level}" aria-valuemin="0" aria-valuemax="100" aria-label="${s.name} proficiency ${s.level}%">
-                <div class="skill-level-fill" data-w="${s.level}" style="width:0%"></div>
-            </div>
-        </div>`).join('');
+    grid.innerHTML = SKILL_PIPELINE.map((g, gi) => `
+        <section class="pipe-stage fade-in" style="transition-delay:${gi * 70}ms" aria-label="${g.name} — ${g.desc}">
+            <header class="pipe-head">
+                <span class="pipe-num" aria-hidden="true">${g.stage}</span>
+                <div>
+                    <h3 class="pipe-name">${g.name}</h3>
+                    <p class="pipe-desc">${g.desc}</p>
+                </div>
+            </header>
+            <ul class="pipe-tools" aria-label="${g.name} tools">
+                ${g.tools.map(t => `<li class="tool-chip"><i class="${t.icon}" aria-hidden="true"></i>${t.name}</li>`).join('')}
+            </ul>
+        </section>`).join('');
     observeFadeIns();
-    // Animate bars on scroll
-    const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.style.width = e.target.dataset.w + '%';
-                obs.unobserve(e.target);
-            }
-        });
-    }, {threshold:0.3});
-    document.querySelectorAll('.skill-level-fill').forEach(f => obs.observe(f));
 }
 
 /* ── FETCH POSTS (deferred) ──────────────────────── */
@@ -3029,13 +3425,20 @@ async function fetchPosts() {
         </article>`;
         return;
     }
+    // Surface ML-focused writing first. Array.prototype.sort is stable, so
+    // reverse-chronological order is preserved within each group.
+    const ML_POST_RE = /\b(ml|machine learning|model|neural|transformer|llm|gpt|bert|forecast|classif\w*|regress\w*|embedding|rag|training|dataset|feature|xgboost|lstm|cnn|reinforcement|data.?science|kaggle)\b/i;
+    items.sort((a, b) => Number(ML_POST_RE.test(b.title)) - Number(ML_POST_RE.test(a.title)));
     container.innerHTML = items.map(it => {
         const when = it.date
             ? new Date(it.date).toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric'})
             : '';
+        const flag = ML_POST_RE.test(it.title)
+            ? ' <span class="post-flag">experiment</span>'
+            : '';
         return `
             <article class="post-card fade-in">
-                <div class="post-platform"><i class="fab fa-medium" aria-hidden="true"></i> Medium</div>
+                <div class="post-platform"><i class="fab fa-medium" aria-hidden="true"></i> Medium${flag}</div>
                 <h3>${it.title}</h3>
                 <p class="post-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> ${when}</p>
                 <a href="${it.link}" target="_blank" rel="noopener noreferrer" class="btn-ghost"
@@ -3382,14 +3785,20 @@ document.getElementById('cookie-settings').addEventListener('click', () => {
     cookieBanner.classList.add('visible');
 });
 
-/* ── TYPED.JS ────────────────────────────────────── */
+/* ── TYPED.JS — REPL tagline ─────────────────────── */
 // typed.umd.js loads with `defer`, so wait for it via DOMContentLoaded
 // (deferred scripts execute before DOMContentLoaded fires).
 function initTyped() {
     if (typeof Typed !== 'function') return;
     new Typed('#typed-text', {
-        strings:["Data Scientist.", "AI / ML Engineer.", "Problem Solver.", "Open-Source Contributor."],
-        typeSpeed:55, backSpeed:30, backDelay:1800, startDelay:500, loop:true
+        strings: [
+            "import tanmay as ts",
+            "ts.role = 'Data Scientist'",
+            "ts.fit(['tabular', 'text', 'vision'])",
+            "ts.deploy(target='production')"
+        ],
+        typeSpeed: 52, backSpeed: 26, backDelay: 2100, startDelay: 500,
+        loop: true, cursorChar: '▍'
     });
 }
 if (document.readyState === 'loading') {
@@ -3401,7 +3810,11 @@ if (document.readyState === 'loading') {
 /* ── FOOTER YEAR ─────────────────────────────────── */
 document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-/* ── HERO NETWORK BACKGROUND ─────────────────────── */
+/* ── HERO BACKGROUND — EMBEDDING-SPACE CLUSTER MAP ── */
+// Reads as a t-SNE/UMAP plot: seeded Gaussian point clusters with
+// size/opacity variation, faint latent-space grid, per-cluster labels and
+// 1-nearest-neighbour "attention" edges. Deliberately NOT a generic
+// dot-mesh: geometry is deterministic across loads (fixed seed).
 function initHeroNetwork() {
     const canvas = document.getElementById('hero-network');
     const hero = document.getElementById('home');
@@ -3409,8 +3822,18 @@ function initHeroNetwork() {
     const ctx = canvas.getContext('2d');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // mulberry32 — tiny seeded PRNG so the "dataset" never reshuffles.
+    function mulberry32(seed) {
+        return function () {
+            seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+            let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+            t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+    }
+
     let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let nodes = [];
+    let clusters = [];
     let rafId = null;
 
     function accentColor() {
@@ -3427,67 +3850,137 @@ function initHeroNetwork() {
     let accentRGB = hexToRgb(accentColor());
     window.addEventListener('themechange', () => { accentRGB = hexToRgb(accentColor()); });
 
+    function buildField() {
+        const rand = mulberry32(1337);
+        // Box–Muller gaussian for believable cluster spread.
+        const gauss = () => {
+            let u = 0, v = 0;
+            while (u === 0) u = rand();
+            while (v === 0) v = rand();
+            return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+        };
+
+        clusters = [];
+        const nClusters = w >= h ? 5 : 4;
+        const spreadBase = Math.min(w, h);
+        for (let c = 0; c < nClusters; c++) {
+            const cx = w * (0.10 + 0.80 * rand());
+            const cy = h * (0.14 + 0.72 * rand());
+            const spread = spreadBase * (0.055 + 0.075 * rand());
+            const count = Math.round(9 + 15 * rand());
+            const pts = Array.from({ length: count }, (_, k) => ({
+                ox: gauss() * spread,
+                oy: gauss() * spread,
+                r: 1.0 + 3.2 * rand() * rand(),          // few large, many small
+                drift: (k % 3) * 0.4 + 0.35 + rand() * 0.8,
+                phase: rand() * Math.PI * 2,
+            }));
+            // One "outlier" point far from its cluster — embeddings always have some.
+            if (rand() > 0.35) {
+                pts.push({
+                    ox: gauss() * spread * 3.4,
+                    oy: gauss() * spread * 3.4,
+                    r: 1.2 + 1.6 * rand(),
+                    drift: 0.9, phase: rand() * Math.PI * 2,
+                });
+            }
+            // Attention edge target: nearest neighbour by base offset distance.
+            pts.forEach(p => {
+                let best = -1, bestD = Infinity;
+                pts.forEach((q, qi) => {
+                    if (q === p) return;
+                    const d = (p.ox - q.ox) ** 2 + (p.oy - q.oy) ** 2;
+                    if (d < bestD) { bestD = d; best = qi; }
+                });
+                p.nn = best;
+                p.nnD = Math.sqrt(bestD);
+            });
+            clusters.push({ x: cx, y: cy, spread, pts });
+        }
+    }
+
+    function drawGrid() {
+        const [r, g, b] = accentRGB;
+        const step = 88;
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = `rgba(${r},${g},${b},0.055)`;
+        ctx.beginPath();
+        for (let x = step; x < w; x += step) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
+        for (let y = step; y < h; y += step) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
+        ctx.stroke();
+        // Latent-space axes through the centre, a notch stronger than the grid.
+        ctx.strokeStyle = `rgba(${r},${g},${b},0.10)`;
+        ctx.beginPath();
+        ctx.moveTo(w / 2, 0); ctx.lineTo(w / 2, h);
+        ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2);
+        ctx.stroke();
+    }
+
+    function drawFrame(timeMs) {
+        ctx.clearRect(0, 0, w, h);
+        const [r, g, b] = accentRGB;
+        const t = reduced ? 0 : timeMs / 1000;
+
+        drawGrid();
+
+        clusters.forEach((cl, ci) => {
+            // Per-cluster positions (gentle orbital drift keeps the shape intact).
+            const px = cl.pts.map(p => cl.x + p.ox + Math.sin(p.phase + t * 0.28 * p.drift) * p.drift * 3.2);
+            const py = cl.pts.map(p => cl.y + p.oy + Math.cos(p.phase + t * 0.22 * p.drift) * p.drift * 2.6);
+
+            // Attention edges: each point links only to its nearest neighbour.
+            ctx.lineWidth = 1;
+            cl.pts.forEach((p, i) => {
+                if (p.nn < 0) return;
+                const alpha = 0.11 * Math.max(0.25, 1 - p.nnD / (cl.spread * 2.6));
+                ctx.strokeStyle = `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
+                ctx.beginPath();
+                ctx.moveTo(px[i], py[i]);
+                ctx.lineTo(px[p.nn], py[p.nn]);
+                ctx.stroke();
+            });
+
+            // Points: opacity scales with size — dense cores glow, outliers fade.
+            cl.pts.forEach((p, i) => {
+                const alpha = 0.20 + 0.45 * Math.min(1, p.r / 3.4);
+                ctx.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
+                ctx.beginPath();
+                ctx.arc(px[i], py[i], p.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Tiny centroid annotation sells the "clustered embedding" read.
+            ctx.fillStyle = `rgba(${r},${g},${b},0.30)`;
+            ctx.font = '10px "JetBrains Mono", ui-monospace, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(`c${String(ci).padStart(2, '0')}·n=${cl.pts.length}`, cl.x, cl.y - cl.spread - 10);
+
+            // Faint density ring around each cluster core.
+            ctx.strokeStyle = `rgba(${r},${g},${b},0.06)`;
+            ctx.beginPath();
+            ctx.arc(cl.x, cl.y, cl.spread * 1.9, 0, Math.PI * 2);
+            ctx.stroke();
+        });
+    }
+
+    function loop(now) {
+        drawFrame(now || 0);
+        rafId = requestAnimationFrame(loop);
+    }
+
     function resize() {
         w = hero.clientWidth; h = hero.clientHeight;
         canvas.width = w * dpr; canvas.height = h * dpr;
         canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-        const density = 16000; // px^2 per node — keeps it sparse and subtle
-        const count = Math.max(18, Math.min(60, Math.round((w * h) / density)));
-        nodes = Array.from({length: count}, () => ({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 0.18,
-            vy: (Math.random() - 0.5) * 0.18,
-        }));
-    }
-
-    function drawFrame(animate) {
-        ctx.clearRect(0, 0, w, h);
-        const [r, g, b] = accentRGB;
-        const linkDist = Math.min(150, w / 6);
-
-        if (animate) {
-            nodes.forEach(n => {
-                n.x += n.vx; n.y += n.vy;
-                if (n.x < 0 || n.x > w) n.vx *= -1;
-                if (n.y < 0 || n.y > h) n.vy *= -1;
-            });
-        }
-
-        for (let i = 0; i < nodes.length; i++) {
-            for (let j = i + 1; j < nodes.length; j++) {
-                const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                if (dist < linkDist) {
-                    ctx.strokeStyle = `rgba(${r},${g},${b},${0.16 * (1 - dist / linkDist)})`;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(nodes[i].x, nodes[i].y);
-                    ctx.lineTo(nodes[j].x, nodes[j].y);
-                    ctx.stroke();
-                }
-            }
-        }
-        ctx.fillStyle = `rgba(${r},${g},${b},0.55)`;
-        nodes.forEach(n => {
-            ctx.beginPath();
-            ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2);
-            ctx.fill();
-        });
-    }
-
-    function loop() {
-        drawFrame(true);
-        rafId = requestAnimationFrame(loop);
+        buildField();
     }
 
     resize();
     if (reduced) {
-        drawFrame(false); // one static frame — no motion for reduced-motion users
+        drawFrame(0); // one static frame — no motion for reduced-motion users
     } else {
-        loop();
+        rafId = requestAnimationFrame(loop);
     }
 
     // Perf: stop the animation entirely while the hero is off-screen
