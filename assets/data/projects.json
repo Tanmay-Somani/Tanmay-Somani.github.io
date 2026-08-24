@@ -17,12 +17,15 @@
     ],
     "imgs": [
       "assets/images/demo/aetherium-1.webp",
-      "assets/images/demo/aetherium-2.webp",
-      "assets/images/demo/aetherium-3.webp"
+      "assets/images/demo/aetherium-2.webp"
     ],
     "github": "https://github.com/Tanmay-Somani/Aetherium-Colab-Agent",
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "4 specialist agents",
+      "CRDT conflict-free co-editing"
+    ]
   },
   {
     "title": "LifeLog-AI",
@@ -47,7 +50,12 @@
     ],
     "github": "https://github.com/Tanmay-Somani/LifeLog-AI",
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "100% on-device inference",
+      "phi + llava · 2 local models",
+      "24/7 passive capture"
+    ]
   },
   {
     "title": "Context Manager",
@@ -71,7 +79,12 @@
     ],
     "github": null,
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "1 file = whole codebase",
+      "Multi-threaded repo scan",
+      "Token-lean output"
+    ]
   },
   {
     "title": "TLDR Gmail Agent",
@@ -91,7 +104,11 @@
     "img": null,
     "github": null,
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "FAISS hybrid search",
+      "Cross-encoder reranked top hits"
+    ]
   },
   {
     "title": "Algorithmic Backtesting Engine",
@@ -115,7 +132,11 @@
     ],
     "github": null,
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "100+ property tests green",
+      "Trade-by-trade simulation"
+    ]
   },
   {
     "title": "AQI Analysis & Forecast",
@@ -139,7 +160,12 @@
     ],
     "github": null,
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "MAE ↓31% vs persistence @ h=24",
+      "6-fold walk-forward CV",
+      "CPCB sub-index aligned"
+    ]
   },
   {
     "title": "Urban Heat Stress Router",
@@ -159,7 +185,11 @@
     "img": null,
     "github": null,
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "Per-street heat scores",
+      "Metres-for-degrees tradeoff"
+    ]
   },
   {
     "title": "Image Colorizer",
@@ -182,7 +212,11 @@
     ],
     "github": "https://github.com/Tanmay-Somani/Image_Colorizer",
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "Zhang ECCV'16 weights",
+      "CUDA auto-detect"
+    ]
   },
   {
     "title": "Gesture Game Hub",
@@ -206,7 +240,12 @@
     ],
     "github": null,
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "21 landmarks @ realtime",
+      "Unbeatable minimax AI",
+      "0 controllers"
+    ]
   },
   {
     "title": "FACT: AI Content Detector",
@@ -226,7 +265,11 @@
     "img": null,
     "github": null,
     "live": "https://fact-wku3.onrender.com/",
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "3 modalities: text·img·audio",
+      "Live on Render"
+    ]
   },
   {
     "title": "Substack RSS Scraper",
@@ -246,7 +289,12 @@
     "img": null,
     "github": null,
     "live": "https://rss-substack-production.up.railway.app/",
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "1-click XLS export",
+      "Webhook-ready",
+      "Always-on Railway"
+    ]
   },
   {
     "title": "LinkedIn Authority Engine",
@@ -266,7 +314,12 @@
     "img": null,
     "github": "https://github.com/Tanmay-Somani/Linkedin_Automation_Engine",
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "Human approval gates",
+      "Hook optimiser stage",
+      "SQLite idea bank"
+    ]
   },
   {
     "title": "Job Opportunity Dataset",
@@ -286,7 +339,11 @@
     "img": null,
     "github": null,
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "LLaMA 3 structured extraction",
+      "Tiered fit ranking"
+    ]
   },
   {
     "title": "Book Recommender System",
@@ -305,7 +362,11 @@
     "img": null,
     "github": "https://github.com/WittyhacksCR004/WH020_Linktree",
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "Hybrid recs: CF + content",
+      "Review-backed suggestions"
+    ]
   },
   {
     "title": "Facial Recognition Attendance",
@@ -325,7 +386,11 @@
     "img": null,
     "github": "https://github.com/Tanmay-Somani/Basic_Face_Detection_Model",
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "Real-time recognition",
+      "Hands-free logs"
+    ]
   },
   {
     "title": "Weight Journal",
@@ -347,7 +412,12 @@
     ],
     "github": "https://github.com/Tanmay-Somani/Weight_ml",
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "~19 MB native exe",
+      "Atomic autosave",
+      "Same-day dedupe"
+    ]
   },
   {
     "title": "Growth Dashboard DeskApp",
@@ -376,7 +446,11 @@
     ],
     "github": "https://github.com/Tanmay-Somani/Growth-Dashboard-DeskApp",
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "9 tools · 1 cockpit",
+      "3 prioritisation methods"
+    ]
   },
   {
     "title": "Stock Sentiment Analysis",
@@ -396,7 +470,11 @@
     "img": null,
     "github": "https://github.com/Tanmay-Somani/Stock-News-Sentiment-Analysis-and-Visualization",
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "Ticker-level sentiment",
+      "Mood-vs-price overlay"
+    ]
   },
   {
     "title": "License Plate Detection",
@@ -415,7 +493,11 @@
     "img": null,
     "github": null,
     "live": null,
-    "status": "done"
+    "status": "done",
+    "metrics": [
+      "Interactive frame rates",
+      "Instant plate crops"
+    ]
   },
   {
     "title": "Native AI Browser",
@@ -437,7 +519,11 @@
     ],
     "github": "https://github.com/Tanmay-Somani/AI-native-broswer",
     "live": null,
-    "status": "wip"
+    "status": "wip",
+    "metrics": [
+      "0 cloud round-trips",
+      "RAG over visited pages"
+    ]
   },
   {
     "title": "Snake Game AI Agent",
@@ -456,6 +542,11 @@
     "img": null,
     "github": "https://github.com/Tanmay-Somani",
     "live": null,
-    "status": "wip"
+    "status": "wip",
+    "metrics": [
+      "Double DQN core",
+      "Reward-shaped policy",
+      "Live training curves"
+    ]
   }
 ]

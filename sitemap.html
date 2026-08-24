@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@
     <script>
     (function () {
         try {
-            var t = ['light', 'dark', 'funky'];
+            var t = ['light', 'dark', 'tide'];
             var i = parseInt(localStorage.getItem('ts-theme'), 10);
             if (!(i >= 0 && i < t.length)) {
                 i = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 1 : 0;
@@ -71,7 +71,7 @@
             --grid-line: rgba(13,148,136,0.07);
             --radius: 0px;
             --stamp:    #a16207;
-            --scanline: rgba(255,41,84,0);
+            --scanline: rgba(201,128,78,0);
         }
         [data-theme="dark"] {
             color-scheme: dark;
@@ -95,33 +95,33 @@
             --grid-line: rgba(34,211,238,0.05);
             --radius: 0px;
             --stamp:      #fbbf24;
-            --scanline:   rgba(255,41,84,0);
+            --scanline:   rgba(201,128,78,0);
         }
-        [data-theme="funky"] {
+        [data-theme="tide"] {
             color-scheme: dark;
-            --bg-primary:    #060512;
-            --bg-secondary:  #0a0818;
-            --bg-card:       #0d0a1f;
-            --text-primary:  #ff2954;
-            --text-secondary:#ff6b8a;
-            --text-muted:    #cf5973;
-            --text-on-accent:#060512;
-            --accent:        #ff2954;
-            --accent-hover:  #ff5c7a;
-            --accent-soft:   rgba(255,41,84,0.10);
-            --accent-glow:   rgba(255,41,84,0.30);
-            --border:        rgba(255,41,84,0.25);
-            --border-strong: rgba(255,41,84,0.50);
-            --shadow-sm: 0 0 6px rgba(255,41,84,0.20);
-            --shadow-md: 0 0 18px rgba(255,41,84,0.28);
-            --tag-bg:    rgba(255,41,84,0.12);
-            --tag-text:  #ff2954;
-            --grid-line: rgba(255,41,84,0.08);
-            --radius: 0px;
-            --crt-red: #ff2954;
-            --crt-blue: #2ee6ff;
-            --stamp:      #ffff00;
-            --scanline:   rgba(255,41,84,.05);
+            --bg-primary:    #071e26;
+            --bg-secondary:  #0a2833;
+            --bg-card:       #0c303c;
+            --text-primary:  #eaf6f5;
+            --text-secondary:#bfe0de;
+            --text-muted:    #8fb5b3;
+            --text-on-accent:#04161c;
+            --accent:        #35c4d7;
+            --accent-hover:  #6ad9e8;
+            --accent-soft:   rgba(53,196,215,0.10);
+            --accent-glow:   rgba(53,196,215,0.30);
+            --border:        rgba(120,200,210,0.22);
+            --border-strong: rgba(120,200,210,0.45);
+            --shadow-sm: 0 0 6px rgba(53,196,215,0.16);
+            --shadow-md: 0 0 18px rgba(53,196,215,0.20);
+            --tag-bg:    rgba(201,128,78,0.14);
+            --tag-text:  #e0a274;
+            --grid-line: rgba(53,196,215,0.06);
+            --radius: 12px;
+            --copper:  #c9804e;
+            --aqua-hi: #6ad9e8;
+            --stamp:      #e0a274;
+            --scanline:   rgba(53,196,215,.04);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -167,7 +167,7 @@
             text-decoration: none;
         }
         .sm-brand:hover { text-decoration: underline; }
-        [data-theme="funky"] .sm-brand { color: var(--crt-red); text-shadow: 0 0 8px rgba(255,41,84,0.55); }
+        [data-theme="tide"] .sm-brand { color: var(--copper); text-shadow: 0 0 8px rgba(201,128,78,0.55); }
         .sm-back {
             display: inline-flex;
             align-items: center;
@@ -186,7 +186,7 @@
             color: var(--accent);
             margin-bottom: 0.5rem;
         }
-        [data-theme="funky"] .sm-kicker { color: var(--crt-red); text-shadow: 0 0 8px rgba(255,41,84,0.55); }
+        [data-theme="tide"] .sm-kicker { color: var(--copper); text-shadow: 0 0 8px rgba(201,128,78,0.55); }
         .sm-title {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
@@ -246,7 +246,7 @@
         .sm-page-link i { color: var(--accent); width: 1.1em; text-align: center; }
         .substack-icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; }
         .sm-page-desc { color: var(--text-muted); font-size: 0.8rem; line-height: 1.5; }
-        [data-theme="funky"] .sm-card { font-family: 'Share Tech Mono', monospace; }
+        [data-theme="tide"] .sm-card { font-family: 'JetBrains Mono', monospace; }
 
         /* No-JS / fetch-failure fallback list */
         #sm-projects-fallback ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
@@ -371,6 +371,18 @@
                 <a class="sm-card" href="assets/Tanmay_Somani_Resume.pdf" download>
                     <span class="sm-page-link"><i class="fas fa-file-pdf" aria-hidden="true"></i> Resume (PDF)</span>
                     <span class="sm-page-desc">Current ATS-friendly resume.</span>
+                </a>
+                <a class="sm-card" href="assets/resume-archive/Archived3.pdf" download>
+                    <span class="sm-page-link"><i class="fas fa-file-pdf" aria-hidden="true"></i> Archived resume &middot; Dec 2025</span>
+                    <span class="sm-page-desc">Archive snapshot from December 2025.</span>
+                </a>
+                <a class="sm-card" href="assets/resume-archive/Archived2.pdf" download>
+                    <span class="sm-page-link"><i class="fas fa-file-pdf" aria-hidden="true"></i> Archived resume &middot; Aug 2025</span>
+                    <span class="sm-page-desc">Archive snapshot from August 2025.</span>
+                </a>
+                <a class="sm-card" href="assets/resume-archive/Archived1.pdf" download>
+                    <span class="sm-page-link"><i class="fas fa-file-pdf" aria-hidden="true"></i> Archived resume &middot; Jan 2025</span>
+                    <span class="sm-page-desc">Archive snapshot from January 2025.</span>
                 </a>
                 <a class="sm-card" href="sitemap.xml">
                     <span class="sm-page-link"><i class="fas fa-code" aria-hidden="true"></i> sitemap.xml</span>

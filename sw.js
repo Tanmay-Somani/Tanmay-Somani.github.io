@@ -1,8 +1,8 @@
-/* Tanmay-Somani.github.io — minimal offline support.
+﻿/* Tanmay-Somani.github.io â€” minimal offline support.
  * HTML is network-first (content changes often); static assets are
  * cache-first with a background fill. Analytics/third-party traffic
  * passes through untouched. */
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE = 'portfolio-' + VERSION;
 
 const PRECACHE = [
