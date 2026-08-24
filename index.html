@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 </html>
 </body>
         /* -- z4 book overlay (scanlines retired with the retro theme) -- */
@@ -15,19 +15,19 @@
         } catch (e) {}
     })();
     </script>
-    <meta name="description" content="Tanmay Somani's Data Science Portfolio â€” AI, Machine Learning, and intelligent systems.">
+    <meta name="description" content="Tanmay Somani's Data Science Portfolio — AI, Machine Learning, and intelligent systems.">
     <meta name="author" content="Tanmay Somani">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://tanmay-somani.github.io/">
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#f7f8fc" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#0a0f1e" media="(prefers-color-scheme: dark)">
-    <meta property="og:title" content="Tanmay Somani â€” Data Science Portfolio">
+    <meta property="og:title" content="Tanmay Somani — Data Science Portfolio">
     <meta property="og:description" content="Explore Tanmay Somani's data science portfolio: ML projects, AI tools, and more.">
     <meta property="og:image" content="https://tanmay-somani.github.io/assets/images/portfolio-thumbnail.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Tanmay Somani â€” Data Scientist and AI/ML Engineer portfolio">
+    <meta property="og:image:alt" content="Tanmay Somani — Data Scientist and AI/ML Engineer portfolio">
     <meta property="og:url" content="https://tanmay-somani.github.io/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
@@ -41,13 +41,13 @@
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
-    <!-- Fonts self-hosted (assets/fonts/fonts.css) â€” no third-party font origin.
+    <!-- Fonts self-hosted (assets/fonts/fonts.css) — no third-party font origin.
          Preload the two faces needed for the hero's first paint. -->
     <link rel="preload" href="assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="assets/fonts/fonts.css">
 <!--   Light/Dark: Inter + Space Grotesk + Fraunces/JetBrains Mono (book). Tide: same type system, aqua x copper palette.
-         Self-hosted in assets/fonts/ â€” only the weights actually used are shipped. -->
+         Self-hosted in assets/fonts/ — only the weights actually used are shipped. -->
 
     <!-- Analytics: Google Analytics is injected ONLY after explicit consent
          (cookie banner on this page). The gtag stub always exists so track()
@@ -80,14 +80,14 @@
 
            PHILOSOPHY:
            LIGHT = Neural-network white: clinical data-lab feel.
-                   Accent = deep teal (#0d9488) â€” the colour of
+                   Accent = deep teal (#0d9488) — the colour of
                    Jupyter outputs, matplotlib colormaps, and ML
                    conference slides. Background uses a faint grid
                    to echo graph paper / coordinate systems.
 
            DARK  = Embedding-space dark: the classic deep-learning
                    notebook. Near-black #0a0f1e (navy, not grey)
-                   with electric cyan #22d3ee â€” the colour of
+                   with electric cyan #22d3ee — the colour of
                    TensorBoard curves and UMAP scatter plots.
 
            TIDE  = Aqua water × copper: deep sea-navy surfaces,
@@ -97,7 +97,7 @@
                    fittings.
            ============================================================ */
 
-        /* â”€â”€ LIGHT â”€â”€ */
+        /* ── LIGHT ── */
         :root {
             color-scheme: light;
             --bg-primary:    #f7f8fc;
@@ -131,7 +131,7 @@
             --scanline: rgba(201,128,78,0);
         }
 
-        /* â”€â”€ DARK â”€â”€ */
+        /* ── DARK ── */
         [data-theme="dark"] {
             color-scheme: dark;
             --bg-primary:    #0a0f1e;
@@ -156,7 +156,7 @@
             --tag-text:  #22d3ee;
             --grid-line: rgba(34,211,238,0.05);
             --radius: 0px;
-            /* book â€” warm lamp-lit paper */
+            /* book — warm lamp-lit paper */
             --paper:      #16140f;
             --paper-deep: #100e0a;
             --ink:        #f3efe2;
@@ -166,7 +166,7 @@
             --scanline:   rgba(201,128,78,0);
         }
 
-        /* â”€â”€ TIDE (aqua water Ã— copper) â”€â”€ */
+        /* ── TIDE (aqua water × copper) ── */
         [data-theme="tide"] {
             color-scheme: dark;
             --bg-primary:    #071e26;
@@ -193,11 +193,12 @@
             --radius: 12px;
             --copper:  #c9804e;
             --aqua-hi: #6ad9e8;
-            /* book â€” deep-water paper, copper trim */
+            /* book — deep-water paper, copper trim; text matches the site's
+               own type tokens so reading surfaces stay neutral */
             --paper:      #0b2933;
             --paper-deep: #071e26;
-            --ink:        #ecf5f3;
-            --ink-soft:   #9dc0bd;
+            --ink:        var(--text-primary);
+            --ink-soft:   var(--text-secondary);
             --ribbon:     var(--copper);
             --stamp:      #e0a274;
             --scanline:   rgba(53,196,215,.04);
@@ -494,7 +495,7 @@
                 linear-gradient(90deg, rgba(201,128,78,0.06) 0%, transparent 70%);
             opacity: 1;
         }
-        /* Animated node/edge network â€” sits behind the gradient overlay and hero text */
+        /* Animated node/edge network — sits behind the gradient overlay and hero text */
         .hero-network-canvas {
             position: absolute; inset: 0;
             width: 100%; height: 100%;
@@ -780,7 +781,7 @@
             box-shadow: 0 0 6px rgba(201,128,78,0.15);
             font-family: 'JetBrains Mono', monospace;
         }
-        /* ">>> now:" â€” one-line signal of what's actively being explored */
+        /* ">>> now:" — one-line signal of what's actively being explored */
         .now-chip {
             display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
             font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -945,7 +946,7 @@
             display: flex; flex-direction: column;
             flex: 1 1 auto;
         }
-        /* Generated project thumbnail â€” a per-project ML-artifact SVG (loss
+        /* Generated project thumbnail — a per-project ML-artifact SVG (loss
            curve / confusion matrix / embedding scatter / forecast / reward /
            architecture diagram), hue set inline. Art strokes use
            currentColor so themes restyle the whole drawing in one line. */
@@ -1199,7 +1200,7 @@
             container-type: inline-size;
         }
 
-        /* â”€â”€ z0 drawn base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        /* ── z0 drawn base ─────────────────────────────── */
         .book-base { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
         .cover-back {
             position: absolute; inset: -11px -13px -13px -13px;
@@ -1221,7 +1222,7 @@
             background-image: repeating-linear-gradient(90deg,
                 var(--edge-line) 0 1px, transparent 1px 3px);
         }
-        /* progressive stack thickness â€” JS writes --read (0..1 scroll fraction);
+        /* progressive stack thickness — JS writes --read (0..1 scroll fraction);
            read pages pile up on the left while the un-read stack thins out */
         .edges-left  { left: -7px; transform-origin: left center;
             transform: scaleX(calc(1 + var(--read, 0) * .6)); }
@@ -1232,7 +1233,7 @@
             opacity: calc(.7 - var(--read, 0) * .25);
         }
 
-        /* â”€â”€ ribbon bookmark (z5 â€” sits over every layer) â”€â”€ */
+        /* ── ribbon bookmark (z5 — sits over every layer) ── */
         .ribbon {
             position: absolute; top: -18px; left: 66%;
             width: 32px; height: 64px; z-index: 5; pointer-events: none;
@@ -1273,7 +1274,7 @@
         button.ribbon:active { transform: perspective(200px) rotateX(4deg) translateY(-1px); }
         button.ribbon:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 3px; }
 
-        /* â”€â”€ centre crease (z2 â€” above the spreads) â”€â”€ */
+        /* ── centre crease (z2 — above the spreads) ── */
         .spine-overlay {
             position: absolute; top: 0; bottom: 0;
             left: 50%; width: min(16%, 140px); transform: translateX(-50%);
@@ -1296,7 +1297,7 @@
             box-shadow: 0 0 20px rgba(201,128,78,.2);
         }
 
-        /* â”€â”€ z1 scrolling spreads â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        /* ── z1 scrolling spreads ──────────────────────── */
         .book-carousel {
             position: absolute; inset: 0; z-index: 1;
             display: flex;
@@ -1318,7 +1319,7 @@
             display: grid; grid-template-columns: 1fr 1fr; height: 100%;
         }
 
-        /* â”€â”€ sheets & page furniture â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        /* ── sheets & page furniture ───────────────────── */
         .sheet {
             position: relative; min-width: 0; overflow: hidden;
             display: flex; flex-direction: column;
@@ -1371,7 +1372,6 @@
             font-size: .68em; letter-spacing: .16em; text-transform: uppercase;
             color: var(--accent); margin: 0 0 .8em;
         }
-        [data-theme="tide"] .kicker { color: var(--copper); text-shadow: 0 0 8px var(--copper); }
         .sheet h3 {
             font-family: 'Fraunces', serif; font-weight: 600;
             font-size: 1.9em; line-height: 1.08; letter-spacing: -.01em;
@@ -1383,7 +1383,7 @@
         }
         .feat-list { list-style: none; margin: 0 0 1.1em; padding: 0; font-size: .88em; color: var(--ink); }
         .feat-list li { position: relative; padding-left: 1.3em; margin-bottom: .42em; line-height: 1.4; }
-        .feat-list li::before { content: "â€”"; position: absolute; left: 0; color: var(--accent); }
+        .feat-list li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
 
         .tag-row { display: flex; flex-wrap: wrap; gap: .4em; margin-bottom: 1.2em; }
         .tag-chip {
@@ -1458,9 +1458,8 @@
         }
         .left-sheet  .folio { left: 1.35em; }
         .right-sheet .folio { right: 1.35em; }
-        [data-theme="tide"] .folio { color: var(--copper); text-shadow: 0 0 6px var(--copper); }
 
-        /* â”€â”€ cover corners & embossed type â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        /* ── cover corners & embossed type ─────────────── */
         .cover-corner {
             position: absolute; width: 1.5em; height: 1.5em;
             border-color: color-mix(in srgb, var(--accent) 55%, transparent);
@@ -1488,7 +1487,7 @@
         .embossed-label { text-shadow: 0 1px 0 rgba(255,255,255,.4), 0 -1px 0 rgba(0,0,0,.25); }
         .embossed-num   { text-shadow: 0 1px 0 rgba(255,255,255,.4), 0 -1px 0 rgba(0,0,0,.25); }
 
-        /* â”€â”€ title / table of contents spread â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        /* ── title / table of contents spread ──────────── */
         .toc-title { position: relative; }
         .toc-title .cover-corner { opacity: .4; }
         .toc-h1 { font-size: 3em; line-height: .98; margin: 0 0 .35em; }
@@ -1537,7 +1536,7 @@
             font-size: .72em; color: var(--ink-soft); flex: 0 0 auto;
         }
 
-        /* â”€â”€ back cover â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        /* ── back cover ────────────────────────────────── */
         .cover-spread .sheet { padding: 0; }
         .cover-face {
             position: relative; width: 100%; height: 100%;
@@ -1589,7 +1588,7 @@
             font-size: 1.15em; color: var(--ink-soft); line-height: 1.6; margin: 0;
         }
 
-        /* â”€â”€ screenshots / empty state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        /* ── screenshots / empty state ─────────────────── */
         .sheet-media {
             position: relative; flex: 1; min-height: 0;
             display: grid; place-items: center;
@@ -1692,7 +1691,7 @@
             box-shadow: 0 0 16px rgba(201,128,78,.14), var(--shadow-md);
         }
 
-        /* â”€â”€ z3 turning pages (JS-synthesized) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        /* ── z3 turning pages (JS-synthesized) ─────────── */
         .flip-layer {
             position: absolute; inset: 0; z-index: 3;
             pointer-events: none;
@@ -1737,7 +1736,7 @@
             animation: crtFlicker 5s infinite;
         }
 
-        /* â”€â”€ controls â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+        /* ── controls ──────────────────────────────────── */
         .corner-nav {
             position: absolute; top: 50%; transform: translateY(-50%);
             z-index: 6;
@@ -1818,7 +1817,7 @@
         }
 
         /* ============================================================
-           SKILLS â€” pipeline stages (data â†’ model â†’ deployment â†’ insight)
+           SKILLS — pipeline stages (data → model → deployment → insight)
            ============================================================ */
         .skills-grid {
             display: grid;
@@ -1895,6 +1894,13 @@
         }
         .post-card:hover { background: var(--bg-secondary); }
         [data-theme="tide"] .post-card:hover { background: rgba(201,128,78,0.05); }
+        /* featured image pulled from the article body; omitted when a post has none */
+        .post-thumb {
+            width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+            border: 1px solid var(--border); background: var(--bg-secondary);
+            margin-bottom: 0.15rem;
+        }
+        [data-theme="tide"] .post-thumb { border-color: rgba(201,128,78,0.35); }
         .post-platform {
             display: inline-flex; align-items: center; gap: 0.35rem;
             font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
@@ -2113,6 +2119,10 @@
             transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
+        /* A kept transform (even translateY(0)) creates a stacking context, so
+           later-in-DOM siblings would paint over this block's dropdown menus.
+           Lifting the wrapper above them restores correct menu layering. */
+        .stack-up { position: relative; z-index: 40; }
         /* ============================================================
            TIDE: copper caret suffix for section labels (static)
            ============================================================ */
@@ -2164,11 +2174,11 @@
 <div id="preloader" role="status" aria-label="Loading page"><div class="preloader-ring"></div></div>
 <div id="scroll-progress-bar" aria-hidden="true"></div>
 
-<!-- â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+<!-- ── NAV ─────────────────────────────────────────── -->
 <nav aria-label="Main navigation">
     <div class="navbar" id="navbar">
         <div class="navbar-inner">
-            <a href="#home" class="nav-brand" aria-label="Tanmay Somani â€” home">
+            <a href="#home" class="nav-brand" aria-label="Tanmay Somani — home">
                 <span class="nav-brand-badge" aria-hidden="true">TS</span>
                 Tanmay Somani
             </a>
@@ -2199,7 +2209,7 @@
     </div>
 </nav>
 
-<!-- â”€â”€ MAIN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+<!-- ── MAIN ──────────────────────────────────────────── -->
 <main id="main-content">
 
     <!-- HERO -->
@@ -2233,11 +2243,11 @@
                     <span class="stat-label">Datasets Processed</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-num" data-target="40" data-suffix="/âˆž">0/âˆž</span>
+                    <span class="stat-num" data-target="40" data-suffix="/∞">0/∞</span>
                     <span class="stat-label">Models Trained &amp; Counting</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-num" data-target="3" data-suffix=".4Ã—">0.4Ã—</span>
+                    <span class="stat-num" data-target="3" data-suffix=".4×">0.4×</span>
                     <span class="stat-label">Inference Latency Cut</span>
                 </div>
             </div>
@@ -2259,10 +2269,10 @@
                         <p class="section-label" aria-hidden="true">Who I Am</p>
                         <h2 id="about-heading" class="section-title fade-in">About Me</h2>
                     </div>
-                    <!-- TODO: claims below map to real repos in projects.json â€” confirm you're happy standing behind each -->
-                    <p class="fade-in">I build applied ML systems end to end: XGBoost baselines validated with time-series cross-validation before any deep model gets a look in, LSTM forecasts for Delhi's hourly air quality, Zhang et&nbsp;al.'s ECCV'16 colorization network running on CUDA, and a Double DQN agent trained on hand-engineered danger-state features. On the LLM side I've shipped local-first RAG pipelines â€” ChromaDB memory, Ollama inference, BERTopic + HDBSCAN for theme discovery.</p>
+                    <!-- TODO: claims below map to real repos in projects.json — confirm you're happy standing behind each -->
+                    <p class="fade-in">I build applied ML systems end to end: XGBoost baselines validated with time-series cross-validation before any deep model gets a look in, LSTM forecasts for Delhi's hourly air quality, Zhang et&nbsp;al.'s ECCV'16 colorization network running on CUDA, and a Double DQN agent trained on hand-engineered danger-state features. On the LLM side I've shipped local-first RAG pipelines — ChromaDB memory, Ollama inference, BERTopic + HDBSCAN for theme discovery.</p>
                     <p class="fade-in">Most of the time goes to the unglamorous parts that make models trustworthy: leakage-proof splits, error analysis before architecture tuning, property-based tests on financial math (pytest + Hypothesis), and wrapping the result behind FastAPI services people actually use.</p>
-                    <!-- TODO: keep current â€” this is your "actively practicing" signal -->
+                    <!-- TODO: keep current — this is your "actively practicing" signal -->
                     <p class="now-chip fade-in" role="note" aria-label="Currently exploring">
                         <span class="now-prompt">&gt;&gt;&gt; now:</span>
                         comparing seq2seq LSTM vs. lagged-gradient-boosting heads for multi-step AQI forecasting
@@ -2276,8 +2286,8 @@
                         <span class="badge-pill">MLOps-lite</span>
                     </div>
                     <h3 class="hiw-heading fade-in">How I work</h3>
-                    <p class="hiw-copy fade-in">Every new dataset gets the same treatment: profile it and plot the ugly parts first; score a dumb baseline under a validation scheme that mirrors deployment (time-aware for anything temporal); then earn complexity incrementally â€” error analysis decides where the next hour goes, not model fashion. Anything worth keeping ships behind an API, with tests on the math and eyes on the residuals.</p>
-                    <div style="margin-top:1.5rem;" class="fade-in">
+                    <p class="hiw-copy fade-in">Every new dataset gets the same treatment: profile it and plot the ugly parts first; score a dumb baseline under a validation scheme that mirrors deployment (time-aware for anything temporal); then earn complexity incrementally — error analysis decides where the next hour goes, not model fashion. Anything worth keeping ships behind an API, with tests on the math and eyes on the residuals.</p>
+                    <div style="margin-top:1.5rem;" class="fade-in stack-up">
                         <div class="resume-split">
                             <a href="assets/Tanmay_Somani_Resume.pdf" class="btn-ghost resume-main" download
                                aria-label="Download current resume PDF"
@@ -2352,10 +2362,10 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
             <div class="section-header fade-in">
                 <p class="section-label" aria-hidden="true">My Work</p>
                 <h2 id="portfolio-heading" class="section-title">Portfolio</h2>
-                <p class="section-subtitle">Flip through my projects â€” scroll, drag, or use the arrows to turn pages.</p>
+                <p class="section-subtitle">Flip through my projects — scroll, drag, or use the arrows to turn pages.</p>
             </div>
 
-            <!-- â”€â”€ FLIP BOOK ("Project Codex") â€” populated by JS â”€â”€ -->
+            <!-- ── FLIP BOOK ("Project Codex") — populated by JS ── -->
             <div class="book-scene" id="flip-book" hidden>
                 <div class="book-pages">
                     <div class="book-base" aria-hidden="true">
@@ -2366,9 +2376,9 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
                         <div class="page-edges edges-right"></div>
                     </div>
                     <button type="button" class="ribbon" id="book-ribbon" data-tip="Back to the contents page"
-                            aria-label="Back to contents" title="Bookmark â€” jump to Contents"></button>
+                            aria-label="Back to contents" title="Bookmark — jump to Contents"></button>
                     <div class="book-carousel" id="book-carousel" tabindex="0"
-                         role="region" aria-label="Project flip-book â€” scroll, drag, or use the arrow keys to turn pages"></div>
+                         role="region" aria-label="Project flip-book — scroll, drag, or use the arrow keys to turn pages"></div>
                     <div class="spine-overlay" aria-hidden="true"></div>
                     <div class="flip-layer" id="flip-layer" aria-hidden="true"></div>
                     <div class="scan-overlay" aria-hidden="true"></div>
@@ -2384,10 +2394,10 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
                          aria-label="Book reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="book-progress-fill"></div></div>
                     <span class="progress-label" id="book-progress-label" aria-hidden="true">1 / 1</span>
                 </div>
-                <p class="hint">Scroll, drag, or use the arrows â€” turning the page is the scrollbar.</p>
+                <p class="hint">Scroll, drag, or use the arrows — turning the page is the scrollbar.</p>
             </div>
 
-            <!-- â”€â”€ FALLBACK CAROUSEL (small screens) â”€â”€ -->
+            <!-- ── FALLBACK CAROUSEL (small screens) ── -->
             <div class="carousel-container" id="carousel-container" hidden>
                 <div class="carousel-track" id="carousel-track"></div>
                 <button class="carousel-nav carousel-nav--prev" id="carousel-prev" aria-label="Previous projects" data-tip="Scroll left">
@@ -2407,7 +2417,7 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
             <div class="section-header fade-in">
                 <p class="section-label" aria-hidden="true">Pipeline</p>
                 <h2 id="skills-heading" class="section-title">Tech Stack</h2>
-                <p class="section-subtitle">Grouped the way work actually flows â€” data in, model out, decisions visible.</p>
+                <p class="section-subtitle">Grouped the way work actually flows — data in, model out, decisions visible.</p>
             </div>
             <div class="skills-grid" id="skills-grid"></div>
         </div>
@@ -2419,12 +2429,12 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
             <div class="section-header fade-in">
                 <p class="section-label" aria-hidden="true">Writing</p>
                 <h2 id="posts-heading" class="section-title">Notes &amp; Experiments</h2>
-                <p class="section-subtitle">ML write-ups and engineering notes from my Medium blog â€” experiments surface first.</p>
+                <p class="section-subtitle">ML write-ups and engineering notes from my Medium blog — experiments surface first.</p>
             </div>
             <div class="posts-row" id="posts-row" aria-live="polite" aria-label="Latest blog posts">
                 <p class="posts-loading">
                     <i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i>
-                    Fetching latest postsâ€¦
+                    Fetching latest posts…
                 </p>
             </div>
         </div>
@@ -2441,7 +2451,7 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
             <div class="contact-grid">
                 <div class="contact-info fade-in">
                     <h3 class="visually-hidden">Ways to reach me</h3>
-                    <p>Whether you have a project idea, a question, or just want to say hello â€” drop me a message and I'll get back to you within 24 hours.</p>
+                    <p>Whether you have a project idea, a question, or just want to say hello — drop me a message and I'll get back to you within 24 hours.</p>
                     <nav class="contact-social" aria-label="Social media and contact links">
                         <a href="https://github.com/Tanmay-Somani" target="_blank" rel="noopener noreferrer" class="social-link">
                             <i class="fab fa-github" aria-hidden="true"></i> GitHub
@@ -2465,7 +2475,7 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
                       action="https://formspree.io/f/xeoqjbpk" method="POST"
                       aria-label="Contact form">
                     <!-- honeypot: bots fill this, humans never see it -->
-                    <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+                    <input type="text" name="_gotcha" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
                     <div class="form-field">
                         <label for="name">Your Name</label>
                         <input type="text" id="name" name="name" placeholder="Jane Smith" required autocomplete="name">
@@ -2483,7 +2493,7 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
                             data-tip="Opens your mail client with the message" style="align-self:flex-start;">
                         Send Message <i class="fas fa-paper-plane" aria-hidden="true"></i>
                     </button>
-                    <p class="form-note"><i class="fas fa-clock" aria-hidden="true"></i> Replies within 24 hours â€” usually sooner.</p>
+                    <p class="form-note"><i class="fas fa-clock" aria-hidden="true"></i> Replies within 24 hours — usually sooner.</p>
                 </form>
             </div>
         </div>
@@ -2491,7 +2501,7 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
 
 </main>
 
-<!-- â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+<!-- ── FOOTER ─────────────────────────────────────── -->
 <footer role="contentinfo">
     <div class="footer-inner">
         <nav class="footer-socials" aria-label="Footer social links">
@@ -2540,10 +2550,10 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
     </div>
 </div>
 
-<!-- â”€â”€ SCRIPTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+<!-- ── SCRIPTS ────────────────────────────────────── -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.16/typed.umd.js"></script>
 <script>
-/* â”€â”€ DATA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── DATA ───────────────────────────────────────────── */
 let PROJECTS = [];
 // Single source of truth: assets/data/projects.json (sitemap.html renders
 // its project cards from the same file). Rendering waits on this promise.
@@ -2552,8 +2562,8 @@ const projectsReady = fetch('assets/data/projects.json')
     .then(data => { PROJECTS = data; })
     .catch(err => console.warn('Project data failed to load:', err));
 
-/* Skills grouped by pipeline stage â€” the grid itself sketches an ML
-   workflow (data â†’ model â†’ deployment â†’ insight) instead of a flat
+/* Skills grouped by pipeline stage — the grid itself sketches an ML
+   workflow (data → model → deployment → insight) instead of a flat
    tool inventory with self-graded progress bars. Icons are restricted
    to glyphs present in the subsetted Font Awesome webfonts. */
 const SKILL_PIPELINE = [
@@ -2593,12 +2603,12 @@ const SKILL_PIPELINE = [
       ]}
 ];
 
-/* â”€â”€ PROJECT THUMB ART GENERATOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── PROJECT THUMB ART GENERATOR ─────────────────── */
 // Deterministic per-project ML-artifact SVGs (matplotlib-figure styling).
 // Artifact type is inferred from tags/title; every random choice comes from
 // a title-seeded PRNG, so a given project renders identically on every load
 // and in both the carousel and the flip-book. All strokes/fills use
-// currentColor â€” themes recolor via .project-thumb { color: â€¦ }.
+// currentColor — themes recolor via .project-thumb { color: … }.
 function thumbRng(seedStr) {
     let h = 2166136261;
     for (let i = 0; i < seedStr.length; i++) {
@@ -2623,7 +2633,7 @@ function thumbKind(p) {
     return 'arch';
 }
 
-// â€”â€”â€” tiny SVG string helpers â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+// ——— tiny SVG string helpers ———————————————————————
 const _t = (x, y, s, size = 9, op = 0.65, anchor = 'start') =>
     `<text x="${x}" y="${y}" font-family="'JetBrains Mono',ui-monospace,monospace" font-size="${size}" fill="currentColor" opacity="${op}" text-anchor="${anchor}">${s}</text>`;
 const _l = (x1, y1, x2, y2, w = 1, op = 0.35, dash = '') =>
@@ -2799,7 +2809,7 @@ function renderThumbSVG(p, i) {
     return `<svg viewBox="0 0 400 130" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${frame}${art}</svg>`;
 }
 
-/* â”€â”€ RENDER PROJECTS (CAROUSEL) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── RENDER PROJECTS (CAROUSEL) ──────────────────── */
 function renderProjects() {
     const track = document.getElementById('carousel-track');
     if (!track) return;
@@ -2837,7 +2847,7 @@ function renderProjects() {
     initCarousel();
 }
 
-/* â”€â”€ CAROUSEL ENGINE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── CAROUSEL ENGINE ────────────────────────────── */
 function initCarousel() {
     const track = document.getElementById('carousel-track');
     const prevBtn = document.getElementById('carousel-prev');
@@ -3044,7 +3054,7 @@ function initCarousel() {
     // --- Keyboard navigation ---
     track.setAttribute('tabindex', '0');
     track.setAttribute('role', 'region');
-    track.setAttribute('aria-label', 'Project carousel â€” use arrow keys to navigate');
+    track.setAttribute('aria-label', 'Project carousel — use arrow keys to navigate');
     track.addEventListener('keydown', (e) => {
         const behavior = prefersReducedMotion ? 'auto' : 'smooth';
         if (e.key === 'ArrowLeft') {
@@ -3064,9 +3074,9 @@ function initCarousel() {
     });
 }
 
-/* â”€â”€ FLIP BOOK ENGINE ("Project Codex") â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── FLIP BOOK ENGINE ("Project Codex") ──────────── */
 // Page turns are synthesized in requestAnimationFrame from scrollLeft,
-// so the book runs on every modern browser â€” no scroll-timeline needed.
+// so the book runs on every modern browser — no scroll-timeline needed.
 // The CSS-only spread dim/undim stays a progressive enhancement.
 
 function buildBook() {
@@ -3098,12 +3108,12 @@ function buildBook() {
             const count = n > 1 ? `<button type="button" class="media-count" aria-label="Next screenshot (1 of ${n})" data-tip="Next screenshot">1/${n}</button>` : '';
             rightPage = `<div class="sheet-media" data-gallery="g${i}" data-shot-count="${n}">${imgs}${count}<span class="data-clip" aria-hidden="true"></span></div>`;
         } else {
-            // styled mock browser-window plate â€” sells the book until real shots land.
+            // styled mock browser-window plate — sells the book until real shots land.
             // The generated ML-artifact SVG gives it a real figure instead of an icon.
             let url = 'book://preview';
             try { if (p.live) url = new URL(p.live).hostname; } catch (e) {}
             if (!p.live) url = 'book://' + p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-            const note = p.live ? 'Live demo â€” click through on the Code / Live links' : 'Screenshots coming soon';
+            const note = p.live ? 'Live demo — click through on the Code / Live links' : 'Screenshots coming soon';
             const hue = (i * 47) % 360;
             rightPage = `<div class="mock-plate" aria-hidden="true">
                 <div class="mock-chrome"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">${url}</span></div>
@@ -3120,7 +3130,7 @@ function buildBook() {
                 ${stamp}
                 <span class="folio" aria-hidden="true">p. ${String(i * 2 + 1).padStart(2, '0')}</span>
                 <div class="sheet-body">
-                    <p class="kicker">${String(i + 1).padStart(2, '0')} â€” ${p.tags[0] || 'Project'}</p>
+                    <p class="kicker">${String(i + 1).padStart(2, '0')} — ${p.tags[0] || 'Project'}</p>
                     <h3>${p.title}</h3>
                     <p class="desc">${p.description}</p>
                     ${feats}
@@ -3159,7 +3169,7 @@ function buildBook() {
                 <div class="sheet-body">
                     <p class="kicker embossed-label">Vol. I</p>
                     <h3 class="toc-h1 embossed">Project<br>Codex</h3>
-                    <p class="desc toc-sub">A bound record of things built â€” every project on one shelf.</p>
+                    <p class="desc toc-sub">A bound record of things built — every project on one shelf.</p>
                     <div class="toc-meta">
                         <span>Edition 2026</span>
                         <span>${PROJECTS.length} entries</span>
@@ -3185,7 +3195,7 @@ function buildBook() {
                     <div class="cover-rule"></div>
                     <p class="cover-colophon">Bound and set in Fraunces &amp; Space Grotesk.<br>${PROJECTS.length} entries, one shelf.</p>
                     <div class="cover-rule"></div>
-                    <p class="cover-byline">Tanmay Somani â€” Edition 2026</p>
+                    <p class="cover-byline">Tanmay Somani — Edition 2026</p>
                 </div>
             </div>
             <div class="sheet right-sheet cover-face cover-face-minor">
@@ -3216,7 +3226,7 @@ function buildBook() {
     let current = 0;
     const clearNudge = () => nextBtn.classList.remove('nudge');
 
-    /* unified turn tween â€” arrows, keys and TOC jumps all ride the same eased
+    /* unified turn tween — arrows, keys and TOC jumps all ride the same eased
        motion. Native smooth-scroll is UA-owned (its easing varies per browser
        and reads as a slide); driving scrollLeft here keeps the flip synthesis
        identical everywhere. */
@@ -3289,7 +3299,7 @@ function buildBook() {
         else if (e.key === 'End')       { goTo(N - 1); e.preventDefault(); }
     });
 
-    // table of contents â€” click an entry to jump to its spread
+    // table of contents — click an entry to jump to its spread
     track.addEventListener('click', e => {
         const row = e.target.closest('[data-jump]');
         if (row) goTo(parseInt(row.dataset.jump, 10));
@@ -3297,7 +3307,7 @@ function buildBook() {
     // the ribbon bookmark returns you to the contents
     if (ribbon) ribbon.addEventListener('click', () => goTo(0));
 
-    /* manual flip synthesis â€” one reusable turning page */
+    /* manual flip synthesis — one reusable turning page */
     let flipEl = null, rafPending = false, turnDir = 1; // 1 = forward, -1 = backward
     function buildFace(spread, side) {
         const clone = spread.querySelector(side === 'front' ? '.right-sheet' : '.left-sheet').cloneNode(true);
@@ -3371,8 +3381,8 @@ function buildBook() {
     setTimeout(() => revealInk(spreads[0]), 1000);
 }
 
-/* â”€â”€ SHEET SLIDESHOWS (multi-screenshot projects) â”€â”€ */
-// One driver per gallery syncs every copy of the media block â€” the real
+/* ── SHEET SLIDESHOWS (multi-screenshot projects) ── */
+// One driver per gallery syncs every copy of the media block — the real
 // spread plus any clones living on the turning pages stay in step.
 function initSheetSlideshows(root) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -3433,12 +3443,12 @@ function updatePortfolioMode() {
     if (useBook && !bookBuilt && PROJECTS.length) { buildBook(); bookBuilt = true; }
 }
 
-/* â”€â”€ RENDER SKILLS (pipeline stages) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── RENDER SKILLS (pipeline stages) ─────────────── */
 function renderSkills() {
     const grid = document.getElementById('skills-grid');
     if (!grid) return;
     grid.innerHTML = SKILL_PIPELINE.map((g, gi) => `
-        <section class="pipe-stage fade-in" style="transition-delay:${gi * 70}ms" aria-label="${g.name} â€” ${g.desc}">
+        <section class="pipe-stage fade-in" style="transition-delay:${gi * 70}ms" aria-label="${g.name} — ${g.desc}">
             <header class="pipe-head">
                 <span class="pipe-num" aria-hidden="true">${g.stage}</span>
                 <div>
@@ -3453,7 +3463,46 @@ function renderSkills() {
     observeFadeIns();
 }
 
-/* â”€â”€ FETCH POSTS (deferred) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── FETCH POSTS (deferred) ──────────────────────── */
+/* Posts render count tracks the site's device breakpoint: 8 on laptop,
+   4 below 1100px. Items are fetched once, sorted ML-first, then sliced
+   per viewport; crossing the breakpoint re-slices without refetching. */
+const POSTS_WIDE = window.matchMedia('(min-width: 1100px)');
+let POSTS_CACHE = null;
+const firstImg = html => {
+    const m = /<img[^>]+src=["']([^"']+)["']/i.exec(html || '');
+    return m ? m[1].replace(/"/g, '%22') : '';
+};
+function renderPosts() {
+    const container = document.getElementById('posts-row');
+    if (!container || !POSTS_CACHE) return;
+    const items = POSTS_CACHE.slice(0, POSTS_WIDE.matches ? 8 : 4);
+    container.innerHTML = items.map(it => {
+        const when = it.date
+            ? new Date(it.date).toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric'})
+            : '';
+        const flag = it.ml
+            ? ' <span class="post-flag">experiment</span>'
+            : '';
+        return `
+            <article class="post-card fade-in">
+                ${it.thumb ? `<img class="post-thumb" src="${it.thumb}" alt="" loading="lazy" decoding="async">` : ''}
+                <div class="post-platform"><i class="fab fa-medium" aria-hidden="true"></i> Medium${flag}</div>
+                <h3>${it.title}</h3>
+                <p class="post-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> ${when}</p>
+                <a href="${it.link}" target="_blank" rel="noopener noreferrer" class="btn-ghost"
+                   style="align-self:flex-start;padding:0.42rem 0.9rem;font-size:0.78rem;"
+                   aria-label="Read: ${it.title}">
+                    Read <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </article>`;
+    }).join('');
+    observeFadeIns();
+}
+if (POSTS_WIDE.addEventListener) {
+    POSTS_WIDE.addEventListener('change', () => { if (POSTS_CACHE) renderPosts(); });
+}
+
 async function fetchPosts() {
     const container = document.getElementById('posts-row');
     const MEDIUM_RSS = 'https://medium.com/feed/@tanmaysomani2003';
@@ -3471,19 +3520,28 @@ async function fetchPosts() {
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             if (src.kind === 'rss2json') {
                 const data = await res.json();
-                items = (data.items || []).slice(0, 10).map(it => ({
+                items = (data.items || []).slice(0, 8).map(it => ({
                     title: it.title || 'Untitled',
                     link:  it.link || '#',
-                    date:  it.pubDate || ''
+                    date:  it.pubDate || '',
+                    thumb: firstImg(it.content)
                 }));
             } else {
                 const text = (src.kind === 'allorigins') ? (await res.json()).contents : await res.text();
                 const xml = new DOMParser().parseFromString(text, 'text/xml');
-                items = [...xml.querySelectorAll('item')].slice(0, 10).map(item => ({
-                    title: item.querySelector('title')?.textContent || 'Untitled',
-                    link:  item.querySelector('link')?.textContent || '#',
-                    date:  item.querySelector('pubDate')?.textContent || ''
-                }));
+                items = [...xml.querySelectorAll('item')].slice(0, 8).map(item => {
+                    let contentHtml = item.getElementsByTagName('content:encoded')[0]?.textContent
+                        || [...item.getElementsByTagNameNS('*', 'encoded')][0]?.textContent || '';
+                    const media = item.getElementsByTagName('media:content')[0]
+                        || [...item.getElementsByTagNameNS('*', 'content')].find(el => el.getAttribute('url'));
+                    return {
+                        title: item.querySelector('title')?.textContent || 'Untitled',
+                        link:  item.querySelector('link')?.textContent || '#',
+                        date:  item.querySelector('pubDate')?.textContent || '',
+                        thumb: firstImg(contentHtml)
+                            || (media && media.getAttribute('url') ? media.getAttribute('url').replace(/"/g, '%22') : '')
+                    };
+                });
             }
             if (items.length) break;
             items = null;
@@ -3508,35 +3566,18 @@ async function fetchPosts() {
     // reverse-chronological order is preserved within each group.
     const ML_POST_RE = /\b(ml|machine learning|model|neural|transformer|llm|gpt|bert|forecast|classif\w*|regress\w*|embedding|rag|training|dataset|feature|xgboost|lstm|cnn|reinforcement|data.?science|kaggle)\b/i;
     items.sort((a, b) => Number(ML_POST_RE.test(b.title)) - Number(ML_POST_RE.test(a.title)));
-    container.innerHTML = items.map(it => {
-        const when = it.date
-            ? new Date(it.date).toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric'})
-            : '';
-        const flag = ML_POST_RE.test(it.title)
-            ? ' <span class="post-flag">experiment</span>'
-            : '';
-        return `
-            <article class="post-card fade-in">
-                <div class="post-platform"><i class="fab fa-medium" aria-hidden="true"></i> Medium${flag}</div>
-                <h3>${it.title}</h3>
-                <p class="post-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> ${when}</p>
-                <a href="${it.link}" target="_blank" rel="noopener noreferrer" class="btn-ghost"
-                   style="align-self:flex-start;padding:0.42rem 0.9rem;font-size:0.78rem;"
-                   aria-label="Read: ${it.title}">
-                    Read <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-            </article>`;
-    }).join('');
-    observeFadeIns();
+    items.forEach(it => { it.ml = ML_POST_RE.test(it.title); });
+    POSTS_CACHE = items;
+    renderPosts();
 }
 
-/* â”€â”€ ANALYTICS HELPER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── ANALYTICS HELPER ────────────────────────────── */
 // Safe no-op if the gtag script is blocked (ad-blockers, consent declined, offline).
 function track(name, params) {
     if (typeof gtag === 'function') gtag('event', name, params || {});
 }
 
-/* â”€â”€ CORE WEB VITALS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── CORE WEB VITALS ─────────────────────────────── */
 // Dependency-free LCP + CLS via PerformanceObserver; flushed to GA when the
 // tab is hidden. track() queues into the dormant dataLayer until consent loads GA.
 (function initVitals() {
@@ -3568,7 +3609,7 @@ function track(name, params) {
     } catch (e) { /* older browsers */ }
 })();
 
-/* â”€â”€ THEME CYCLING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── THEME CYCLING ───────────────────────────────── */
 const THEMES = [
     {key:'light', label:'Light', icon:'fa-sun'},
     {key:'dark',  label:'Dark',  icon:'fa-moon'},
@@ -3598,7 +3639,7 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
     track('theme_change', { theme: THEMES[themeIdx].key });
 });
 
-/* â”€â”€ MOBILE NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── MOBILE NAV ──────────────────────────────────── */
 const navToggle  = document.getElementById('nav-toggle');
 const navLinks   = document.getElementById('nav-links-list');
 const navControls = document.querySelector('.nav-controls');
@@ -3641,7 +3682,7 @@ window.addEventListener('resize', () => {
     }, 150);
 });
 
-/* â”€â”€ SCROLL BEHAVIOURS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── SCROLL BEHAVIOURS ───────────────────────────── */
 const navbar     = document.getElementById('navbar');
 const scrollBtn  = document.getElementById('scroll-to-top');
 const progressBar = document.getElementById('scroll-progress-bar');
@@ -3680,7 +3721,7 @@ scrollBtn.addEventListener('click', () => {
     window.scrollTo({top:0, behavior: prefersReducedMotionGlobal ? 'auto' : 'smooth'});
 });
 
-/* â”€â”€ OUTBOUND & DOWNLOAD TRACKING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── OUTBOUND & DOWNLOAD TRACKING ────────────────── */
 // One delegated listener covers every link, including JS-rendered ones.
 document.addEventListener('click', e => {
     const a = e.target.closest('a[href]');
@@ -3696,10 +3737,10 @@ document.addEventListener('click', e => {
         if (dest.hostname !== location.hostname) {
             track('outbound_click', { link_url: dest.href, link_text: a.textContent.trim().slice(0, 80) });
         }
-    } catch (err) { /* malformed href â€” ignore */ }
+    } catch (err) { /* malformed href — ignore */ }
 });
 
-/* â”€â”€ SMOOTH ANCHOR SCROLL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── SMOOTH ANCHOR SCROLL ────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
         let t = document.querySelector(a.getAttribute('href'));
@@ -3722,7 +3763,7 @@ function initBookLanding() {
     });
 }
 
-/* â”€â”€ ACTIVE NAV-LINK HIGHLIGHTING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── ACTIVE NAV-LINK HIGHLIGHTING ─────────────────── */
 // QOL 7: highlight whichever section is currently in view as the person scrolls.
 (function initActiveNav() {
     const sections = ['about','portfolio','skills','posts','contact']
@@ -3741,7 +3782,7 @@ function initBookLanding() {
     sections.forEach(s => navObserver.observe(s));
 })();
 
-/* â”€â”€ FADE-IN OBSERVER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── FADE-IN OBSERVER ────────────────────────────── */
 function observeFadeIns() {
     const obs = new IntersectionObserver(entries => {
         entries.forEach(e => {
@@ -3751,7 +3792,7 @@ function observeFadeIns() {
     document.querySelectorAll('.fade-in:not(.visible)').forEach(el => obs.observe(el));
 }
 
-/* â”€â”€ HERO STAT COUNT-UP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── HERO STAT COUNT-UP ──────────────────────────── */
 function initStatCounters() {
     const nums = document.querySelectorAll('.stat-num[data-target]');
     if (!nums.length) return;
@@ -3781,7 +3822,7 @@ function initStatCounters() {
     nums.forEach(el => obs.observe(el));
 }
 
-/* â”€â”€ CONTACT FORM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── CONTACT FORM ────────────────────────────────── */
 const contactForm = document.getElementById('contact-form');
 const formStatus = document.getElementById('form-status');
 contactForm.addEventListener('input', () => {
@@ -3801,7 +3842,7 @@ contactForm.addEventListener('invalid', (e) => {
             ? first.labels[0].textContent.trim()
             : (first.name || 'this field');
         formStatus.className = 'error';
-        formStatus.textContent = `Please complete the highlighted field${bad.length > 1 ? 's' : ''} â€” starting with "${label}".`;
+        formStatus.textContent = `Please complete the highlighted field${bad.length > 1 ? 's' : ''} — starting with "${label}".`;
         formStatus.style.display = 'block';
     }, 0);
 }, true);
@@ -3841,7 +3882,7 @@ contactForm.addEventListener('submit', async function(e) {
     btn.innerHTML = 'Send Message <i class="fas fa-paper-plane" aria-hidden="true"></i>';
 });
 
-/* â”€â”€ ANALYTICS CONSENT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── ANALYTICS CONSENT ───────────────────────────── */
 const cookieBanner = document.getElementById('cookie-banner');
 if (!localStorage.getItem('ts-cookie')) {
     setTimeout(() => cookieBanner.classList.add('visible'), 1200);
@@ -3864,7 +3905,7 @@ document.getElementById('cookie-settings').addEventListener('click', () => {
     cookieBanner.classList.add('visible');
 });
 
-/* â”€â”€ TYPED.JS â€” REPL tagline â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── TYPED.JS — REPL tagline ─────────────────────── */
 // typed.umd.js loads with `defer`, so wait for it via DOMContentLoaded
 // (deferred scripts execute before DOMContentLoaded fires).
 function initTyped() {
@@ -3877,7 +3918,7 @@ function initTyped() {
             "ts.deploy(target='production')"
         ],
         typeSpeed: 52, backSpeed: 26, backDelay: 2100, startDelay: 500,
-        loop: true, cursorChar: 'â–'
+        loop: true, cursorChar: '▍'
     });
 }
 if (document.readyState === 'loading') {
@@ -3886,10 +3927,10 @@ if (document.readyState === 'loading') {
     initTyped();
 }
 
-/* â”€â”€ FOOTER YEAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── FOOTER YEAR ─────────────────────────────────── */
 document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-/* â”€â”€ HERO BACKGROUND â€” EMBEDDING-SPACE CLUSTER MAP â”€â”€ */
+/* ── HERO BACKGROUND — EMBEDDING-SPACE CLUSTER MAP ── */
 // Reads as a t-SNE/UMAP plot: seeded Gaussian point clusters with
 // size/opacity variation, faint latent-space grid, per-cluster labels and
 // 1-nearest-neighbour "attention" edges. Deliberately NOT a generic
@@ -3901,7 +3942,7 @@ function initHeroNetwork() {
     const ctx = canvas.getContext('2d');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // mulberry32 â€” tiny seeded PRNG so the "dataset" never reshuffles.
+    // mulberry32 — tiny seeded PRNG so the "dataset" never reshuffles.
     function mulberry32(seed) {
         return function () {
             seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
@@ -3931,7 +3972,7 @@ function initHeroNetwork() {
 
     function buildField() {
         const rand = mulberry32(1337);
-        // Boxâ€“Muller gaussian for believable cluster spread.
+        // Box–Muller gaussian for believable cluster spread.
         const gauss = () => {
             let u = 0, v = 0;
             while (u === 0) u = rand();
@@ -3954,7 +3995,7 @@ function initHeroNetwork() {
                 drift: (k % 3) * 0.4 + 0.35 + rand() * 0.8,
                 phase: rand() * Math.PI * 2,
             }));
-            // One "outlier" point far from its cluster â€” embeddings always have some.
+            // One "outlier" point far from its cluster — embeddings always have some.
             if (rand() > 0.35) {
                 pts.push({
                     ox: gauss() * spread * 3.4,
@@ -4019,7 +4060,7 @@ function initHeroNetwork() {
                 ctx.stroke();
             });
 
-            // Points: opacity scales with size â€” dense cores glow, outliers fade.
+            // Points: opacity scales with size — dense cores glow, outliers fade.
             cl.pts.forEach((p, i) => {
                 const alpha = 0.20 + 0.45 * Math.min(1, p.r / 3.4);
                 ctx.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
@@ -4032,7 +4073,7 @@ function initHeroNetwork() {
             ctx.fillStyle = `rgba(${r},${g},${b},0.30)`;
             ctx.font = '10px "JetBrains Mono", ui-monospace, monospace';
             ctx.textAlign = 'center';
-            ctx.fillText(`c${String(ci).padStart(2, '0')}Â·n=${cl.pts.length}`, cl.x, cl.y - cl.spread - 10);
+            ctx.fillText(`c${String(ci).padStart(2, '0')}·n=${cl.pts.length}`, cl.x, cl.y - cl.spread - 10);
 
             // Faint density ring around each cluster core.
             ctx.strokeStyle = `rgba(${r},${g},${b},0.06)`;
@@ -4057,13 +4098,13 @@ function initHeroNetwork() {
 
     resize();
     if (reduced) {
-        drawFrame(0); // one static frame â€” no motion for reduced-motion users
+        drawFrame(0); // one static frame — no motion for reduced-motion users
     } else {
         rafId = requestAnimationFrame(loop);
     }
 
     // Perf: stop the animation entirely while the hero is off-screen
-    // (scrolled past) â€” saves CPU/battery on long reading sessions.
+    // (scrolled past) — saves CPU/battery on long reading sessions.
     let heroVisible = true;
     new IntersectionObserver(entries => {
         const isVisible = entries[0].isIntersecting;
@@ -4087,7 +4128,7 @@ function initHeroNetwork() {
     });
 }
 
-/* â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── INIT ────────────────────────────────────────── */
 /* ============================================================
    RESUME SPLIT DROPDOWN (About section)
    ============================================================ */
@@ -4187,8 +4228,8 @@ function initLiveVisitors() {
     setInterval(beat, 45000);
 }
 
-/* â”€â”€ PRELOADER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-// Dismiss as soon as the DOM is parsed and everything above has rendered â€”
+/* ── PRELOADER ───────────────────────────────────── */
+// Dismiss as soon as the DOM is parsed and everything above has rendered —
 // NOT on window.load, which analytics/fonts can delay by seconds.
 function dismissPreloader() {
     const pre = document.getElementById('preloader');
@@ -4213,7 +4254,7 @@ setTimeout(dismissPreloader, 4000);
             "@type":"ProfilePage",
             "@id":"https://tanmay-somani.github.io/#profilepage",
             "url":"https://tanmay-somani.github.io/",
-            "name":"Tanmay Somani â€” Data Science Portfolio",
+            "name":"Tanmay Somani — Data Science Portfolio",
             "description":"Portfolio of Tanmay Somani: data science, AI/ML projects, writing and contact.",
             "image":"https://tanmay-somani.github.io/assets/images/portfolio-thumbnail.png",
             "mainEntity":{"@id":"https://tanmay-somani.github.io/#person"}
