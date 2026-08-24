@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-</html>
-</body>
-        /* -- z4 book overlay (scanlines retired with the retro theme) -- */
-        .scan-overlay {
-            position: absolute; inset: -11px -13px -13px;
-            z-index: 4; pointer-events: none;
-            border-radius: 14px; opacity: 0;
-        }
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanmay Somani — Data Science Portfolio</title>
+    <!-- Apply saved theme BEFORE first paint to avoid a light-mode flash for dark-theme users -->
+    <script>
+    (function () {
+        try {
+            var t = ['light', 'dark', 'tide'];
             var i = parseInt(localStorage.getItem('ts-theme'), 10);
             if (!(i >= 0 && i < t.length)) {
                 i = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 1 : 0;
@@ -1723,19 +1725,6 @@
         }
         .fp-face > .sheet { position: absolute; inset: 0; }
 
-/* -- z4 book overlay (scanlines retired with the retro theme) -- */
-        .scan-overlay {
-            position: absolute; inset: -11px -13px -13px;
-            z-index: 4; pointer-events: none;
-            border-radius: 14px; opacity: 0;
-        }
-        [data-theme="tide"] .scan-overlay {
-            opacity: 1;
-            background-image: repeating-linear-gradient(0deg,
-                var(--scanline) 0 2px, transparent 2px 4px);
-            animation: crtFlicker 5s infinite;
-        }
-
         /* ── controls ──────────────────────────────────── */
         .corner-nav {
             position: absolute; top: 50%; transform: translateY(-50%);
@@ -2381,7 +2370,6 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
                          role="region" aria-label="Project flip-book — scroll, drag, or use the arrow keys to turn pages"></div>
                     <div class="spine-overlay" aria-hidden="true"></div>
                     <div class="flip-layer" id="flip-layer" aria-hidden="true"></div>
-                    <div class="scan-overlay" aria-hidden="true"></div>
                 </div>
                 <button class="corner-nav prev" id="book-prev" aria-label="Previous project" data-tip="Previous project">
                     <i class="fas fa-chevron-left" aria-hidden="true"></i>
@@ -3465,7 +3453,7 @@ function renderSkills() {
 
 /* ── FETCH POSTS (deferred) ──────────────────────── */
 /* Posts render count tracks the site's device breakpoint: 8 on laptop,
-   4 below 1100px. Items are fetched once, sorted ML-first, then sliced
+   4 below 1100px. Items are fetched once, sorted newest-first, then sliced
    per viewport; crossing the breakpoint re-slices without refetching. */
 const POSTS_WIDE = window.matchMedia('(min-width: 1100px)');
 let POSTS_CACHE = null;
@@ -3562,10 +3550,11 @@ async function fetchPosts() {
         </article>`;
         return;
     }
-    // Surface ML-focused writing first. Array.prototype.sort is stable, so
-    // reverse-chronological order is preserved within each group.
+    // Strict newest-first. Feeds are normally pre-sorted, but enforce it so
+    // proxy quirks can never shuffle the reading order. The ML regex only
+    // drives the "experiment" flag on the platform chip, never ordering.
     const ML_POST_RE = /\b(ml|machine learning|model|neural|transformer|llm|gpt|bert|forecast|classif\w*|regress\w*|embedding|rag|training|dataset|feature|xgboost|lstm|cnn|reinforcement|data.?science|kaggle)\b/i;
-    items.sort((a, b) => Number(ML_POST_RE.test(b.title)) - Number(ML_POST_RE.test(a.title)));
+    items.sort((a, b) => new Date(b.date) - new Date(a.date));
     items.forEach(it => { it.ml = ML_POST_RE.test(it.title); });
     POSTS_CACHE = items;
     renderPosts();
