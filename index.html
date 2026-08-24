@@ -351,18 +351,19 @@
         }
         [data-theme="tide"] .nav-links a.active { color: var(--copper); }
         [data-theme="tide"] .nav-links a.active::after { background: var(--copper); box-shadow: 0 0 6px var(--copper); }
-        /* QOL: skip-to-content link for keyboard/screen-reader users, hidden until focused */
+        /* QOL: skip-to-content link for keyboard/screen-reader users, hidden until focused.
+           Anchored bottom-left so it never covers the nav it lets you skip. */
         .skip-link {
             position: fixed;
-            top: -60px; left: 1rem;
+            top: auto; left: 1rem; bottom: -60px;
             z-index: 10000;
             background: var(--accent);
             color: var(--text-on-accent);
             padding: 0.65rem 1.1rem;
             font-size: 0.85rem; font-weight: 600;
-            transition: top 0.2s ease;
+            transition: bottom 0.2s ease;
         }
-        .skip-link:focus { top: 1rem; }
+        .skip-link:focus { bottom: 1rem; }
         .nav-controls { display: flex; align-items: center; gap: .55rem; }
 
         /* ── live visitors badge (Abacus minute-bucket approximation) ── */
