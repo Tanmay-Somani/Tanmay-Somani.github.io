@@ -4206,11 +4206,13 @@ function initLiveVisitors() {
             .catch(() => null);
     async function beat() {
         try {
+            // Every open tab beats every 45s (< the 60s bucket), so anyone
+            // still on the page is already inside the current-minute counter.
+            // /hit auto-creates its key (a bare /get 404s on never-hit buckets
+            // and just spams the console), so we only ever /hit.
             const cur = await jget(`${BASE}/hit/${NS}/${bkt()}`); // heartbeat + read
             if (!cur || typeof cur.value !== 'number') { badge.hidden = true; return; }
-            const prev = await jget(`${BASE}/get/${NS}/${bkt(Date.now() - 60000)}`);
-            const p = prev && typeof prev.value === 'number' ? prev.value : 0;
-            out.textContent = String(Math.max(1, Math.round(cur.value + p * 0.5)));
+            out.textContent = String(Math.max(1, Math.round(cur.value)));
         } catch (e) { badge.hidden = true; }
     }
     beat();
