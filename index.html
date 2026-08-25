@@ -2135,15 +2135,46 @@
            RESPONSIVE
            ============================================================ */
         @media (max-width: 767px) {
-            .carousel-card { flex: 0 0 280px; min-height: 260px; }
-            .carousel-track { gap: 1rem; padding: 1rem 1.5rem 1.5rem; }
-            .carousel-nav { width: 36px; height: 36px; font-size: 0.8rem; }
+            /* Hero — tighter vertical padding */
+            .hero            { padding: 5rem 1.25rem 3rem; }
+            .hero-eyebrow    { margin-bottom: 0.8rem; }
+            .hero-typed      { margin-bottom: 1rem; }
+            .hero-stats      { gap: 1.5rem; margin-top: 2rem; padding-top: 1.25rem; }
+            .stat-num        { font-size: 1.4rem; }
+
+            /* Section — reduced vertical breathing room */
+            .section         { padding: clamp(2.5rem, 5vw, 4rem) 1rem; }
+            .section-header  { margin-bottom: 1.5rem; }
+
+            /* About — smaller avatar, tighter gap */
+            .about-grid      { gap: 1.5rem; }
+            .about-avatar    { width: 140px; height: 140px; }
+            .hiw-heading     { margin-top: 0.8rem; }
+
+            /* Portfolio / Carousel */
+            .carousel-card   { flex: 0 0 280px; min-height: 260px; }
+            .carousel-track  { gap: 1rem; padding: 1rem 1.5rem 1.5rem; }
+            .carousel-nav    { width: 36px; height: 36px; font-size: 0.8rem; }
             .carousel-container::before, .carousel-container::after { width: 40px; }
-            .skills-grid  { grid-template-columns: repeat(2,1fr); }
-            .posts-row    { grid-template-columns: 1fr; }
-            .topmate-btn  { font-size: 0.78rem; padding: 0.55rem 1rem; bottom: 1rem; right: 1rem; }
-            #scroll-to-top { bottom: 4.5rem; left: 1rem; }
-            .hero-stats   { gap: 1.5rem; }
+
+            /* Skills — tighter stage padding */
+            .skills-grid     { grid-template-columns: repeat(2,1fr); }
+            .pipe-stage      { padding: 1rem 0.9rem; }
+
+            /* Posts — compact cards */
+            .posts-row       { grid-template-columns: 1fr; }
+            .post-card       { padding: 1rem; }
+
+            /* Contact — tighter gap */
+            .contact-grid    { gap: 1.5rem; }
+
+            /* Footer — reduced padding */
+            footer           { padding: 1.5rem 1rem; }
+
+            /* Misc */
+            .nb-cell         { display: none; }
+            .topmate-btn     { font-size: 0.78rem; padding: 0.55rem 1rem; bottom: 1rem; right: 1rem; }
+            #scroll-to-top   { bottom: 4.5rem; left: 1rem; }
         }
 
         /* ============================================================
