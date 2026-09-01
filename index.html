@@ -3425,7 +3425,7 @@ function buildBook() {
         // what read as a jittery "double animation" before).
         track.classList.add('animating');
         const t0 = performance.now();
-        const DUR = Math.min(820, 380 + Math.abs(dist / widthOf()) * 190);
+        const DUR = Math.min(980, 450 + Math.abs(dist / widthOf()) * 230);
         const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         const step = now => {
             const k = Math.min(1, (now - t0) / DUR);
@@ -3477,7 +3477,7 @@ function buildBook() {
        strip shows exactly its slice of the artwork — a true curved page.
        Non-image pages (TOC, cover, mock-plate) turn as a flat paper sheet. */
     const STRIPS = 18, CURL = 0.5; // STRIPS used for the curved image leaf
-    let flipEl = null, flipStrips = [], stripsN = 1, rafPending = false, turnDir = 1; // 1 = fwd, -1 = back
+    let flipEl = null, flipStrips = [], stripsN = 1, rafPending = false, turnDir = 1, lastPos = 0; // 1 = fwd, -1 = back
 
     // the screenshot a spread's right page shows, if any (first visible shot)
     function rightImage(spread) {
@@ -3576,6 +3576,14 @@ function buildBook() {
         if (!tweenRAF && veiledSp) releaseInk();
         const w = Math.max(widthOf(), 1);
         const pos = track.scrollLeft / w;
+        // Derive the turn direction from THIS scroll's movement, not from a
+        // stale programmatic turn: scrolling right = the right page lifts
+        // (forward, .next), scrolling left = a turned page folds back
+        // (backward, .prev). Without this, wheel/drag scrolls the "other" way
+        // still flipped the leaf forward.
+        const delta = pos - lastPos;
+        if (Math.abs(delta) > 1e-4) turnDir = delta > 0 ? 1 : -1;
+        lastPos = pos;
         const segIdx = Math.floor(pos), t = pos - segIdx;
         if (!reduced && t > 0.01 && t < 0.99 && segIdx >= 0 && segIdx < N - 1) {
             if (!flipEl || +flipEl.dataset.seg !== segIdx) ensureFlip(segIdx);
@@ -3596,6 +3604,7 @@ function buildBook() {
     }, { passive: true });
     window.addEventListener('resize', updateUI);
     updateUI();
+    lastPos = track.scrollLeft / Math.max(widthOf(), 1);
 
     // tall screenshots letterbox at full height instead of shrinking to fit width
     document.querySelectorAll('#flip-book .sheet-media img').forEach(img => {
