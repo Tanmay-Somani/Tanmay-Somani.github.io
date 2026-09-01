@@ -1181,7 +1181,7 @@
            ============================================================ */
 
 /* paper palettes — light defaults here; dark/tide papers live in the theme blocks */
-        :root               { --paper:#fffdf7; --paper-deep:#f5efdf; --edge-line:rgba(13,148,136,.30); }
+        :root:not([data-theme="dark"]):not([data-theme="tide"]) { --paper:#fffdf7; --paper-deep:#f5efdf; --edge-line:rgba(13,148,136,.30); }
         [data-theme="dark"] { --edge-line:rgba(34,211,238,.28); }
         [data-theme="tide"]{ --edge-line:rgba(201,128,78,.35); }
 
