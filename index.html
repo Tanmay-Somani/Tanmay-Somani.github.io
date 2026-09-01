@@ -3426,7 +3426,7 @@ function buildBook() {
         // what read as a jittery "double animation" before).
         track.classList.add('animating');
         const t0 = performance.now();
-        const DUR = Math.min(980, 450 + Math.abs(dist / widthOf()) * 230);
+        const DUR = Math.min(1180, 550 + Math.abs(dist / widthOf()) * 275);
         const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         const step = now => {
             const k = Math.min(1, (now - t0) / DUR);
