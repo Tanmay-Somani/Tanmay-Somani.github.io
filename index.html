@@ -1311,6 +1311,14 @@
             scrollbar-width: none;
             border-radius: 10px;
         }
+        /* A JS turn is the ONLY animator while the page is turning — snap and
+           native smooth-scroll would fight the rAF and read as a jittery double
+           animation (the "two animations" bug). Toggled by goTo for the duration
+           of each turn, then restored so finger swipes keep native snap. */
+        .book-carousel.animating {
+            scroll-snap-type: none;
+            scroll-behavior: auto;
+        }
         .book-carousel::-webkit-scrollbar { display: none; }
         .book-carousel:focus-visible {
             outline: 2px solid var(--accent); outline-offset: -3px;
@@ -1694,7 +1702,10 @@
             box-shadow: 0 0 16px rgba(201,128,78,.14), var(--shadow-md);
         }
 
-        /* ── z3 turning pages (JS-synthesized) ─────────── */
+        /* ── z3 turning pages (JS-synthesized, curved "turning leaf") ── */
+        /* The turning page isn't a flat door — it's a chain of nested strips
+           whose tangent sweeps through an arc (Meng To's sketchbook approach),
+           so the sheet bends like paper instead of pivoting like a hinge. */
         .flip-layer {
             position: absolute; inset: 0; z-index: 3;
             pointer-events: none;
@@ -1703,15 +1714,27 @@
             border-radius: 10px;
         }
         .flip-page {
-            position: absolute; top: 0; left: 50%;
-            width: 50%; height: 100%;
-            transform-origin: left center;
+            position: absolute; top: 0; height: 100%;
+            width: 50%;
             transform-style: preserve-3d;
             opacity: 0;
             will-change: transform;
         }
+        .flip-page.next { left: 50%; transform-origin: left center; transform: rotateY(calc(-1 * var(--tt, 0deg))); }
+        .flip-page.prev { right: 50%; transform-origin: right center; transform: rotateY(var(--tt, 0deg)); }
+        .fp-strip {
+            position: absolute; top: 0; height: 100%;
+            /* each strip is a fixed slice of the page width (not % of parent),
+               so nesting never shrinks them — they tile horizontally */
+            width: calc(var(--pw, 420px) / var(--n, 18));
+            transform-style: preserve-3d;
+        }
+        .flip-page.next .fp-strip { left: 0; transform-origin: left center; }
+        .flip-page.prev .fp-strip { right: 0; transform-origin: right center; }
+        .flip-page .fp-strip .fp-strip { left: 100%; transform: rotateY(var(--td, 0deg)); }
+        .flip-page.prev .fp-strip .fp-strip { right: 100%; left: auto; transform: rotateY(calc(-1 * var(--td, 0deg))); }
         .fp-face {
-            position: absolute; inset: 0;
+            position: absolute; top: 0; bottom: 0; left: 0; right: -1.1px;
             backface-visibility: hidden; -webkit-backface-visibility: hidden;
             overflow: hidden;
         }
@@ -1725,6 +1748,29 @@
             box-shadow: inset -12px 0 18px -14px rgba(0,0,0,.10);
         }
         .fp-face > .sheet { position: absolute; inset: 0; }
+        /* a real screenshot turns as a curved image: each strip shows its own
+           band of the artwork (background-position-x is set per strip in JS) */
+        .fp-face.fp-imgface {
+            background-size: calc(var(--n, 18) * 100%) auto;
+            background-repeat: no-repeat;
+            box-shadow: none;
+        }
+        .fp-face.fp-imgface::after {
+            content:""; position:absolute; inset:0;
+            background: linear-gradient(90deg, rgba(0,0,0,var(--sh,0)), rgba(0,0,0,0) 65%);
+            pointer-events:none;
+        }
+        /* each strip casts a soft inner shade so the bend reads as curved paper */
+        .fp-face--front::after {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(90deg, rgba(0,0,0,var(--sh,0)), transparent 70%);
+            pointer-events: none;
+        }
+        .fp-face--back::after {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(270deg, rgba(0,0,0,var(--sh,0)), transparent 70%);
+            pointer-events: none;
+        }
 
         /* ── controls ──────────────────────────────────── */
         .corner-nav {
@@ -2175,6 +2221,17 @@
             .nb-cell         { display: none; }
             .topmate-btn     { font-size: 0.78rem; padding: 0.55rem 1rem; bottom: 1rem; right: 1rem; }
             #scroll-to-top   { bottom: 4.5rem; left: 1rem; }
+        }
+
+        /* Carousel is the active portfolio view whenever min(width,height)<600
+           (see updatePortfolioMode). Landscape phones pass the width check but
+           fail on height, so compact the cards by height too — otherwise the
+           370px desktop cards spill off-screen. */
+        @media (max-height: 600px) and (min-width: 601px) {
+            .carousel-card   { flex: 0 0 280px; min-height: 260px; }
+            .carousel-track  { gap: 1rem; padding: 1rem 1.5rem 1.5rem; }
+            .carousel-nav    { width: 36px; height: 36px; font-size: 0.8rem; }
+            .carousel-container::before, .carousel-container::after { width: 40px; }
         }
 
         /* ============================================================
@@ -2884,24 +2941,46 @@ function initCarousel() {
     function measureCardScroll() {
         const firstCard = track.querySelector('.carousel-card');
         if (!firstCard) return;
-        const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0');
-        CARD_SCROLL = firstCard.getBoundingClientRect().width + gap;
+        const w = firstCard.getBoundingClientRect().width;
+        // Ignore while hidden (width 0) — keep the last good measurement so the
+        // fallback still works the instant it becomes visible (it is re-measured
+        // on resize and when shown, see re-measureCarousel).
+        if (w > 0) {
+            const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0');
+            CARD_SCROLL = w + gap;
+        }
+        updateEdgeState();
     }
+    // renderProjects() can run more than once; guard so the event listeners
+    // below are bound exactly once (duplicate binds would double-fire the
+    // wheel/scroll/keyboard handlers and stack the glitch drives). Re-measuring
+    // on every call keeps the card-step size correct for freshly built cards.
+    if (track.dataset.carouselBound === '1') { measureCardScroll(); return; }
+    track.dataset.carouselBound = '1';
     measureCardScroll();
 
     // QOL 2: keep that measurement correct across resizes/orientation changes.
     let resizeTO = null;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTO);
-        resizeTO = setTimeout(() => { measureCardScroll(); updateEdgeState(); }, 150);
+        resizeTO = setTimeout(measureCardScroll, 150);
     });
 
     // --- Arrow navigation ---
     prevBtn.addEventListener('click', () => {
+        holdSnapOff(); // let the one-card scroll land without snap yank
         track.scrollBy({ left: -CARD_SCROLL, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
     nextBtn.addEventListener('click', () => {
-        track.scrollBy({ left: CARD_SCROLL, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+        holdSnapOff();
+        // Always reach the last card: if what's left is less than one card,
+        // jump to the very end instead of overshooting the scroll extent.
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const remaining = maxScroll - track.scrollLeft;
+        const target = (remaining > 0 && remaining < CARD_SCROLL)
+            ? track.scrollLeft + remaining
+            : track.scrollLeft + CARD_SCROLL;
+        track.scrollTo({ left: target, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
 
     // QOL 3: disable the arrow buttons + fade the edge gradient once you can't scroll further that way.
@@ -2982,12 +3061,42 @@ function initCarousel() {
     }, { passive: true });
 
     // QOL 5: let a plain vertical mouse-wheel/trackpad scroll drive the horizontal carousel,
-    // so people don't need to know to hold Shift.
+    // so people don't need to know to hold Shift. But never trap the page:
+    // once the carousel is hard against the edge in the wheel's direction,
+    // let the vertical scroll pass through so the page keeps scrolling.
+    // Restore CSS scroll-snap after scrolling actually ends, so mandatory
+    // snapping can't yank the track mid-fling. We rely on the `scrollend`
+    // event (Chrome/Firefox/Safari 18+), with a generous timeout fallback for
+    // browsers that don't fire it yet. This correctly waits out BOTH a short
+    // single-card step and a long Home/End jump.
+    let snapTimer = null;
+    function restoreSnap() {
+        clearTimeout(snapTimer);
+        snapTimer = null;
+        track.style.scrollSnapType = '';
+    }
+    function holdSnapOff() {
+        track.style.scrollSnapType = 'none';
+        clearTimeout(snapTimer);
+        track.addEventListener('scrollend', restoreSnap, { once: true });
+        snapTimer = setTimeout(restoreSnap, 1200); // fallback if scrollend unsupported
+    }
     track.addEventListener('wheel', (e) => {
-        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-            track.scrollLeft += e.deltaY;
+        if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+        // Normalize line-based wheel deltas (deltaMode 1) to pixels so mouse
+        // wheels advance by a sensible amount instead of a few px per notch.
+        const px = e.deltaMode === 1 ? e.deltaY * 24 : e.deltaY;
+        // Direct horizontal gestures already work natively; only translate
+        // vertical wheel input, and only while it can actually advance.
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const canBack = track.scrollLeft > 1;
+        const canFwd  = track.scrollLeft < maxScroll - 1;
+        if ((px < 0 && canBack) || (px > 0 && canFwd)) {
+            holdSnapOff();
+            track.scrollLeft += px;
             e.preventDefault();
         }
+        // Otherwise (at an edge) fall through and let the page scroll.
     }, { passive: false });
 
     // --- Drag to scroll with momentum (mouse + touch) ---
@@ -3008,7 +3117,7 @@ function initCarousel() {
         dragLastX = x;
         dragLastTime = performance.now();
         dragVelocity = 0;
-        track.style.scrollSnapType = 'none';
+        holdSnapOff(); // hold mandatory snap off for the whole drag + momentum
         track.style.scrollBehavior = 'auto';
         track.classList.add('is-dragging'); // QOL 6: suppress text selection while dragging
         return true;
@@ -3030,15 +3139,23 @@ function initCarousel() {
     function dragEnd() {
         if (!isDragging) return;
         isDragging = false;
-        track.style.scrollSnapType = '';
+        // Snap stays off (dragStart called holdSnapOff) until the momentum
+        // fling settles — restored on `scrollend` or the fallback timer, so
+        // mandatory snapping can't yank the track mid-fling.
         track.style.scrollBehavior = '';
         track.classList.remove('is-dragging');
 
         if (!prefersReducedMotion) {
             const momentum = dragVelocity * 180;
             if (Math.abs(momentum) > 25) {
+                // re-arm a scrollend restore that covers the fling duration
+                holdSnapOff();
                 track.scrollBy({ left: -momentum, behavior: 'smooth' });
+            } else {
+                restoreSnap();
             }
+        } else {
+            restoreSnap();
         }
     }
 
@@ -3077,21 +3194,37 @@ function initCarousel() {
     track.setAttribute('aria-label', 'Project carousel — use arrow keys to navigate');
     track.addEventListener('keydown', (e) => {
         const behavior = prefersReducedMotion ? 'auto' : 'smooth';
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' ||
+            e.key === 'Home' || e.key === 'End') {
+            holdSnapOff(); // let the keyboard scroll land without snap yank
+        }
         if (e.key === 'ArrowLeft') {
             track.scrollBy({ left: -CARD_SCROLL, behavior });
             e.preventDefault();
         } else if (e.key === 'ArrowRight') {
-            track.scrollBy({ left: CARD_SCROLL, behavior });
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            const remaining = maxScroll - track.scrollLeft;
+            const target = (remaining > 0 && remaining < CARD_SCROLL)
+                ? track.scrollLeft + remaining
+                : track.scrollLeft + CARD_SCROLL;
+            track.scrollTo({ left: target, behavior });
             e.preventDefault();
         } else if (e.key === 'Home') {
-            // QOL 9: jump straight to the first/last project instead of arrow-mashing.
-            track.scrollTo({ left: 0, behavior });
+            // QOL 9: jump straight to the first/last project instead of
+            // arrow-mashing. Instant (auto) so snap can never cut it short.
+            track.scrollTo({ left: 0, behavior: 'auto' });
             e.preventDefault();
         } else if (e.key === 'End') {
-            track.scrollTo({ left: track.scrollWidth, behavior });
+            // QOL 9: End should land on the last card, not overshoot past the
+            // scroll extent (scrollWidth vs. the real max scroll offset).
+            track.scrollTo({ left: track.scrollWidth - track.clientWidth, behavior: 'auto' });
             e.preventDefault();
         }
     });
+
+    // Let updatePortfolioMode re-measure the instant this carousel becomes the
+    // visible view (it is otherwise measured while hidden, returning width 0).
+    window.__remCarousel = measureCardScroll;
 }
 
 /* ── FLIP BOOK ENGINE ("Project Codex") ──────────── */
@@ -3259,7 +3392,11 @@ function buildBook() {
         veiledSp = null;
         sp.classList.remove('ink-pending');
     };
-    const stopTween = () => { if (tweenRAF) cancelAnimationFrame(tweenRAF); tweenRAF = null; releaseInk(); };
+    const stopTween = () => {
+        if (tweenRAF) { cancelAnimationFrame(tweenRAF); tweenRAF = null; }
+        track.classList.remove('animating'); // never leave snap disabled behind
+        releaseInk();
+    };
     /* Ink choreography: a page travels as bare paper; once it settles, its
        contents fade in over .33s (CSS owns the fade via .ink-pending). */
     function veilInk(sp) {
@@ -3283,6 +3420,10 @@ function buildBook() {
         if (!dist) { revealInk(spreads[current]); return; }
         turnDir = dist > 0 ? 1 : -1;
         veilInk(spreads[current]); // target page rides veiled until it lands
+        // The rAF below is the only animator during the turn — drop mandatory
+        // snap and native smooth-scroll so they can't fight it (that fight is
+        // what read as a jittery "double animation" before).
+        track.classList.add('animating');
         const t0 = performance.now();
         const DUR = Math.min(820, 380 + Math.abs(dist / widthOf()) * 190);
         const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -3290,7 +3431,7 @@ function buildBook() {
             const k = Math.min(1, (now - t0) / DUR);
             track.scrollLeft = start + dist * ease(k);
             if (k < 1) tweenRAF = requestAnimationFrame(step);
-            else { tweenRAF = null; revealInk(spreads[current]); }
+            else { tweenRAF = null; track.classList.remove('animating'); revealInk(spreads[current]); }
         };
         tweenRAF = requestAnimationFrame(step);
     }
@@ -3327,14 +3468,48 @@ function buildBook() {
     // the ribbon bookmark returns you to the contents
     if (ribbon) ribbon.addEventListener('click', () => goTo(0));
 
-    /* manual flip synthesis — one reusable turning page */
-    let flipEl = null, rafPending = false, turnDir = 1; // 1 = forward, -1 = backward
-    function buildFace(spread, side) {
-        const clone = spread.querySelector(side === 'front' ? '.right-sheet' : '.left-sheet').cloneNode(true);
-        // the face facing the reader when a segment ends is the incoming
-        // page: it turns as bare paper. Forward turns reveal the back face
-        // last; backward turns the front face.
-        const isIncoming = turnDir < 0 ? side === 'front' : side === 'back';
+    /* manual flip synthesis — the turning leaf.
+       The turning page is a chain of N nested strips whose tangent sweeps
+       through an arc, so the sheet BENDS like paper instead of pivoting like
+       a flat door (Meng To's sketchbook technique).
+       When the right page is a real screenshot we render it as a full-page
+       background glyph and slide background-position-x per strip, so each
+       strip shows exactly its slice of the artwork — a true curved page.
+       Non-image pages (TOC, cover, mock-plate) turn as a flat paper sheet. */
+    const STRIPS = 18, CURL = 0.5; // STRIPS used for the curved image leaf
+    let flipEl = null, flipStrips = [], stripsN = 1, rafPending = false, turnDir = 1; // 1 = fwd, -1 = back
+
+    // the screenshot a spread's right page shows, if any (first visible shot)
+    function rightImage(spread) {
+        const img = spread.querySelector('.right-sheet .sheet-media img.is-live')
+                 || spread.querySelector('.right-sheet .sheet-media img');
+        return img ? img.getAttribute('src') : null;
+    }
+
+    function buildFace(spread, side, stripIdx, isImage) {
+        if (isImage && spread) {
+            const src = rightImage(spread);
+            const face = document.createElement('div');
+            face.className = 'fp-face fp-face--' + side + ' fp-imgface';
+            if (src) {
+                face.style.backgroundImage = 'url(' + src + ')';
+                // each strip shows its 1/N band of the artwork. X% of a
+                // background that is N× the box width lands band i when
+                // X = i/(N-1)*100 (vertical slices). The back face is the
+                // mirror, so its bands run the other way.
+                const band = (turnDir > 0) ? stripIdx : (STRIPS - 1 - stripIdx);
+                const mirrored = (turnDir > 0) ? (STRIPS - 1 - stripIdx) : stripIdx;
+                const x = (side === 'front' ? band : mirrored) / (STRIPS - 1) * 100;
+                face.style.backgroundPositionX = x.toFixed(2) + '%';
+                face.style.backgroundSize = (STRIPS * 100) + '% auto';
+                face.style.backgroundRepeat = 'no-repeat';
+            }
+            return face;
+        }
+        const src = spread ? spread.querySelector(side === 'front' ? '.right-sheet' : '.left-sheet') : null;
+        const clone = (src || document.createElement('div')).cloneNode(true);
+        clone.classList.add('fp-clone');
+        const isIncoming = (turnDir < 0) ? (side === 'front') : (side === 'back');
         if (!reduced && isIncoming) clone.classList.add('ink-pending');
         clone.querySelectorAll('img').forEach(img => { img.loading = 'eager'; });
         clone.querySelectorAll('a').forEach(a => a.setAttribute('tabindex', '-1'));
@@ -3348,12 +3523,50 @@ function buildBook() {
         const outgoing = spreads[segIdx], incoming = spreads[segIdx + 1];
         if (!outgoing || !incoming) return null;
         if (flipEl) flipEl.remove();
+        // Magical image page-turn: BOTH faces are a real screenshot, so the
+        // leaf is split into curved strips that each show a slice of the image
+        // (A turning away, B curling up underneath) — the Meng To curl.
+        // If either side is a paper page (TOC, cover, back, description) we
+        // turn a flat single leaf instead — a sliver of squished HTML is
+        // never a coherent slice, so the curve is disabled there.
+        const isImage = !!(rightImage(outgoing) && rightImage(incoming));
+        // image pages get the curved strip leaf; paper/HTML pages (TOC, cover,
+        // mock-plate) turn flat as a single page
+        stripsN = isImage ? STRIPS : 1;
         flipEl = document.createElement('div');
-        flipEl.className = 'flip-page';
-        flipEl.append(buildFace(outgoing, 'front'), buildFace(incoming, 'back'));
+        flipEl.className = 'flip-page ' + (turnDir > 0 ? 'next' : 'prev');
+        flipEl.style.setProperty('--n', stripsN);
+        // page width in px, so nested strips keep a fixed width (see .fp-strip)
+        layer.style.setProperty('--pw', (track.clientWidth / 2) + 'px');
+        // nest the strips: strip0 holds the front/back faces + strip1, etc.
+        let host = flipEl;
+        flipStrips = [];
+        for (let i = 0; i < stripsN; i++) {
+            const s = document.createElement('div');
+            s.className = 'fp-strip';
+            s.appendChild(buildFace(outgoing, 'front', i, isImage));
+            s.appendChild(buildFace(incoming, 'back', i, isImage));
+            host.appendChild(s);
+            host = s;
+            flipStrips.push(s);
+        }
         flipEl.dataset.seg = segIdx;
         layer.appendChild(flipEl);
         return flipEl;
+    }
+    // per-frame: how far the leaf has swung + the bend of each strip
+    function bendLeaf(t) {
+        if (!flipEl) return;
+        const th = Math.PI * t;                       /* swing of the whole leaf */
+        const beta = CURL * Math.sin(Math.PI * t);    /* flat at both ends        */
+        const D = 180 / Math.PI;
+        const tt = th + beta, td = stripsN > 1 ? 2 * beta / stripsN : 0;
+        flipEl.style.setProperty('--tt', (tt * D).toFixed(2) + 'deg');
+        flipEl.style.setProperty('--td', (td * D).toFixed(3) + 'deg');
+        for (let i = 0; i < flipStrips.length; i++) {
+            const ob = Math.abs(Math.cos(tt - (i + 0.5) * td)); // 1 face-on, 0 edge-on
+            flipStrips[i].style.setProperty('--sh', ((1 - ob) * 0.5).toFixed(3));
+        }
     }
     function frame() {
         rafPending = false;
@@ -3368,11 +3581,12 @@ function buildBook() {
             if (!flipEl || +flipEl.dataset.seg !== segIdx) ensureFlip(segIdx);
             if (flipEl) {
                 flipEl.style.opacity = (t > 0.03 && t < 0.97) ? '1' : '0';
-                flipEl.style.transform = 'rotateY(' + (-180 * t) + 'deg)';
+                bendLeaf(t);
             }
         } else if (flipEl) {
             flipEl.remove();
             flipEl = null;
+            flipStrips = [];
         }
     }
     track.addEventListener('scroll', () => {
@@ -3458,6 +3672,11 @@ function updatePortfolioMode() {
     if (!scene || !fallback) return;
     scene.hidden = !useBook;
     fallback.hidden = useBook;
+    // The carousel may have been built while hidden → re-measure now that
+    // dimensions are real, so arrow jumps land on a proper card width.
+    if (!useBook && typeof window.__remCarousel === 'function') {
+        requestAnimationFrame(window.__remCarousel);
+    }
     // Book build needs the JSON data; updatePortfolioMode may fire from a
     // resize event before projectsReady resolves.
     if (useBook && !bookBuilt && PROJECTS.length) { buildBook(); bookBuilt = true; }
