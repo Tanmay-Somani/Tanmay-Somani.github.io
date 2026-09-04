@@ -28,6 +28,35 @@
     ]
   },
   {
+    "title": "AI Codebase Doctor",
+    "icon": "fas fa-shield-halved",
+    "hue": 330,
+    "description": "A self-hostable AI platform that analyses any codebase for vulnerabilities, bugs and dependency risk — then turns each raw finding into a full investigation. Every issue is enriched with OSV/NVD/GitHub-Advisory intelligence, code-graph context and git history, then reasoned over by role-specific Patch, Debug and Summary agents routed through OpenRouter to produce a root cause, a patch and a human explanation. Ships Dockerized (LITE/STANDARD/FULL profiles) with no paid-infrastructure hard dependencies.",
+    "features": [
+      "Role-specific Patch / Debug / Summary LLM agents",
+      "Vulnerability findings grounded in OSV, NVD & advisories",
+      "Static analyzers: Semgrep, Bandit, Ruff, Gitleaks, Trivy"
+    ],
+    "tags": [
+      "FastAPI",
+      "Next.js",
+      "PostgreSQL",
+      "Qdrant"
+    ],
+    "imgs": [
+      "assets/images/demo/codedoc-1.webp",
+      "assets/images/demo/codedoc-2.webp"
+    ],
+    "github": "https://github.com/Tanmay-Somani/codedoc",
+    "live": "https://codedoc-ruddy.vercel.app/",
+    "status": "done",
+    "metrics": [
+      "Patch / Debug / Summary agents",
+      "OSV + NVD + GitHub Advisory enrichment",
+      "Dockerized LITE-to-FULL profiles"
+    ]
+  },
+  {
     "title": "LifeLog-AI",
     "icon": "fas fa-clock-rotate-left",
     "hue": 190,
