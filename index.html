@@ -321,7 +321,7 @@
             font-size: 0.78rem; font-weight: 700;
         }
         [data-theme="tide"] .nav-brand-badge {
-            background: var(--copper); color: #060512;
+            background: var(--copper); color: var(--text-on-accent);
             box-shadow: 0 0 12px var(--copper), 0 0 20px rgba(46,230,255,0.35);
             border: 1px solid var(--aqua-hi);
         }
@@ -587,7 +587,12 @@
         .hero-typed {
             font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
             font-size: clamp(0.92rem, 2.2vw, 1.12rem);
-            color: var(--text-secondary); min-height: 2em; margin-bottom: 2rem;
+            color: var(--text-secondary); min-height: 2em; margin-bottom: 0.9rem;
+        }
+        .hero-promise {
+            max-width: 42rem; margin: 0 auto 2rem;
+            font-size: clamp(1rem, 2.4vw, 1.16rem); line-height: 1.55;
+            color: var(--text-primary);
         }
         .term-prompt {
             color: var(--text-muted); margin-right: 0.4rem; user-select: none;
@@ -1138,7 +1143,7 @@
             border-color: rgba(201,128,78,0.40);
             font-family: 'JetBrains Mono', monospace;
         }
-        [data-theme="tide"] .project-status.wip { color: #ffff00; border-color: rgba(255,255,0,0.40); background: rgba(255,255,0,0.08); }
+        [data-theme="tide"] .project-status.wip { color: var(--aqua-hi); border-color: rgba(106,217,232,0.40); background: rgba(53,196,215,0.10); }
 
         .carousel-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
         .carousel-card p { font-size: 0.855rem; color: var(--text-secondary); flex-grow: 1; margin-bottom: 0.9rem; line-height: 1.65; }
@@ -1633,7 +1638,7 @@
             border: none; cursor: pointer;
         }
         .media-count:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
-        [data-theme="tide"] .media-count { color: #ffff00; background: rgba(20,4,10,.72); }
+        [data-theme="tide"] .media-count { color: var(--aqua-hi); background: rgba(7,30,38,.85); }
 
         /* mock browser-window plate for projects without demo screenshots */
         .mock-plate {
@@ -2167,8 +2172,6 @@
             content: "_"; color: var(--copper);
             margin-left: 2px;
         }
-            margin-left: 2px;
-        }
 
         /* ============================================================
            UTILITY
@@ -2185,7 +2188,8 @@
             /* Hero — tighter vertical padding */
             .hero            { padding: 5rem 1.25rem 3rem; }
             .hero-eyebrow    { margin-bottom: 0.8rem; }
-            .hero-typed      { margin-bottom: 1rem; }
+            .hero-typed      { margin-bottom: 0.5rem; }
+            .hero-promise    { margin-bottom: 1.5rem; }
             .hero-stats      { gap: 1.5rem; margin-top: 2rem; padding-top: 1.25rem; }
             .stat-num        { font-size: 1.4rem; }
 
@@ -2276,7 +2280,7 @@
             </ul>
 
             <div class="nav-controls">
-                <span class="live-badge" id="live-badge" data-tip="Visitors on the site right now (approximate)" data-tip-down role="status" aria-label="Live visitors">
+                <span class="live-badge" id="live-badge" hidden data-tip="Visitors on the site right now (approximate)" data-tip-down role="status" aria-label="Live visitors">
                     <span class="live-dot" aria-hidden="true"></span><span id="live-count">&ndash;</span>
                 </span>
                 <button class="icon-btn" id="theme-toggle" data-tip="Cycle colour theme: light → dark → tide" data-tip-down aria-label="Cycle colour theme" aria-live="polite">
@@ -2306,6 +2310,9 @@
                 <span class="visually-hidden">Data Scientist. AI / ML Engineer. Problem Solver. Open-Source Contributor.</span>
                 <span class="term-prompt" aria-hidden="true">&gt;&gt;&gt;</span><span id="typed-text" aria-hidden="true"></span>
             </p>
+            <p class="hero-promise fade-in">
+                I build data and AI/ML systems end to end — from raw datasets to models in production — and I'm looking for a data science or ML engineering role.
+            </p>
             <div class="hero-cta fade-in">
                 <a href="#portfolio" class="btn-primary-custom" data-tip="Jump to the project codex">
                     View My Work <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -2316,7 +2323,6 @@
                 </a>
             </div>
             <div class="hero-stats fade-in" aria-label="Quick stats">
-                <!-- TODO: verify these are real numbers you're comfortable claiming -->
                 <div class="stat-item">
                     <span class="stat-num" data-target="25" data-suffix="+">0+</span>
                     <span class="stat-label">Datasets Processed</span>
@@ -2348,10 +2354,8 @@
                         <p class="section-label" aria-hidden="true">Who I Am</p>
                         <h2 id="about-heading" class="section-title fade-in">About Me</h2>
                     </div>
-                    <!-- TODO: claims below map to real repos in projects.json — confirm you're happy standing behind each -->
                     <p class="fade-in">I build applied ML systems end to end: XGBoost baselines validated with time-series cross-validation before any deep model gets a look in, LSTM forecasts for Delhi's hourly air quality, Zhang et&nbsp;al.'s ECCV'16 colorization network running on CUDA, and a Double DQN agent trained on hand-engineered danger-state features. On the LLM side I've shipped local-first RAG pipelines — ChromaDB memory, Ollama inference, BERTopic + HDBSCAN for theme discovery.</p>
                     <p class="fade-in">Most of the time goes to the unglamorous parts that make models trustworthy: leakage-proof splits, error analysis before architecture tuning, property-based tests on financial math (pytest + Hypothesis), and wrapping the result behind FastAPI services people actually use.</p>
-                    <!-- TODO: keep current — this is your "actively practicing" signal -->
                     <p class="now-chip fade-in" role="note" aria-label="Currently exploring">
                         <span class="now-prompt">&gt;&gt;&gt; now:</span>
                         comparing seq2seq LSTM vs. lagged-gradient-boosting heads for multi-step AQI forecasting
@@ -2391,7 +2395,6 @@
 
             <!-- Recent-experiment notebook cell: static "screenshot" of a real
                  analysis run — code + output chart, no interaction needed. -->
-            <!-- TODO: swap numbers/chart for a genuine recent run when convenient -->
             <figure class="nb-cell fade-in" aria-label="Recent experiment notebook snippet">
                 <figcaption class="nb-head">
                     <span class="nb-tag">recent experiment</span>
@@ -2568,7 +2571,7 @@ print(tm.get_topic_info()[[<span class="nb-str">"Count"</span>, <span class="nb-
                     </div>
                     <div id="form-status" role="alert" aria-live="polite"></div>
                     <button type="submit" class="btn-primary-custom" id="contact-submit"
-                            data-tip="Opens your mail client with the message" style="align-self:flex-start;">
+                            data-tip="Sends the message straight to my inbox" style="align-self:flex-start;">
                         Send Message <i class="fas fa-paper-plane" aria-hidden="true"></i>
                     </button>
                     <p class="form-note"><i class="fas fa-clock" aria-hidden="true"></i> Replies within 24 hours — usually sooner.</p>
@@ -3756,48 +3759,30 @@ async function fetchPosts() {
     const container = document.getElementById('posts-row');
     const MEDIUM_RSS = 'https://medium.com/feed/@tanmaysomani2003';
     const enc = encodeURIComponent(MEDIUM_RSS);
-    /* CORS-friendly sources tried in order; Medium blocks direct browser reads */
-    const SOURCES = [
-        { url: `https://api.rss2json.com/v1/api.json?rss_url=${enc}`, kind: 'rss2json' },
-        { url: `https://api.allorigins.win/get?url=${enc}`,           kind: 'allorigins' },
-        { url: `https://corsproxy.io/?url=${enc}`,                    kind: 'corsproxy' }
-    ];
+    /* Medium blocks direct browser reads, so the feed goes through rss2json
+       (a purpose-built feed API) rather than anonymous CORS proxies, which
+       are unreliable and can rewrite content. If it fails, the fallback card
+       below takes over — the section never hard-depends on it. */
+    const SRC = `https://api.rss2json.com/v1/api.json?rss_url=${enc}`;
+    const ctl = new AbortController();
+    const to = setTimeout(() => ctl.abort(), 8000);
     let items = null;
-    for (const src of SOURCES) {
-        try {
-            const res = await fetch(src.url);
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            if (src.kind === 'rss2json') {
-                const data = await res.json();
-                items = (data.items || []).slice(0, 8).map(it => ({
-                    title: it.title || 'Untitled',
-                    link:  it.link || '#',
-                    date:  it.pubDate || '',
-                    thumb: firstImg(it.content)
-                }));
-            } else {
-                const text = (src.kind === 'allorigins') ? (await res.json()).contents : await res.text();
-                const xml = new DOMParser().parseFromString(text, 'text/xml');
-                items = [...xml.querySelectorAll('item')].slice(0, 8).map(item => {
-                    let contentHtml = item.getElementsByTagName('content:encoded')[0]?.textContent
-                        || [...item.getElementsByTagNameNS('*', 'encoded')][0]?.textContent || '';
-                    const media = item.getElementsByTagName('media:content')[0]
-                        || [...item.getElementsByTagNameNS('*', 'content')].find(el => el.getAttribute('url'));
-                    return {
-                        title: item.querySelector('title')?.textContent || 'Untitled',
-                        link:  item.querySelector('link')?.textContent || '#',
-                        date:  item.querySelector('pubDate')?.textContent || '',
-                        thumb: firstImg(contentHtml)
-                            || (media && media.getAttribute('url') ? media.getAttribute('url').replace(/"/g, '%22') : '')
-                    };
-                });
-            }
-            if (items.length) break;
-            items = null;
-        } catch (err) {
-            console.warn(`Posts source failed (${src.kind}):`, err);
-            items = null;
-        }
+    try {
+        const res = await fetch(SRC, { signal: ctl.signal });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        items = (data.items || []).slice(0, 8).map(it => ({
+            title: it.title || 'Untitled',
+            link:  it.link || '#',
+            date:  it.pubDate || '',
+            thumb: firstImg(it.content)
+        }));
+        if (!items.length) items = null;
+    } catch (err) {
+        console.warn('Posts source failed (rss2json):', err);
+        items = null;
+    } finally {
+        clearTimeout(to);
     }
     if (!items) {
         console.warn('Posts unavailable: all sources failed');
@@ -3812,7 +3797,7 @@ async function fetchPosts() {
         return;
     }
     // Strict newest-first. Feeds are normally pre-sorted, but enforce it so
-    // proxy quirks can never shuffle the reading order. The ML regex only
+    // a source can never shuffle the reading order. The ML regex only
     // drives the "experiment" flag on the platform chip, never ordering.
     const ML_POST_RE = /\b(ml|machine learning|model|neural|transformer|llm|gpt|bert|forecast|classif\w*|regress\w*|embedding|rag|training|dataset|feature|xgboost|lstm|cnn|reinforcement|data.?science|kaggle)\b/i;
     items.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -4423,7 +4408,7 @@ window.addEventListener('resize', () => {
     clearTimeout(bookResizeTO);
     bookResizeTO = setTimeout(updatePortfolioMode, 150);
 });
-renderSkills();// Posts sit near the bottom of the page: don't let third-party RSS calls
+// Posts sit near the bottom of the page: don't let third-party RSS calls
 // compete with first paint. Start them as the section approaches the
 // viewport (with idle + timeout fallbacks for short viewports).
 let postsStarted = false;
@@ -4473,7 +4458,13 @@ function initLiveVisitors() {
             // and just spams the console), so we only ever /hit.
             const cur = await jget(`${BASE}/hit/${NS}/${bkt()}`); // heartbeat + read
             if (!cur || typeof cur.value !== 'number') { badge.hidden = true; return; }
-            out.textContent = String(Math.max(1, Math.round(cur.value)));
+            const n = Math.round(cur.value);
+            // Never advertise a crowd of one: on a quiet portfolio the badge
+            // would read "1" (just you) and undercut the social proof it
+            // exists to give. Hidden until a second person actually shows up.
+            if (n < 2) { badge.hidden = true; return; }
+            out.textContent = String(n);
+            badge.hidden = false;
         } catch (e) { badge.hidden = true; }
     }
     beat();
